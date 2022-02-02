@@ -1,0 +1,4 @@
+de.muenchen.keycloak.custom.broker.saml.mappers.CustomIdTemplateMapper
+de.muenchen.keycloak.custom.broker.saml.mappers.CustomUsernameTemplateMapper
+de.muenchen.keycloak.custom.broker.saml.mappers.CustomAttributeToRoleMapper
+org.keycloak.broker.saml.mappers.UserAttributeMapper
