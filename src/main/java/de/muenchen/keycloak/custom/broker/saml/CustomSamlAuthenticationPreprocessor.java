@@ -387,7 +387,7 @@ public class CustomSamlAuthenticationPreprocessor implements SamlAuthenticationP
 
     private SamlProtocolExtensionsAwareBuilder.NodeGenerator makeAllowedMethodsExtension(List<String> methods) {
         Map<String, String> attributes = new LinkedHashMap<>();
-        attributes.put("Version", "1");
+//        attributes.put("Version", "1");
 
         AllowedMethodsExtensionGenerator allowedMethodsExtension = new AllowedMethodsExtensionGenerator(attributes, methods);
         logger.debugf("  ---> %s", allowedMethodsExtension.toString());
