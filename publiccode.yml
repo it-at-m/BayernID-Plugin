@@ -1,0 +1,94 @@
+# This repository adheres to the publiccode.yml standard by including this
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+applicationSuite: Keycloak/RH-SSO-Plugins
+categories:
+  - identity-management
+dependsOn:
+  open:
+    - name: Keycloak
+      optional: false
+      version: ''
+      versionMax: ''
+      versionMin: 15.0.2
+description:
+  de:
+    documentation: |-
+      https://gitlab.opencode.de/landeshauptstadt-muenchen/bayernid-plugin/-/blob/main/README.md
+    features:
+      - Anbindung Bürgerkonto
+      - Anbindung Organisationskonto
+      - Explizite Anforderung eines Mindest-Vertrauensniveaus
+      - Explizite Anforderung des Organsationskonto-Logins
+      - Spezifische Datenmapper
+    genericName: Keycloak/RH-SSO-Plugin
+    longDescription: |
+      Die BayernID (ein Service der AKDB im Auftrag des Freistaats Bayern) ist
+      eine  digitale Identität, die Bürgerinnen und Bürger sowie Unternehmen und
+      Organisationen im Zusammenhang mit der Abwicklung digitaler
+      Verwaltungsdienste einsetzen können. Sie dient dazu, sich online eindeutig
+      zu identifizieren und bietet verschiedene Authentifizierungsstufen
+      (schwache Authentifizierung per Benutzername und Passwort, substantielle
+      Authentifizierung per Authega oder hohe Authentifizierung per eID/nPA).
+
+
+      Die Integration mit Fachverfahren erfolgt per SAML2-Protokoll.
+
+
+      Da eine direkte Integration jedes Fachverfahrens-Servers aufgrund
+      auszutauschender Zertifikate und Metadaten aufwändig ist, setzt die
+      Landeshauptstadt München einen zwischengeschalteten Identity Provider
+      (IDP) auf Basis der Software Keycloak (bzw. deren größtenteils baugleiches
+      kommerzielles Pendant RedHat Single Sign On (RH-SSO)) ein. Dies hat den
+      Vorteil, dass die angeschlossenen Fachverfahren nur mit diesem IDP eine
+      Vertrauensstellung aufbauen müssen und dafür sowohl OpenID-Connect (OIDC)
+      als auch SAML2 als Protkoll zur Verfügung stehen.
+
+
+      Die Anbindung eines Keycloak/RH-SSO an die BayernID funktioniert aber
+      nicht out-of-the-box, da der Keycloak/RH-SSO die Einstellung
+      nameID=transient nicht unterstützt. Außerdem muss für die Anforderung
+      eines Mindest-Vertrauensniveaus oder auch für die Anforderung des Logins
+      per Organisationskonto in den SAML2-Request eingegriffen werden, was nativ
+      vom Keycloak/RH-SSO nicht unterstützt wird.
+
+
+      Aus diesem Grund wurde von der Landeshauptstadt München ein Plugin
+      entwickelt, das eine entsprechende Erweiterung des Keycloak/RH-SSO
+      bewirkt. Damit ist es für die angebundenen Fachverfahren möglich, ein
+      gewünschtes Mindest-Vertrauensniveau oder den Login per Organisationskonto
+      explizit anzufordern - sowohl per OIDC als auch per SAML2. Außerdem
+      ermöglicht das Plugin, dass Userdatensätze eindeutig auf den gleichen
+      Datensatz im Keycloak/RH-SSO zu mappen, so dass dort bspw. auch eine
+      Autorisierung angewendet werden kann.
+    shortDescription: |-
+      Plugin für Keycloak/RH-SSO zur Anbindung der BayernID (Bürgerkonto und
+      Organisationskonto).
+developmentStatus: stable
+intendedAudience:
+  countries:
+    - de
+legal:
+  license: EUPL-1.2
+  mainCopyrightOwner: Landeshauptstadt München
+  repoOwner: Landeshauptstadt München
+localisation:
+  availableLanguages:
+    - de
+  localisationReady: true
+maintenance:
+  contacts:
+      - name: Roland Werner
+      - name: Alexander Kerscher
+  type: internal
+name: bayernID-Plugin für Keycloak/RH-SSO
+platforms:
+  - web
+releaseDate: '2022-05-23'
+softwareType: standalone/desktop
+softwareVersion: 0.1.7
+url: 'https://gitlab.opencode.de/landeshauptstadt-muenchen/bayernid-plugin.git'
+usedBy:
+  - Landeshauptstadt München
