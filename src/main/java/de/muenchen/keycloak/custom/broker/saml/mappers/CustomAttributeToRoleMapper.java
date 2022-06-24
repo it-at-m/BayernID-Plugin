@@ -3,7 +3,6 @@ package de.muenchen.keycloak.custom.broker.saml.mappers;
 import org.jboss.logging.Logger;
 import org.keycloak.broker.provider.BrokeredIdentityContext;
 import org.keycloak.broker.provider.ConfigConstants;
-import org.keycloak.broker.provider.IdentityBrokerException;
 import org.keycloak.broker.saml.mappers.AttributeToRoleMapper;
 import org.keycloak.models.*;
 import org.keycloak.models.utils.KeycloakModelUtils;
@@ -26,35 +25,45 @@ public class CustomAttributeToRoleMapper extends AttributeToRoleMapper {
 
     @Override
     public void importNewUser(KeycloakSession session, RealmModel realm, UserModel user, IdentityProviderMapperModel mapperModel, BrokeredIdentityContext context) {
-        String roleName = retrieveRoleNameExtended(session, mapperModel);
-
+        RoleModel role = this.getRole(realm, session, mapperModel); //session ergänzt
+        if (role == null) {
+            return;
+        }
         //LHM: aus Super-Klasse übernommen - ANFANG
-        if (isAttributePresent(mapperModel, context)) {
-            RoleModel role = KeycloakModelUtils.getRoleFromString(realm, roleName);
-            if (role == null) { //hier Semantik verändert: keine Exception, sondern nur Warning
-                LOGGER.warn("Unable to find role: " + roleName);
-            } else {
-                user.grantRole(role);
-            }
+        if (this.applies(mapperModel, context)) {
+            user.grantRole(role);
         }
         //LHM: aus Super-Klasse übernommen - ENDE
     }
 
     @Override
     public void updateBrokeredUser(KeycloakSession session, RealmModel realm, UserModel user, IdentityProviderMapperModel mapperModel, BrokeredIdentityContext context) {
+        RoleModel role = this.getRole(realm, session, mapperModel); //session ergänzt
+        if (role == null) {
+            return;
+        }
         String roleName = retrieveRoleNameExtended(session, mapperModel);
-
         //LHM: aus Super-Klasse übernommen - ANFANG
-        RoleModel role = KeycloakModelUtils.getRoleFromString(realm, roleName);
-        if (role == null) { //hier Semantik verändert: keine Exception, sondern nur Warning
-            LOGGER.warn("Unable to find role: " + roleName);
-        } else {
-            if (!this.isAttributePresent(mapperModel, context)) {
-                user.deleteRoleMapping(role);
-            } else {
+        // KEYCLOAK-8730 if a previous mapper has already granted the same role, skip the checks so we don't accidentally remove a valid role.
+        if (!context.hasMapperGrantedRole(roleName)) {
+            if (this.applies(mapperModel, context)) {
+                context.addMapperGrantedRole(roleName);
                 user.grantRole(role);
+            } else {
+                user.deleteRoleMapping(role);
             }
         }
+        //LHM: aus Super-Klasse übernommen - ENDE
+    }
+
+    private RoleModel getRole(final RealmModel realm, KeycloakSession session, final IdentityProviderMapperModel mapperModel) {
+        String roleName = retrieveRoleNameExtended(session, mapperModel);
+        //LHM: aus Super-Klasse übernommen - ANFANG
+        RoleModel role = KeycloakModelUtils.getRoleFromString(realm, roleName);
+        if (role == null) {
+            LOGGER.warn("Unable to find role: " + roleName); //hier Semantik verändert: keine Exception, sondern nur Warning
+        }
+        return role;
         //LHM: aus Super-Klasse übernommen - ENDE
     }
 
