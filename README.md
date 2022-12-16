@@ -25,7 +25,7 @@ Die Datei `bayernid-plugin-[VERSION].jar` aus dem Verzeichnis `target` (existier
 
 ## Konfigurieren
 
-Siehe Dokument `KeyCloak-Konfiguration.odt`
+Siehe Dokument `KeyCloak-Konfiguration.pdf`
 
 ## Testen
 
@@ -42,22 +42,24 @@ Falls das Bürgerkonto als Default-Provider konfiguriert ist (unter Authenticati
 z.B. "buergerkonto"), kommt man sofort zur Login-Maske des Bürgerkontos bei der AKDB, an sonsten kommt die Login-Maske des Keycloak/RH-SSO,
 in der man dann "buergerkonto", "Bayern-ID" o.ä. anklickt (nicht direkt einloggen).
 
-Es gibt eine Ausnahme wenn es darum geht zu testen, wie man ein höheres Authentifizierungsniveau anfordern kann. Das funktioniert bei OIDC über die Angabe der folgenden Scopes
+Bei OIDC kann man per Anforderung von Scopes ein höheres Authentifizierungsniveau anfordern. Das funktioniert über die Angabe der folgenden Scopes
 - **level1**: mindestes Username+Passwort
 - **level2**: [derzeit nicht belegt]
 - **level3**: mindestens Authega
 - **level4**: nPA mit eID
 
-Außerdem gibt es noch die folgenden Scopes in Verbindung mit dem Unternehmenskonto (auch "AKDB Organisationskonto"):
-- **any**: sowohl Bürgerkonto als auch Unternehmenskonto sind für den Login möglich
-- **legalEntity**: nur Unternehmenskonto ist für den Login möglich
-- (keine explizite Angabe): nur Login mit Bürgerkonto ist möglich
+Außerdem gibt es noch die folgenden Scopes in Verbindung mit dem ELSTER Unternehmenskonto (NEZO):
+- **any** oder (keine explizite Angabe): sowohl Bürgerkonto als auch Unternehmenskonto sind für den Login möglich (falls BayernID und NEZO als Broker konfiguriert sind, erscheinen beide IDPs aus Auswahlmöglichkeit im Keycloak Loginscreen)
+- **legalEntity**: nur Unternehmenskonto ist für den Login möglich 
+- **person**: nur Login mit Bürgerkonto ist möglich
 
 Die Scopes zum Authentifizierungsniveau und zum Unternehmenskonto sind kombinierbar.
 
 Zudem gibt es noch den Scope **debug**. Wenn dieser zusätzlich gesetzt wird, werden SAML Request und Response im Logfile ausgegeben.
 
-Das BayernID-Plugin ist derzeit so konfiguriert, dass nur die BayernID-eigenen Authentifizierungsmethoden eID, Authega und Benutzername+Passwort aktiv sind, d.h. die anderen Methoden wie temporär Login und Servicekonten (anderer Bundesländer / NutzerkontoBund oder anderer europäischer Staaten) sind standardmäßig deaktiviert. Der Grund ist, dass die bei den Servicekonten übertragenen Attribute sehr unterschiedlich sind, so dass man u.U. Schwierigkeiten mit der sauberen Verarbeitung im nachgelagerten Fachverfahren bekommt. Man kann aber explizit die anderen Authentifizierungsmethoden erzwingen über den Scope **otherOptions**.
+Außerdem können natürlich die weiteren definierten und als optional im Client konfigurierten Client Scopes angefordert werden, um die darin enthaltenen Attribute zu erhalten (z.B. `profile`, `email` oder `birthdate`).
+
+Das BayernID-Plugin ist derzeit so konfiguriert, dass nur die BayernID-eigenen Authentifizierungsmethoden eID, Authega, ELSTER und Benutzername+Passwort aktiv sind, d.h. die anderen Methoden wie temporär Login und Servicekonten (anderer Bundesländer / NutzerkontoBund oder anderer europäischer Staaten) sind standardmäßig deaktiviert. Der Grund ist, dass die bei den Servicekonten übertragenen Attribute sehr unterschiedlich sind, so dass man u.U. Schwierigkeiten mit der sauberen Verarbeitung im nachgelagerten Fachverfahren bekommt. Man kann aber explizit die anderen Authentifizierungsmethoden erzwingen über den Scope **otherOptions**.
 
 Ein Test der beschriebenen Scopes kann wie folgt vorgenommen werden:
 
@@ -77,7 +79,7 @@ Code entnehmen
 ```
 POST
 http://<basis-URL-inkl-Realm>/protocol/openid-connect/token
-client_id=eogov&client_secret=<secret>&grant_type=authorization_code&redirect_uri=https://www.muenchen.de&code=<code>
+client_id=eogov&client_secret=<secret>&grant_type=authorization_code&code=<code>
 ```
 
 ### SAML2
@@ -87,8 +89,37 @@ Per SAML2 angebundene Clients müssen die Konfiguration, die bei OIDC per Scopes
 ```xml
 <samlp:AuthnRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" ID="Login" Version="2.0" IssueInstant="2012-01-01T00:00:00Z">
     <samlp:Extensions>
-        <bayernid:RequestedAttributeSet xmlns:bayernid="urn:bayernid:1.0">individualPerson</bayernid:RequestedAttributeSet>
-        <otherOptions>true</otherOptions>
+        <bayernid:RequestedAttributeSet xmlns:bayernid="urn:bayernid:1.0">person</bayernid:RequestedAttributeSet>
+        <akdb:AuthenticationRequest xmlns:akdb="https://www.akdb.de/request/2018/09">
+            <akdb:AuthnMethods>
+                <akdb:eID>
+                    <akdb:Enabled>true</akdb:Enabled>
+                </akdb:eID>
+                <akdb:Elster>
+                    <akdb:Enabled>true</akdb:Enabled>
+                </akdb:Elster>
+            </akdb:AuthnMethods>
+            <akdb:RequestedAttributes>
+                <!--gender-->
+                <akdb:RequestedAttribute Name="urn:oid:1.3.6.1.4.1.33592.1.3.5"/>
+                <!--givenName / Vorname-->
+                <akdb:RequestedAttribute Name="urn:oid:2.5.4.42" RequiredAttribute="false"/>
+                <!--surname / Nachname-->
+                <akdb:RequestedAttribute Name="urn:oid:2.5.4.4" RequiredAttribute="true"/>
+                <!--bPK2-->
+                <akdb:RequestedAttribute Name="urn:oid:1.3.6.1.4.1.25484.494450.3" RequiredAttribute="true"/>
+                <!--authlevel-->
+                <akdb:RequestedAttribute Name="urn:oid:1.2.40.0.10.2.1.1.261.94" RequiredAttribute="true"/>
+                <!--birthdate / Geburtsdatum - Scope birthdate -->
+                <akdb:RequestedAttribute Name="urn:oid:1.2.40.0.10.2.1.1.55" RequiredAttribute="true"/>
+            </akdb:RequestedAttributes>
+        </akdb:AuthenticationRequest>
+        <lhm:otherOptions xmlns:lhm="urn:lhm:1.0">true</lhm:otherOptions>
+        <lhm:idpHint xmlns:lhm="urn:lhm:1.0">buergerkonto</lhm:idpHint>
+        <lhm:RequestedScopes xmlns:lhm="https://www.muenchen.de/request/2022/03">
+            <lhm:Scope>email</lhm:Scope>
+            <lhm:Scope>debug</lhm:Scope>
+        </lhm:RequestedScopes>
     </samlp:Extensions>
     <samlp:RequestedAuthnContext Comparison="minimum" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">
         <saml:AuthnContextClassRef>STORK-QAA-Level-3</saml:AuthnContextClassRef>
@@ -96,7 +127,20 @@ Per SAML2 angebundene Clients müssen die Konfiguration, die bei OIDC per Scopes
 </samlp:AuthnRequest>
 ```
 
-In diesem Beispiel sollte dann bei der AKDB dann nur noch die Bürgerkonto-Authentifizierungsmethoden mit starkem TrustLevel (nPA, Authega) zur Verfügung stehen, sowie die externen Anbindungen an Servicekonten etc.
+Dabei gibt es folgende Möglichkeiten:
+* **bayernid:RequestedAttributeSet** (im Bereich Extensions): `any`, `legalEntity` oder `person` (s. OIDC für Beschreibung)
+* **lhm:otherOptions** (im Bereich Extensions): Explizites Hinzukonfigurieren der weiteren Authentifizierungsmethoden bei der BayernID wie FINK (aber keine temporären Logins)
+* **lhm:idpHint** (im Bereich Extensions): Durch Angabe eines Broker-Alias kann die Keylcoak-Loginseite übersprungen und direkt zum entsprechenden externen IDP (z.B. BayernID oder NEZO) weitergeleitet werden.
+* **lhm:RequestedScopes** (im Bereich Extensions): Angabe der explizit gewünschten Scopes, die bei der BayernID angefordert werden sollen. 
+  Falls keine explizite Angabe erfolgt, werden alle im zugehörigen SAML-Client definierten Client Scopes bei der BayernID angefordert.\
+  In der Schlussfolgerung werden auch nur die Attribute im SAML-Response geliefert, die in den angeforderten Scopes definiert sind (weitere Attribute wurden ja gar nicht von der BayernID eingeholt).
+* **akdb:AuthnMethods** (im Bereich Extension im Unterbereich `akdb:AuthenticationRequest`): Hier können explizit die Anmeldeoptionen der BayernID angegeben werden, die bei diesem Request aktiv sein sollen,  
+  bspw. `Benutzername`, `eID` oder `Elster`, aber da die Anfrage direkt an die BayernID durchgereicht wird, sind auch alle weiteren derzeit oder künftig verfügbaren Anmeldeoptionen möglich.
+* **akdb:RequestedAttributes**  (im Bereich Extension im Unterbereich `akdb:AuthenticationRequest`): Aus Gründen der Schnittstellenkompatibilität zur BayernID ist es über diesen Parameter zusätzlich zu den o.g. `RequestedScopes`
+  möglich, direkt einzelne Attribute von der BayernID anzufordern. Es wird aber dringend empfohlen, stattdessen wenn möglich die `RequestedScopes` zu nutzen oder an sonsten alle Attribute anzufordern, die einen Scope vollständig abdecken,
+  da es sonst zu ungewollten Effekten im SSO-bedingten Wechsel zwischen verschiedenen Anwendungen kommt.
+* **RequestedAuthnContext** (separater Bereich im SAML-Request): Hierüber lässt sich einschränken, mit welcher Authentifizierungsstufe sich ein\*eine User\*in an der BayernID anmelden soll. 
+  Es stehen hier derzeit die Optionen `STORK-QAA-Level-1`, `STORK-QAA-Level-3` und `STORK-QAA-Level-4` zur Verfügung.  In diesem Beispiel sollte dann bei der AKDB dann nur noch die Bürgerkonto-Authentifizierungsmethoden mit starkem TrustLevel zur Verfügung stehen
 
 
-Dies kann bspw. bei Shibboleth erreicht werden, indem man in der Datei `shibboleth2.xml` einen `SessionInitiator` mit entsprechendem Inhalt definiert.
+Diese Möglichkeiten kann man bspw. bei Shibboleth erreichen, indem man in der Datei `shibboleth2.xml` einen `SessionInitiator` mit entsprechendem Inhalt definiert.

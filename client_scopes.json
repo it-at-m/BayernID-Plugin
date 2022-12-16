@@ -1,0 +1,2821 @@
+[
+  {
+    "id": "37845f29-7ff6-4b44-b66b-3bf30e73d78a",
+    "name": "level4_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "7ae3f5b7-58eb-46a6-a6f6-305df94e21dc",
+    "name": "level2_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "6973b5cb-e904-4f2a-a508-3bc79c8ed5f1",
+    "name": "level3_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "87ca2c49-90c4-4a4e-9512-a9621e776786",
+    "name": "phone",
+    "description": "OpenID Connect built-in scope: phone",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true",
+      "consent.screen.text": "${phoneScopeConsentText}"
+    },
+    "protocolMappers": [
+      {
+        "id": "a1d84189-6fea-43e3-8562-95ffd5afa247",
+        "name": "organizationTelefoneNumber",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "user.attribute": "organizationTelefoneNumber",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "organizationTelefoneNumber",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "3ef60c7d-ab33-420e-b363-0c6facb10412",
+        "name": "phone number verified",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "phoneNumberVerified",
+          "id.token.claim": "true",
+          "access.token.claim": "true",
+          "claim.name": "phone_number_verified",
+          "jsonType.label": "boolean"
+        }
+      },
+      {
+        "id": "a3cd9512-49e3-4ec1-adb4-f7eaa214ce54",
+        "name": "fax",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "fax",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "fax",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "7ae2874a-99d5-4460-91ce-1d74b15a8a2d",
+        "name": "phone number",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "telephoneNumber",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "phone_number",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "5f08bdcb-1795-4ba3-b2aa-9bca8698714e",
+        "name": "organizationFax",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "user.attribute": "organizationFax",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "organizationFax",
+          "userinfo.token.claim": "true"
+        }
+      }
+    ]
+  },
+  {
+    "id": "bc805967-b48d-4193-9425-bbd796d93fb0",
+    "name": "email_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    },
+    "protocolMappers": [
+      {
+        "id": "526e937f-31b6-48cb-9c2b-85e49865edbe",
+        "name": "email",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-property-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "email",
+          "friendly.name": "mail",
+          "attribute.name": "mail"
+        }
+      },
+      {
+        "id": "5fde9f5a-b5d1-44cf-8377-6908c5bf1926",
+        "name": "organizationEmail",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "organizationEmail",
+          "friendly.name": "organizationEmail",
+          "attribute.name": "organizationEmail"
+        }
+      },
+      {
+        "id": "efc4af58-66d7-4143-b98f-6a257ffccbd9",
+        "name": "DeMail",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "DeMail",
+          "friendly.name": "DeMail",
+          "attribute.name": "DeMail"
+        }
+      },
+      {
+        "id": "92af3027-e76e-4574-89e8-513c0cf3f9f3",
+        "name": "postkorbMailAddress",
+        "protocol": "saml",
+        "protocolMapper": "script-saml2-postkorbMailAddress.js",
+        "consentRequired": false,
+        "config": {
+          "single": "true",
+          "attribute.nameformat": "Unspecified",
+          "friendly.name": "postkorbMailAddress",
+          "attribute.name": "postkorbMailAddress"
+        }
+      }
+    ]
+  },
+  {
+    "id": "4f635b58-cdbc-4d8f-8760-d0cfc0c7d46e",
+    "name": "authlevel_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    },
+    "protocolMappers": [
+      {
+        "id": "67a32089-a08f-4d6f-a59f-fe1d5b98f203",
+        "name": "vertrauensniveauIdentifizierung",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "vertrauensniveauIdentifizierung",
+          "friendly.name": "vertrauensniveauIdentifizierung",
+          "attribute.name": "vertrauensniveauIdentifizierung"
+        }
+      },
+      {
+        "id": "12103b30-5475-491a-9267-6debe023e969",
+        "name": "authlevel",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "authlevel",
+          "friendly.name": "authlevel",
+          "attribute.name": "authlevel"
+        }
+      }
+    ]
+  },
+  {
+    "id": "8fb3d267-5e33-4ad5-8784-f259f75ca4b3",
+    "name": "ELSTER_NEZO_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "31375f4d-24aa-4258-a338-947c7c8cb8b4",
+    "name": "microprofile-jwt",
+    "description": "Microprofile - JWT built-in scope",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    },
+    "protocolMappers": [
+      {
+        "id": "63d06d40-65d5-4ffc-a533-4598911b52f2",
+        "name": "groups",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-realm-role-mapper",
+        "consentRequired": false,
+        "config": {
+          "multivalued": "true",
+          "user.attribute": "foo",
+          "id.token.claim": "true",
+          "access.token.claim": "true",
+          "claim.name": "groups",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "7bc0032a-a8b1-4136-ae63-33d3f1850bce",
+        "name": "upn",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-property-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "username",
+          "id.token.claim": "true",
+          "access.token.claim": "true",
+          "claim.name": "upn",
+          "jsonType.label": "String"
+        }
+      }
+    ]
+  },
+  {
+    "id": "cb5fce7d-69ec-4e71-86f5-926bc60babe4",
+    "name": "companyaddress",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true"
+    },
+    "protocolMappers": [
+      {
+        "id": "9da8ef50-b5f5-4b0a-aedc-0a79ff32fb8e",
+        "name": "unternehmensanschriftHausnummer",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "unternehmensanschriftHausnummer",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "companyaddress.unternehmensanschriftHausnummer",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "9de55b28-5e3d-4133-b709-2d6b97e4c9c0",
+        "name": "unternehmensanschriftTyp",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "unternehmensanschriftTyp",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "companyaddress.unternehmensanschriftTyp",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "5160fb2a-c16c-48ce-9a0c-844e2e720ab2",
+        "name": "unternehmensanschrift",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "unternehmensanschrift",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "companyaddress.unternehmensanschrift",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "9568d4a3-cb12-41b5-884f-7dd773a15dfb",
+        "name": "unternehmensanschriftAdressergaenzung",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "unternehmensanschriftAdressergaenzung",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "companyaddress.unternehmensanschriftAdressergaenzung",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "09a6b3ae-2f5b-4371-96a3-a1cbaea0cce8",
+        "name": "unternehmensanschriftLand",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "unternehmensanschriftLand",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "companyaddress.unternehmensanschriftLand",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "4b18e669-b293-43d5-a579-a6e8185f5502",
+        "name": "unternehmensanschriftOrt",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "unternehmensanschriftOrt",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "companyaddress.unternehmensanschriftOrt",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "4b63876f-52be-4b66-8ed7-4c592417dfa6",
+        "name": "unternehmensanschriftPLZ",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "unternehmensanschriftPLZ",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "companyaddress.unternehmensanschriftPLZ",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "53bcaa4e-e3cc-4cc4-a931-d59ce0a40e3f",
+        "name": "unternehmensanschriftStrasse",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "unternehmensanschriftStrasse",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "companyaddress.unternehmensanschriftStrasse",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "a42a79c2-f3e3-4a2c-84ed-95dca4bf7858",
+        "name": "unternehmensanschriftOrtsteil",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "unternehmensanschriftOrtsteil",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "companyaddress.unternehmensanschriftOrtsteil",
+          "jsonType.label": "String"
+        }
+      }
+    ]
+  },
+  {
+    "id": "17afd0e8-73ca-4c56-8567-a99b97ab2480",
+    "name": "M-Login_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "362efe29-882b-41d0-9007-b245c3769229",
+    "name": "acr",
+    "description": "OpenID Connect scope for add acr (authentication context class reference) to the token",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "false",
+      "display.on.consent.screen": "false"
+    },
+    "protocolMappers": [
+      {
+        "id": "2731465d-60b7-492f-bc31-272a7a7c4a02",
+        "name": "acr loa level",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-acr-mapper",
+        "consentRequired": false,
+        "config": {
+          "id.token.claim": "true",
+          "access.token.claim": "true"
+        }
+      }
+    ]
+  },
+  {
+    "id": "3ca3b0ce-3644-436a-a268-9464e1176243",
+    "name": "birth_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true"
+    },
+    "protocolMappers": [
+      {
+        "id": "797fe7f2-35e7-4b78-90b7-c3c777db739f",
+        "name": "geburtsland",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "geburtsland",
+          "friendly.name": "geburtsland",
+          "attribute.name": "geburtsland"
+        }
+      },
+      {
+        "id": "8b5484ea-b2e7-415b-ac97-3a1e3f20c0cf",
+        "name": "birthName",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "birthName",
+          "friendly.name": "birthName",
+          "attribute.name": "birthName"
+        }
+      },
+      {
+        "id": "ccd35e14-6370-48d5-9647-8b3fcc6c1a71",
+        "name": "placeOfBirth",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "placeOfBirth",
+          "friendly.name": "placeOfBirth",
+          "attribute.name": "placeOfBirth"
+        }
+      }
+    ]
+  },
+  {
+    "id": "751d8932-81d4-48f7-aa4b-2c85ad0a8e5a",
+    "name": "ELSTER_NEZO",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "94a18964-f46f-42a7-b412-fc009db34b5d",
+    "name": "role_list",
+    "description": "SAML role list",
+    "protocol": "saml",
+    "attributes": {
+      "consent.screen.text": "${samlRoleListScopeConsentText}",
+      "display.on.consent.screen": "true"
+    },
+    "protocolMappers": [
+      {
+        "id": "f0cc0339-ebee-4ead-89c7-b2e2d58d9150",
+        "name": "role list",
+        "protocol": "saml",
+        "protocolMapper": "saml-role-list-mapper",
+        "consentRequired": false,
+        "config": {
+          "single": "false",
+          "attribute.nameformat": "Basic",
+          "attribute.name": "Role"
+        }
+      }
+    ]
+  },
+  {
+    "id": "3b9dd1c8-78e2-4444-93ea-57a12fe53cf9",
+    "name": "birth",
+    "description": "Gibt Geburtsort und Geburtsname an",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true",
+      "consent.screen.text": "Geburtsort und Geburtsname"
+    },
+    "protocolMappers": [
+      {
+        "id": "e1372d24-4f48-478f-9acd-645b1ef41657",
+        "name": "geburtsland",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "user.attribute": "geburtsland",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "geburtsland",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "ce6dcd8e-0be8-484d-a5b5-e3d74d8ba831",
+        "name": "birthName",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "birthName",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "birthName",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "90111bc7-92da-43ff-bfdd-948415eaee90",
+        "name": "placeOfBirth",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "placeOfBirth",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "placeOfBirth",
+          "jsonType.label": "String"
+        }
+      }
+    ]
+  },
+  {
+    "id": "89263088-639d-4908-b5ad-3cd758fd5cc2",
+    "name": "any",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "dfd27769-6d92-4b0a-ad80-3b23f8da768a",
+    "name": "web-origins",
+    "description": "OpenID Connect scope for add allowed web origins to the access token",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "false",
+      "display.on.consent.screen": "false"
+    },
+    "protocolMappers": [
+      {
+        "id": "8ffdb1e5-985c-4a79-ac6f-80db1f2d4072",
+        "name": "allowed web origins",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-allowed-origins-mapper",
+        "consentRequired": false,
+        "config": {}
+      }
+    ]
+  },
+  {
+    "id": "41961ec8-e882-4b6b-aec1-107bcd2a376a",
+    "name": "NutzerkontoBund_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "false",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "d0b73707-8746-4009-95ce-7cbfedd24dbc",
+    "name": "companyaddress_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true"
+    },
+    "protocolMappers": [
+      {
+        "id": "b91b8169-9387-452e-800b-b2fbe4f4b512",
+        "name": "unternehmensanschriftOrtsteil",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "unternehmensanschriftOrtsteil",
+          "friendly.name": "unternehmensanschriftOrtsteil",
+          "attribute.name": "unternehmensanschriftOrtsteil"
+        }
+      },
+      {
+        "id": "d5e4de9f-4008-421c-8c25-a3f30f8bece7",
+        "name": "unternehmensanschriftHausnummer",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "unternehmensanschriftHausnummer",
+          "friendly.name": "unternehmensanschriftHausnummer",
+          "attribute.name": "unternehmensanschriftHausnummer"
+        }
+      },
+      {
+        "id": "cd545959-81fa-44ab-8571-516465cb4d12",
+        "name": "unternehmensanschriftAdressergaenzung",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "unternehmensanschriftAdressergaenzung",
+          "friendly.name": "unternehmensanschriftAdressergaenzung",
+          "attribute.name": "unternehmensanschriftAdressergaenzung"
+        }
+      },
+      {
+        "id": "214fb6d2-5e97-4997-a440-6da7eeb0f477",
+        "name": "unternehmensanschriftPLZ",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "unternehmensanschriftPLZ",
+          "friendly.name": "unternehmensanschriftPLZ",
+          "attribute.name": "unternehmensanschriftPLZ"
+        }
+      },
+      {
+        "id": "6e7c729a-720b-4eb9-880a-46ea5bd45b35",
+        "name": "unternehmensanschriftTyp",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "unternehmensanschriftTyp",
+          "friendly.name": "unternehmensanschriftTyp",
+          "attribute.name": "unternehmensanschriftTyp"
+        }
+      },
+      {
+        "id": "bae32334-2483-4321-aa11-1a790095fcff",
+        "name": "unternehmensanschriftStrasse",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "unternehmensanschriftStrasse",
+          "friendly.name": "unternehmensanschriftStrasse",
+          "attribute.name": "unternehmensanschriftStrasse"
+        }
+      },
+      {
+        "id": "4c88a45e-4499-43ac-ac38-2c656211fb77",
+        "name": "unternehmensanschrift",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "unternehmensanschrift",
+          "friendly.name": "unternehmensanschrift",
+          "attribute.name": "unternehmensanschrift"
+        }
+      },
+      {
+        "id": "25191a91-fcbc-4fe3-8ca8-dabc9794d140",
+        "name": "unternehmensanschriftOrt",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "unternehmensanschriftOrt",
+          "friendly.name": "unternehmensanschriftOrt",
+          "attribute.name": "unternehmensanschriftOrt"
+        }
+      },
+      {
+        "id": "ec6733ca-0813-40be-9950-15218e7befdd",
+        "name": "unternehmensanschriftLand",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "unternehmensanschriftLand",
+          "friendly.name": "unternehmensanschriftLand",
+          "attribute.name": "unternehmensanschriftLand"
+        }
+      }
+    ]
+  },
+  {
+    "id": "64a4bc0e-cfd7-4959-b9bf-b494c12032a9",
+    "name": "offline_access",
+    "description": "OpenID Connect built-in scope: offline_access",
+    "protocol": "openid-connect",
+    "attributes": {
+      "consent.screen.text": "${offlineAccessScopeConsentText}",
+      "display.on.consent.screen": "true"
+    }
+  },
+  {
+    "id": "de63c8c1-b245-4366-8877-5872a3f58742",
+    "name": "M-Login",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "301dc194-a16f-4053-a652-6bc19ac2d22f",
+    "name": "email",
+    "description": "OpenID Connect built-in scope: email",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true",
+      "consent.screen.text": "${emailScopeConsentText}"
+    },
+    "protocolMappers": [
+      {
+        "id": "c930785d-b6d8-48eb-a64a-1c40702df5d3",
+        "name": "email",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-property-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "email",
+          "id.token.claim": "true",
+          "access.token.claim": "true",
+          "claim.name": "email",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "6d83f1ef-2493-4be7-b4e9-216ccf5a56a1",
+        "name": "email verified",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-property-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "emailVerified",
+          "id.token.claim": "true",
+          "access.token.claim": "true",
+          "claim.name": "email_verified",
+          "jsonType.label": "boolean"
+        }
+      },
+      {
+        "id": "ca97dac2-cfe3-41d4-81ae-32b7653955d1",
+        "name": "postkorbMailAddress",
+        "protocol": "openid-connect",
+        "protocolMapper": "script-oidc-postkorbMailAddress.js",
+        "consentRequired": false,
+        "config": {
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "postkorbMailAddress",
+          "jsonType.label": "String",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "28b77d71-6025-40ce-9675-916b7b0cd359",
+        "name": "DeMail",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "DeMail",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "DeMail",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "dcf787aa-9c58-46fa-8802-a9fc1d1aee52",
+        "name": "organizationEmail",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "user.attribute": "organizationEmail",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "organizationEmail",
+          "userinfo.token.claim": "true"
+        }
+      }
+    ]
+  },
+  {
+    "id": "1ab9e51c-7de6-4c85-9caf-2937d75354fc",
+    "name": "NutzerkontoBund",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "5590610f-e31b-4e41-9855-e3b1e73996fb",
+    "name": "authlevel_legacy_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true"
+    },
+    "protocolMappers": [
+      {
+        "id": "5493e660-2a3e-4b42-a157-c0e0c9bc56f3",
+        "name": "vertrauensniveauIdentifizierung",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "vertrauensniveauIdentifizierung",
+          "friendly.name": "vertrauensniveauIdentifizierung",
+          "attribute.name": "vertrauensniveauIdentifizierung"
+        }
+      },
+      {
+        "id": "70253a48-adf9-4ed1-9d18-cd148d236091",
+        "name": "authlevel_legacy",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "authlevel_legacy",
+          "friendly.name": "authlevel",
+          "attribute.name": "authlevel"
+        }
+      }
+    ]
+  },
+  {
+    "id": "85454a9c-ecb2-4ef4-8ee1-2d7dc722e74b",
+    "name": "debug",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "false",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "41bae73d-37ba-4e61-81c0-536faa2f0479",
+    "name": "level4",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "23a314a0-f15c-4d96-9dac-c4eb4f979b1f",
+    "name": "level1_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "1563c279-2da2-4311-aee1-bf9dff417e82",
+    "name": "BayernID",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "de97b357-2f2b-43b7-833b-235017b02b24",
+    "name": "profile",
+    "description": "OpenID Connect built-in scope: profile",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true",
+      "consent.screen.text": "${profileScopeConsentText}"
+    },
+    "protocolMappers": [
+      {
+        "id": "1f7a40d0-439b-4711-9ace-468942765ec3",
+        "name": "postkorbMailAddress",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-script-based-protocol-mapper",
+        "consentRequired": false,
+        "config": {
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "postkorbMailAddress",
+          "script": "/**\n * Available variables: \n * user - the current user\n * realm - the current realm\n * token - the current token\n * userSession - the current userSession\n * keycloakSession - the current userSession\n */\n\nif (user.getFirstAttribute(\"legacyPostkorbHandle\") !== null) {\n    exports = user.getFirstAttribute(\"legacyPostkorbHandle\") + \"@bsp-postkorb-pre.akdb.doi-de.net\";\n}",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "f94f8f2d-2f0f-4d21-b436-64383a50b51b",
+        "name": "full name",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-full-name-mapper",
+        "consentRequired": false,
+        "config": {
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "0ea18146-eb3d-47a9-9a11-c2b951125618",
+        "name": "artisticName",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "artisticName",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "artisticName",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "19fdb780-e2a6-4d12-acff-663c4f9725a1",
+        "name": "displayName",
+        "protocol": "openid-connect",
+        "protocolMapper": "script-oidc-displayName.js",
+        "consentRequired": false,
+        "config": {
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "displayName",
+          "jsonType.label": "String",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "3241866b-af1f-477a-b4e2-abc45d3e1eab",
+        "name": "ID",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "ID",
+          "id.token.claim": "true",
+          "access.token.claim": "true",
+          "claim.name": "ID",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "dbc3f8b4-9a83-419b-ab8e-4d1272238e9e",
+        "name": "family name",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-property-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "lastName",
+          "id.token.claim": "true",
+          "access.token.claim": "true",
+          "claim.name": "family_name",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "70616436-a2ba-4d56-bf68-1fcad2df67aa",
+        "name": "eidasIssuingCountry",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "user.attribute": "EIDAS-Issuing-Country",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "eidasIssuingCountry",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "07dcf46b-db9e-4498-a300-623ab39d8fd8",
+        "name": "given name",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-property-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "firstName",
+          "id.token.claim": "true",
+          "access.token.claim": "true",
+          "claim.name": "given_name",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "92aa203b-0755-4c05-b368-284632aff082",
+        "name": "username",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-property-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "username",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "username",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "6fe18b65-71db-4bfb-9889-47214769b238",
+        "name": "version",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "version",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "version",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "d61dff7b-84f2-482d-97f9-f8fb2c004f78",
+        "name": "bPK2",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "bPK2",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "bPK2",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "42237a39-ba45-4980-99aa-bd8419c6f6e5",
+        "name": "gender",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "gender",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "gender",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "7fdf9b63-562c-45de-a745-b1c32e1394a5",
+        "name": "AssertionProvedBy",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "AssertionProvedBy",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "AssertionProvedBy",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "2bc71d86-b70c-40d6-9b29-741231fbf2b1",
+        "name": "bPK",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "bPK",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "bPK",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "78acd2e2-deb5-417b-b962-031f1968b99a",
+        "name": "personalTitle",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "personalTitle",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "personalTitle",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "c6a32759-7b16-40dc-800a-14a45f9482b5",
+        "name": "preferred_username",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-property-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "username",
+          "id.token.claim": "true",
+          "access.token.claim": "true",
+          "claim.name": "preferred_username",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "8cffc7b6-5985-4962-8512-27e25c596129",
+        "name": "legacyPostkorbHandle",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "legacyPostkorbHandle",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "legacyPostkorbHandle",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "76091e04-d5a6-460a-ba65-0efa09112286",
+        "name": "accountSource",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "accountSource",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "accountSource",
+          "jsonType.label": "String"
+        }
+      }
+    ]
+  },
+  {
+    "id": "19db8b3e-5061-4db0-b09c-3884468e44ec",
+    "name": "level3",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "3eeb98fe-faa5-4135-bebb-d8b370ee7e1b",
+    "name": "address",
+    "description": "OpenID Connect built-in scope: address",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true",
+      "consent.screen.text": "${addressScopeConsentText}"
+    },
+    "protocolMappers": [
+      {
+        "id": "036c7157-a513-4d9f-8e33-49d961cfd6b2",
+        "name": "houseNumber",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "user.attribute": "houseNumber",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "address.houseNumber",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "8e4f48bf-7cf9-4d52-ba00-e41551549fec",
+        "name": "postalCode",
+        "protocol": "openid-connect",
+        "protocolMapper": "script-oidc-postalCode.js",
+        "consentRequired": false,
+        "config": {
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "address.postal_code",
+          "jsonType.label": "String",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "3f789e59-ff47-4304-9381-53c9cd778c5c",
+        "name": "anschriftOrtsteil",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "anschriftOrtsteil",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "address.anschriftOrtsteil",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "c5e49420-f2a6-40fe-a9f1-c9b478e17d11",
+        "name": "postalAddress",
+        "protocol": "openid-connect",
+        "protocolMapper": "script-oidc-postalAddress.js",
+        "consentRequired": false,
+        "config": {
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "address.street_address",
+          "jsonType.label": "String",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "2ca9811c-a3ff-4683-ae54-f7fd585a799f",
+        "name": "anschrift",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "user.attribute": "anschrift",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "address.anschrift",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "335ea4c4-24d7-4086-9c21-494a4db83bb0",
+        "name": "anschriftTyp",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "anschriftTyp",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "address.anschriftTyp",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "85a599e7-3983-489a-816f-3c2356ea64d3",
+        "name": "country",
+        "protocol": "openid-connect",
+        "protocolMapper": "script-oidc-country.js",
+        "consentRequired": false,
+        "config": {
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "address.country",
+          "jsonType.label": "String",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "a932fef2-acce-48d5-a6a0-1631fe86f59b",
+        "name": "anschriftAdressergaenzung",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "anschriftAdressergaenzung",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "address.anschriftAdressergaenzung",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "5d2936bc-2786-4ed7-84ac-763fdbcbf526",
+        "name": "hausnummerzusatz",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "user.attribute": "hausnummerzusatz",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "address.hausnummerzusatz",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "c8790acb-d825-46b4-9d1a-f1e132c51846",
+        "name": "localityName",
+        "protocol": "openid-connect",
+        "protocolMapper": "script-oidc-localityName.js",
+        "consentRequired": false,
+        "config": {
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "address.locality",
+          "jsonType.label": "String",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "300460da-46a9-41aa-81d5-cd37aa952904",
+        "name": "anschriftHausnummer",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "anschriftHausnummer",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "address.anschriftHausnummer",
+          "jsonType.label": "String"
+        }
+      }
+    ]
+  },
+  {
+    "id": "6afc1e6a-9b55-47e5-85d2-a5b75fe9bd29",
+    "name": "organization_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true"
+    },
+    "protocolMappers": [
+      {
+        "id": "a34ba451-dda5-4a59-8920-0e9a0904e90c",
+        "name": "datenuebermittlerPseudonymId",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "datenuebermittlerPseudonymId",
+          "friendly.name": "datenuebermittlerPseudonymId",
+          "attribute.name": "datenuebermittlerPseudonymId"
+        }
+      },
+      {
+        "id": "4a7d8d09-9321-4bca-9b72-7f5700a99c5e",
+        "name": "firmenname",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "firmenname",
+          "friendly.name": "firmenname",
+          "attribute.name": "firmenname"
+        }
+      },
+      {
+        "id": "99ecdb1b-91d4-4810-be9a-f62d75d7c651",
+        "name": "betriebsGruendungsDatum",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "betriebsGruendungsDatum",
+          "friendly.name": "betriebsGruendungsDatum",
+          "attribute.name": "betriebsGruendungsDatum"
+        }
+      },
+      {
+        "id": "7dae3a65-f53c-4056-b048-015b1adacdc0",
+        "name": "betriebsEndeDatum",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "betriebsEndeDatum",
+          "friendly.name": "betriebsEndeDatum",
+          "attribute.name": "betriebsEndeDatum"
+        }
+      },
+      {
+        "id": "69326bbd-1838-485a-8989-bcaae170c554",
+        "name": "stNr",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "stNr",
+          "friendly.name": "stNr",
+          "attribute.name": "stNr"
+        }
+      },
+      {
+        "id": "586fb682-fbdc-46cb-b6e7-7e2cb64d8796",
+        "name": "umsatzsteuerId",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "umsatzsteuerId",
+          "friendly.name": "umsatzsteuerId",
+          "attribute.name": "umsatzsteuerId"
+        }
+      },
+      {
+        "id": "267a3c0e-0580-435d-9ae2-7c8959a5905d",
+        "name": "registerart",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "registerart",
+          "friendly.name": "registerart",
+          "attribute.name": "registerart"
+        }
+      },
+      {
+        "id": "d092d634-5b7d-4d0d-adb3-837a54c07819",
+        "name": "organizationId",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "organizationId",
+          "friendly.name": "organizationId",
+          "attribute.name": "organizationId"
+        }
+      },
+      {
+        "id": "b46e7a95-3e90-4ddb-9bc5-0cd21ca0fafb",
+        "name": "rechtsform",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "rechtsform",
+          "friendly.name": "rechtsform",
+          "attribute.name": "rechtsform"
+        }
+      },
+      {
+        "id": "9251b17f-9f77-4789-b620-3e87bc6ae22f",
+        "name": "registergericht",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "registergericht",
+          "friendly.name": "registergericht",
+          "attribute.name": "registergericht"
+        }
+      },
+      {
+        "id": "d941b906-c27b-4bea-95a9-f55af9f4addb",
+        "name": "datenkranztyp",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "datenkranzTyp",
+          "friendly.name": "datenkranzTyp",
+          "attribute.name": "datenkranzTyp"
+        }
+      },
+      {
+        "id": "2bc326ff-23bc-43e9-bc7e-cf644746f27d",
+        "name": "representationPath",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "representationPath",
+          "friendly.name": "representationPath",
+          "attribute.name": "representationPath"
+        }
+      },
+      {
+        "id": "27ac9395-d434-402e-995a-22d5c13127db",
+        "name": "namenszusatz",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "namenszusatz",
+          "friendly.name": "namenszusatz",
+          "attribute.name": "namenszusatz"
+        }
+      },
+      {
+        "id": "0bd96539-7de6-43dc-b590-00f5e76a87c6",
+        "name": "registerLocation",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "registerLocation",
+          "friendly.name": "registerLocation",
+          "attribute.name": "registerLocation"
+        }
+      },
+      {
+        "id": "bd753d7b-44dd-4349-9e0c-9131a504e70a",
+        "name": "taetigkeitText",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "taetigkeitText",
+          "friendly.name": "taetigkeitText",
+          "attribute.name": "taetigkeitText"
+        }
+      },
+      {
+        "id": "2c89744a-4a2b-426d-8f99-0e8e14d49e9a",
+        "name": "registernummer",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "registernummer",
+          "friendly.name": "registernummer",
+          "attribute.name": "registernummer"
+        }
+      },
+      {
+        "id": "888d0402-9c41-4505-8d79-921c3f4c09c6",
+        "name": "taetigkeit",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "taetigkeit",
+          "friendly.name": "taetigkeit",
+          "attribute.name": "taetigkeit"
+        }
+      },
+      {
+        "id": "2d27c1ac-5fda-4aa4-8069-d56d3f75c8b5",
+        "name": "registerNumber",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "registerNumber",
+          "friendly.name": "registerNumber",
+          "attribute.name": "registerNumber"
+        }
+      },
+      {
+        "id": "e73486e9-80ea-4b0e-8751-f14f506ff81d",
+        "name": "rechtsformText",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "rechtsformText",
+          "friendly.name": "rechtsformText",
+          "attribute.name": "rechtsformText"
+        }
+      },
+      {
+        "id": "ad7c26c6-591d-47bd-b172-61511c7782f0",
+        "name": "legalForm",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "legalForm",
+          "friendly.name": "legalForm",
+          "attribute.name": "legalForm"
+        }
+      },
+      {
+        "id": "27c0723f-0ebd-4bd2-a2b2-34cfd9cc0f4a",
+        "name": "istTestkonto",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "istTestkonto",
+          "friendly.name": "istTestkonto",
+          "attribute.name": "istTestkonto"
+        }
+      },
+      {
+        "id": "cd0fe39a-325c-4f1f-a067-acb3d6f3ba09",
+        "name": "idNr",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "idNr",
+          "friendly.name": "idNr",
+          "attribute.name": "idNr"
+        }
+      },
+      {
+        "id": "acf6507c-35f9-45da-94e9-371036d7a573",
+        "name": "persTyp",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "persTyp",
+          "friendly.name": "persTyp",
+          "attribute.name": "persTyp"
+        }
+      },
+      {
+        "id": "38890f3d-958e-46dc-856a-cf09bcba9009",
+        "name": "organizationName",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "organizationName",
+          "friendly.name": "organizationName",
+          "attribute.name": "organizationName"
+        }
+      }
+    ]
+  },
+  {
+    "id": "bd44d9ab-470f-4ddf-9900-2d580642ad05",
+    "name": "address_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true"
+    },
+    "protocolMappers": [
+      {
+        "id": "b726dfe3-c52d-4dd9-bc77-4e730e4049f8",
+        "name": "anschriftHausnummer",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "anschriftHausnummer",
+          "friendly.name": "anschriftHausnummer",
+          "attribute.name": "anschriftHausnummer"
+        }
+      },
+      {
+        "id": "e0aef2e5-8c30-4c89-9c44-4b3dd1ab97cf",
+        "name": "postalAddress",
+        "protocol": "saml",
+        "protocolMapper": "script-saml2-postalAddress.js",
+        "consentRequired": false,
+        "config": {
+          "single": "true",
+          "attribute.nameformat": "Unspecified",
+          "friendly.name": "postalAddress",
+          "attribute.name": "postalAddress"
+        }
+      },
+      {
+        "id": "ee1d3bb1-ff13-4215-804d-82ff7ace407b",
+        "name": "postalCode",
+        "protocol": "saml",
+        "protocolMapper": "script-saml2-postalCode.js",
+        "consentRequired": false,
+        "config": {
+          "single": "true",
+          "attribute.nameformat": "Unspecified",
+          "friendly.name": "postalCode",
+          "attribute.name": "postalCode"
+        }
+      },
+      {
+        "id": "414cbeb6-a814-41c9-afae-6b42852c870d",
+        "name": "anschrift",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "anschrift",
+          "friendly.name": "anschrift",
+          "attribute.name": "anschrift"
+        }
+      },
+      {
+        "id": "37c9ef8c-cf93-4819-9c80-47c17d35e124",
+        "name": "houseNumber",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "houseNumber",
+          "friendly.name": "houseNumber",
+          "attribute.name": "houseNumber"
+        }
+      },
+      {
+        "id": "430be6bc-f17b-4457-a67d-dc3c3035f6b6",
+        "name": "anschriftTyp",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "anschriftTyp",
+          "friendly.name": "anschriftTyp",
+          "attribute.name": "anschriftTyp"
+        }
+      },
+      {
+        "id": "664f58b5-ec0f-4617-b239-277536592740",
+        "name": "hausnummerzusatz",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "hausnummerzusatz",
+          "friendly.name": "hausnummerzusatz",
+          "attribute.name": "hausnummerzusatz"
+        }
+      },
+      {
+        "id": "b10c553d-782a-4797-a726-41af0e61e8f3",
+        "name": "country",
+        "protocol": "saml",
+        "protocolMapper": "script-saml2-country.js",
+        "consentRequired": false,
+        "config": {
+          "single": "true",
+          "attribute.nameformat": "Unspecified",
+          "friendly.name": "country",
+          "attribute.name": "country"
+        }
+      },
+      {
+        "id": "9fe14e93-4d10-43b4-bd6e-5daeb9f7db4d",
+        "name": "anschriftOrtsteil",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "anschriftOrtsteil",
+          "friendly.name": "anschriftOrtsteil",
+          "attribute.name": "anschriftOrtsteil"
+        }
+      },
+      {
+        "id": "042cfc5b-c36b-4935-a167-80922317c5d1",
+        "name": "anschriftAdressergaenzung",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "anschriftAdressergaenzung",
+          "friendly.name": "anschriftAdressergaenzung",
+          "attribute.name": "anschriftAdressergaenzung"
+        }
+      },
+      {
+        "id": "524ec392-32e6-43f1-9e3f-80acfb82c2a1",
+        "name": "localityName",
+        "protocol": "saml",
+        "protocolMapper": "script-saml2-localityName.js",
+        "consentRequired": false,
+        "config": {
+          "single": "true",
+          "attribute.nameformat": "Unspecified",
+          "friendly.name": "localityName",
+          "attribute.name": "localityName"
+        }
+      },
+      {
+        "id": "30232a23-9111-44a0-8ad7-9fca7a3e59c4",
+        "name": "adresszusatz",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "adresszusatz",
+          "friendly.name": "adresszusatz",
+          "attribute.name": "adresszusatz"
+        }
+      }
+    ]
+  },
+  {
+    "id": "d3e3412d-fcdb-4912-9b92-4aa8ee1dc7da",
+    "name": "roles",
+    "description": "OpenID Connect scope for add user roles to the access token",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "false",
+      "display.on.consent.screen": "true",
+      "consent.screen.text": "${rolesScopeConsentText}"
+    },
+    "protocolMappers": [
+      {
+        "id": "43d626fb-fec6-4a6a-b5fa-e52d762db894",
+        "name": "realm roles",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-realm-role-mapper",
+        "consentRequired": false,
+        "config": {
+          "user.attribute": "foo",
+          "access.token.claim": "true",
+          "claim.name": "realm_access.roles",
+          "jsonType.label": "String",
+          "multivalued": "true"
+        }
+      },
+      {
+        "id": "b5bc2097-1922-4b34-a8df-9fda1cf7d89d",
+        "name": "client roles",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-client-role-mapper",
+        "consentRequired": false,
+        "config": {
+          "user.attribute": "foo",
+          "access.token.claim": "true",
+          "claim.name": "resource_access.${client_id}.roles",
+          "jsonType.label": "String",
+          "multivalued": "true"
+        }
+      },
+      {
+        "id": "3afeb571-1f37-4529-8900-90165a9f2ead",
+        "name": "audience resolve",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-audience-resolve-mapper",
+        "consentRequired": false,
+        "config": {}
+      }
+    ]
+  },
+  {
+    "id": "82aa9110-e79b-4f27-bcd7-5ebeaef2779f",
+    "name": "refarch",
+    "description": "Attribute aus der Referenz Architektur werden eingebunden",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true"
+    },
+    "protocolMappers": [
+      {
+        "id": "67434193-8680-44b6-ab79-32f1713b2842",
+        "name": "User's authorities",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-authorities-mapper",
+        "consentRequired": false,
+        "config": {
+          "authorities": "authorities",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "0d8291f3-24f1-4b2c-a1d0-f1223e799255",
+        "name": "Username To Spring Security Username",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-property-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "username",
+          "id.token.claim": "true",
+          "access.token.claim": "true",
+          "claim.name": "user_name",
+          "jsonType.label": "String"
+        }
+      }
+    ]
+  },
+  {
+    "id": "93f7a5ba-bce5-4d8f-afa8-0980c761f1de",
+    "name": "authlevel",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    },
+    "protocolMappers": [
+      {
+        "id": "75ad8bb7-807f-4d98-98c3-2df5da41c7a9",
+        "name": "authlevel",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "user.attribute": "authlevel",
+          "id.token.claim": "true",
+          "access.token.claim": "true",
+          "claim.name": "authlevel",
+          "userinfo.token.claim": "true"
+        }
+      },
+      {
+        "id": "151371b2-0b25-4767-8150-ce69b1f2c81c",
+        "name": "elsterVertrauensniveauIdentifizierung",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "elsterVertrauensniveauIdentifizierung",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "vertrauensniveauIdentifizierung",
+          "jsonType.label": "String"
+        }
+      }
+    ]
+  },
+  {
+    "id": "9b22031c-b51e-4233-aa2b-2ef3415dbb12",
+    "name": "otherOptions",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "false",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "ec8d090c-4fa8-4a45-966a-d9eb4e4b2932",
+    "name": "organization",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true"
+    },
+    "protocolMappers": [
+      {
+        "id": "a2a13b82-dcf4-4337-9a85-5735b010b218",
+        "name": "taetigkeitText",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "taetigkeitText",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "taetigkeitText",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "42abdc99-7932-4fa7-b13d-4282ecf27a48",
+        "name": "namenszusatz",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "namenszusatz",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "namenszusatz",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "561b6f51-2ecf-4c93-8692-7f99160a53cb",
+        "name": "legalForm",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "legalForm",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "legalForm",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "f63d6b48-88f6-40c9-a8b7-4abc9b950d5c",
+        "name": "stNr",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "stNr",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "stNr",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "e686a0ed-4441-4d71-8ceb-547a4078475d",
+        "name": "persTyp",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "persTyp",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "persTyp",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "eb5bd60b-d376-4b47-8ca8-9a25fe773776",
+        "name": "umsatzsteuerId",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "umsatzsteuerId",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "umsatzsteuerId",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "1375e055-0dea-4a7d-8f21-e0ed52b37927",
+        "name": "taetigkeit",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "taetigkeit",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "taetigkeit",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "2de9085c-e106-4e2d-b831-a6559c2a81ce",
+        "name": "betriebsEndeDatum",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "betriebsEndeDatum",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "betriebsEndeDatum",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "d2a9da9c-2e18-4472-8195-33dd0e8fec6a",
+        "name": "registerart",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "registerart",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "registerart",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "3d565bc5-89d0-4be9-89f8-d282824cb73a",
+        "name": "organizationFax",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "organizationFax",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "organizationFax",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "bf9503b6-a517-45c2-962c-ea6da2eb157f",
+        "name": "organizationEmail",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "organizationEmail",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "organizationEmail",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "0aa3e0b2-eeb4-4493-8ccb-15b34d642685",
+        "name": "datenuebermittlerPseudonymId",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "datenuebermittlerPseudonymId",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "datenuebermittlerPseudonymId",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "3e9855af-180b-4fe1-b4a0-6f4b17802e9e",
+        "name": "registerNumber",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "registerNumber",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "registerNumber",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "a83d2600-01f8-4bf3-9a22-5f86d2779a61",
+        "name": "rechtsform",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "rechtsform",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "rechtsform",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "26830329-821c-493e-9d2c-5c7e510f39c2",
+        "name": "betriebsGruendungsDatum",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "betriebsGruendungsDatum",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "betriebsGruendungsDatum",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "7e65a2d4-795f-498a-937d-3630071876b0",
+        "name": "datenkranztyp",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "datenkranzTyp",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "datenkranzTyp",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "25d967ca-45f2-43bf-a6dd-cdc0b0063487",
+        "name": "representationPath",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "representationPath",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "representationPath",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "079d2578-4e61-48ee-9c65-453ce5d7b80c",
+        "name": "registergericht",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "registergericht",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "registergericht",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "7fd067a3-2b17-4eca-b51c-b1dbaaaac85d",
+        "name": "registernummer",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "registernummer",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "registernummer",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "a14bcdfe-df44-4f49-a156-6cc3b541208c",
+        "name": "organizationId",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "organizationId",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "organizationId",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "9db05f11-b55b-4cac-80e0-7e8f8692d0fc",
+        "name": "organizationTelefoneNumber",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "organizationTelefoneNumber",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "organizationTelefoneNumber",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "c90d0c03-580d-4941-8fec-6c3bda8ee7b9",
+        "name": "firmenname",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "firmenname",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "firmenname",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "7eed596b-78a4-494d-b6cd-9abb6f5469d3",
+        "name": "idNr",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "idNr",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "idNr",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "54072ed5-ecc0-410e-a81b-50c2890e4973",
+        "name": "rechtsformText",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "rechtsformText",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "rechtsformText",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "cbf64bb8-939a-4a5b-b358-b72bbabed083",
+        "name": "registerLocation",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "registerLocation",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "registerLocation",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "b597c6df-b9b5-4dbf-ad53-762055b6d9e5",
+        "name": "istTestkonto",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "istTestkonto",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "istTestkonto",
+          "jsonType.label": "String"
+        }
+      },
+      {
+        "id": "a2e79712-9911-4012-a320-71967314dd2c",
+        "name": "organizationName",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "organizationName",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "organizationName",
+          "jsonType.label": "String"
+        }
+      }
+    ]
+  },
+  {
+    "id": "7c2af6fc-c06d-42e5-88e5-aba29cbbb999",
+    "name": "BayernID_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "3bb2b17f-9cb3-49ad-aeb1-4fa1acd499d5",
+    "name": "profile_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true"
+    },
+    "protocolMappers": [
+      {
+        "id": "e26fd9ac-5025-48ce-9a3c-ad3bad30b208",
+        "name": "postOfficeBox",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "postOfficeBox",
+          "friendly.name": "postOfficeBox",
+          "attribute.name": "postOfficeBox"
+        }
+      },
+      {
+        "id": "b3a688bd-bd2d-4551-9006-8da9f2d2b024",
+        "name": "personalTitle",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "personalTitle",
+          "friendly.name": "personalTitle",
+          "attribute.name": "personalTitle"
+        }
+      },
+      {
+        "id": "dfcb5bf4-aabc-406d-ab21-19afa55808c4",
+        "name": "displayName",
+        "protocol": "saml",
+        "protocolMapper": "script-saml2-displayName.js",
+        "consentRequired": false,
+        "config": {
+          "single": "true",
+          "attribute.nameformat": "Unspecified",
+          "friendly.name": "displayName",
+          "attribute.name": "displayName"
+        }
+      },
+      {
+        "id": "f03fb0e5-f140-438d-9cec-9be0002b94a7",
+        "name": "bPK2",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "bPK2",
+          "friendly.name": "bPK2",
+          "attribute.name": "bPK2"
+        }
+      },
+      {
+        "id": "fb5e9eb7-723a-47d9-b9f5-b7861dcfc1f5",
+        "name": "username",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-property-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "username",
+          "friendly.name": "username",
+          "attribute.name": "username"
+        }
+      },
+      {
+        "id": "d5e4ffd9-bccd-4e15-8767-c20a5c2409b8",
+        "name": "AssertionProvedBy",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "AssertionProvedBy",
+          "friendly.name": "AssertionProvedBy",
+          "attribute.name": "AssertionProvedBy"
+        }
+      },
+      {
+        "id": "5be6cb4a-b3de-442e-bdbe-3fe95e6a320d",
+        "name": "bPK",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "bPK",
+          "friendly.name": "bPK",
+          "attribute.name": "bPK"
+        }
+      },
+      {
+        "id": "409362d2-dc0d-4c69-bb9f-14241182d89f",
+        "name": "gender",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "gender",
+          "friendly.name": "gender",
+          "attribute.name": "gender"
+        }
+      },
+      {
+        "id": "2f222e5a-9af0-4749-a5bd-beea667bc9b5",
+        "name": "artisticName",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "artisticName",
+          "friendly.name": "artisticName",
+          "attribute.name": "artisticName"
+        }
+      },
+      {
+        "id": "13a349d5-bb0f-43f8-9b11-27bd6b518668",
+        "name": "EIDAS-Issuing-Country",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "EIDAS-Issuing-Country",
+          "friendly.name": "EIDAS-Issuing-Country",
+          "attribute.name": "EIDAS-Issuing-Country"
+        }
+      },
+      {
+        "id": "fee1a10e-63c4-483e-834b-6772ea804b4c",
+        "name": "firstName",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-property-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "firstName",
+          "friendly.name": "givenName",
+          "attribute.name": "givenName"
+        }
+      },
+      {
+        "id": "ca581445-aca4-4298-a2f8-439b8d20d4e1",
+        "name": "accountSource",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "accountSource",
+          "friendly.name": "accountSource",
+          "attribute.name": "accountSource"
+        }
+      },
+      {
+        "id": "a68e2330-e09f-4d07-8bef-d8aa17144de8",
+        "name": "ukHandle",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "ukHandle",
+          "friendly.name": "ukHandle",
+          "attribute.name": "ukHandle"
+        }
+      },
+      {
+        "id": "608738d5-53d4-40e6-a559-af69bfe93bc0",
+        "name": "Version",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "Version",
+          "friendly.name": "Version",
+          "attribute.name": "Version"
+        }
+      },
+      {
+        "id": "babbbc18-404f-404f-88c9-009486fe804d",
+        "name": "legacyPostkorbHandle",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "legacyPostkorbHandle",
+          "friendly.name": "legacyPostkorbHandle",
+          "attribute.name": "legacyPostkorbHandle"
+        }
+      },
+      {
+        "id": "acc4bb6f-7f6e-4647-9611-f5266c3de7d3",
+        "name": "lastName",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-property-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "lastName",
+          "friendly.name": "surname",
+          "attribute.name": "surname"
+        }
+      }
+    ]
+  },
+  {
+    "id": "860cdaff-bd45-4265-9469-5a0253cd24d7",
+    "name": "level2",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "1c2e3e73-89e5-4f6f-bed4-c19ae8468cdf",
+    "name": "phone_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true"
+    },
+    "protocolMappers": [
+      {
+        "id": "49c099cf-469c-4aef-97dd-e9ce99c19942",
+        "name": "telephoneNumber",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "telephoneNumber",
+          "friendly.name": "telephoneNumber",
+          "attribute.name": "telephoneNumber"
+        }
+      },
+      {
+        "id": "d49671e6-3537-4c87-8cae-ce1205aecc4a",
+        "name": "deMail",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "deMail",
+          "friendly.name": "deMail",
+          "attribute.name": "deMail"
+        }
+      },
+      {
+        "id": "bdc80d98-4292-4e1a-a90e-cc487c3d8fe2",
+        "name": "organizationTelefoneNumber",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "organizationTelefoneNumber",
+          "friendly.name": "organizationTelefoneNumber",
+          "attribute.name": "organizationTelefoneNumber"
+        }
+      },
+      {
+        "id": "fc1a9981-e2ad-49b8-8676-98d2f9de9c9a",
+        "name": "organizationFax",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "organizationFax",
+          "friendly.name": "organizationFax",
+          "attribute.name": "organizationFax"
+        }
+      }
+    ]
+  },
+  {
+    "id": "46636fce-ed66-49db-bb60-4fd39f84aed9",
+    "name": "authlevel_legacy",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    },
+    "protocolMappers": [
+      {
+        "id": "458c0080-c47d-4823-bd12-9b85dd25180c",
+        "name": "authlevel_legacy",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "user.attribute": "authlevel_legacy",
+          "id.token.claim": "true",
+          "access.token.claim": "true",
+          "claim.name": "authlevel",
+          "userinfo.token.claim": "true"
+        }
+      }
+    ]
+  },
+  {
+    "id": "a4978ea8-75a2-42df-83e0-b330efc23cb1",
+    "name": "level1",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    }
+  },
+  {
+    "id": "3d54e03f-5f8b-4765-a025-684a540ba904",
+    "name": "birthdate",
+    "description": "enthält das Attribut birthdate",
+    "protocol": "openid-connect",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "false"
+    },
+    "protocolMappers": [
+      {
+        "id": "de4d934a-7895-423c-ad85-da3a8ccca150",
+        "name": "birthdate",
+        "protocol": "openid-connect",
+        "protocolMapper": "oidc-usermodel-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "userinfo.token.claim": "true",
+          "user.attribute": "birthdate",
+          "id.token.claim": "true",
+          "access.token.claim": "false",
+          "claim.name": "birthdate",
+          "jsonType.label": "String"
+        }
+      }
+    ]
+  },
+  {
+    "id": "0241680f-62f0-401a-8865-3566b541ba0a",
+    "name": "birthdate_saml",
+    "protocol": "saml",
+    "attributes": {
+      "include.in.token.scope": "true",
+      "display.on.consent.screen": "true"
+    },
+    "protocolMappers": [
+      {
+        "id": "0094fb8d-71a2-4137-9cf0-16eefc32181b",
+        "name": "birthdate",
+        "protocol": "saml",
+        "protocolMapper": "saml-user-attribute-mapper",
+        "consentRequired": false,
+        "config": {
+          "attribute.nameformat": "Unspecified",
+          "user.attribute": "birthdate",
+          "friendly.name": "birthdate",
+          "attribute.name": "birthdate"
+        }
+      }
+    ]
+  }
+]

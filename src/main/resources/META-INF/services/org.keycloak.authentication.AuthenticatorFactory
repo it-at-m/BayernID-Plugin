@@ -1,0 +1,4 @@
+de.muenchen.keycloak.custom.authentication.authenticators.RequireEffectiveScopesAuthenticatorFactory
+de.muenchen.keycloak.custom.authentication.authenticators.afterbroker.RequireAttributeAuthenticatorFactory
+de.muenchen.keycloak.custom.authentication.authenticators.conditional.CustomConditionalRoleAuthenticatorFactory
+de.muenchen.keycloak.custom.authentication.authenticators.browser.CustomIdentityProviderAuthenticatorFactory

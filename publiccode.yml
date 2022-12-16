@@ -19,9 +19,10 @@ description:
       https://gitlab.opencode.de/landeshauptstadt-muenchen/bayernid-plugin/-/blob/main/README.md
     features:
       - Anbindung Bürgerkonto
-      - Anbindung Organisationskonto
       - Explizite Anforderung eines Mindest-Vertrauensniveaus
-      - Explizite Anforderung des Organsationskonto-Logins
+      - Explizite Anforderung der zusätzlichen Authentifizierungsmethoden der BayernID (z.B. FINK)
+      - Explizite Anforderung von Einzelattributen oder Gruppierungen von Attributen per Scopes (sowohl für OIDC als auch für SAML2)
+      - Erweiterung des SSO-Mechanismus zur Berücksichtigung des Mindest-Vertrauensniveaus und der angeforderten Attribute
       - Spezifische Datenmapper
     genericName: Keycloak/RH-SSO-Plugin
     longDescription: |
@@ -31,10 +32,11 @@ description:
       Verwaltungsdienste einsetzen können. Sie dient dazu, sich online eindeutig
       zu identifizieren und bietet verschiedene Authentifizierungsstufen
       (schwache Authentifizierung per Benutzername und Passwort, substantielle
-      Authentifizierung per Authega oder hohe Authentifizierung per eID/nPA).
+      Authentifizierung per ELSTER oder hohe Authentifizierung per eID/nPA).
+      Zudem werden Weiterleitungen zu anderen Länderkonten und dem Nutzerkonto Bund angeboten.
 
 
-      Die Integration mit Fachverfahren erfolgt per SAML2-Protokoll.
+      Die direkt Integration der BayernID mit Fachverfahren erfolgt per SAML2-Protokoll.
 
 
       Da eine direkte Integration jedes Fachverfahrens-Servers aufgrund
@@ -47,25 +49,23 @@ description:
       als auch SAML2 als Protkoll zur Verfügung stehen.
 
 
-      Die Anbindung eines Keycloak/RH-SSO an die BayernID funktioniert aber
-      nicht out-of-the-box, da der Keycloak/RH-SSO die Einstellung
-      nameID=transient nicht unterstützt. Außerdem muss für die Anforderung
-      eines Mindest-Vertrauensniveaus oder auch für die Anforderung des Logins
-      per Organisationskonto in den SAML2-Request eingegriffen werden, was nativ
+      Die Anbindung eines Keycloak/RH-SSO an die BayernID unterstützt aber nicht
+      alle benötigen Funktionalitäten der BayernID. Bspw.  muss für die Anforderung
+      eines Mindest-Vertrauensniveaus oder auch für die Anforderung expliziter Attribute
+      in den SAML2-Request eingegriffen werden, was nativ
       vom Keycloak/RH-SSO nicht unterstützt wird.
 
 
       Aus diesem Grund wurde von der Landeshauptstadt München ein Plugin
       entwickelt, das eine entsprechende Erweiterung des Keycloak/RH-SSO
       bewirkt. Damit ist es für die angebundenen Fachverfahren möglich, ein
-      gewünschtes Mindest-Vertrauensniveau oder den Login per Organisationskonto
+      gewünschtes Mindest-Vertrauensniveau oder spezifische Attribute (per Scopes oder einzeln)
       explizit anzufordern - sowohl per OIDC als auch per SAML2. Außerdem
       ermöglicht das Plugin, dass Userdatensätze eindeutig auf den gleichen
       Datensatz im Keycloak/RH-SSO zu mappen, so dass dort bspw. auch eine
       Autorisierung angewendet werden kann.
     shortDescription: |-
-      Plugin für Keycloak/RH-SSO zur Anbindung der BayernID (Bürgerkonto und
-      Organisationskonto).
+      Plugin für Keycloak/RH-SSO zur Anbindung der BayernID.
 developmentStatus: stable
 intendedAudience:
   countries:
@@ -86,9 +86,9 @@ maintenance:
 name: bayernID-Plugin für Keycloak/RH-SSO
 platforms:
   - web
-releaseDate: '2022-05-23'
+releaseDate: '2022-12-16'
 softwareType: standalone/desktop
-softwareVersion: 0.1.7
+softwareVersion: 1.0.0
 url: 'https://gitlab.opencode.de/landeshauptstadt-muenchen/bayernid-plugin.git'
 usedBy:
   - Landeshauptstadt München

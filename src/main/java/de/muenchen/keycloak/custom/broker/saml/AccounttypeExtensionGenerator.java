@@ -16,9 +16,9 @@ import org.keycloak.saml.common.util.StaxUtil;
  */
 public class AccounttypeExtensionGenerator implements SamlProtocolExtensionsAwareBuilder.NodeGenerator {
 
-    public static final String NS_URI = "https://www.bayern.id/request/2018/09";
+    public static final String NS_URI = "https://www.akdb.de/request/2018/09";
 
-    public static final String NS_PREFIX = "bayernid";
+    public static final String NS_PREFIX = "akdb";
 
     public static final String KC_KEY_INFO_ELEMENT_NAME = "RequestedAttributeSet";
 

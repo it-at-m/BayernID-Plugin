@@ -4,9 +4,16 @@
     <description>Plugin zur Anbindung der BayernID (Bürgerkonto sowie Organisationskonto) an Keycloak / RH-SSO.</description>
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>de.muenchen</groupId>
+        <artifactId>muenchen-pom</artifactId>
+        <version>2.1.0</version>
+    </parent>
+
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
+        <!--        <keycloak.version>9.0.3</keycloak.version>-->
         <keycloak.version>15.0.2</keycloak.version>
         <jboss-logging.version>3.3.1.Final</jboss-logging.version>
         <!-- Plugins -->
@@ -16,14 +23,15 @@
     </properties>
 
     <scm>
-        <connection>${scmurl}</connection>
-        <developerConnection>${scmurl}</developerConnection>
-    <tag>HEAD</tag>
-  </scm>
+        <connection>scm:git:https://git.muenchen.de/ccse/rh-sso-plugins/bayernid-plugin/public.git</connection>
+        <developerConnection>scm:git:https://git.muenchen.de/ccse/rh-sso-plugins/bayernid-plugin/public.git</developerConnection>
+        <tag>bayernid-plugin-0.0.0</tag>
+    </scm>
+
 
     <artifactId>bayernid-plugin</artifactId>
     <groupId>de.muenchen.keycloak</groupId>
-    <version>0.1.11-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -71,6 +79,11 @@
 
     <build>
         <plugins>
+            <!-- Wird für den Release-Build benötigt -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-plugin</artifactId>
