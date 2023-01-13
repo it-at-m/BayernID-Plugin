@@ -4,12 +4,6 @@
     <description>Plugin zur Anbindung der BayernID (Bürgerkonto sowie Organisationskonto) an Keycloak / RH-SSO.</description>
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>de.muenchen</groupId>
-        <artifactId>muenchen-pom</artifactId>
-        <version>2.1.0</version>
-    </parent>
-
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -17,7 +11,6 @@
         <keycloak.version>15.0.2</keycloak.version>
         <jboss-logging.version>3.3.1.Final</jboss-logging.version>
         <!-- Plugins -->
-        <mvn.compiler.plugin.version>3.8.0</mvn.compiler.plugin.version>
         <wildfly.version>2.0.0.Final</wildfly.version>
         <scm.plugin.version>1.11.2</scm.plugin.version>
     </properties>
@@ -25,7 +18,6 @@
     <scm>
         <connection>scm:git:https://git.muenchen.de/ccse/rh-sso-plugins/bayernid-plugin/public.git</connection>
         <developerConnection>scm:git:https://git.muenchen.de/ccse/rh-sso-plugins/bayernid-plugin/public.git</developerConnection>
-        <tag>bayernid-plugin-0.0.0</tag>
     </scm>
 
 
@@ -98,15 +90,6 @@
                 <version>${wildfly.version}</version>
                 <configuration>
                     <skip>false</skip>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${mvn.compiler.plugin.version}</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
         </plugins>

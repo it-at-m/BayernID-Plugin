@@ -1,587 +1,504 @@
 [
   {
-    "id": "e9be42c8-3edc-4d22-8dac-b66da0610c88",
-    "name": "Unternehmensanschrift.Adressergaenzung",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "unternehmensanschriftAdressergaenzung",
-      "attribute.name": "Unternehmensanschrift.Adressergaenzung"
-    }
-  },
-  {
-    "id": "6917f669-c6d5-4193-bf12-135bc47dc853",
-    "name": "Geburtsname",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "birthName",
-      "attribute.name": "Geburtsname"
-    }
-  },
-  {
-    "id": "97c724df-5c9b-4569-a750-2bf136d68771",
-    "name": "Registergericht",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "registergericht",
-      "attribute.name": "Registergericht"
-    }
-  },
-  {
-    "id": "2164c535-ebd5-4116-a07b-eaf6403aa1e6",
-    "name": "Firmenname",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "firmenname",
-      "attribute.name": "Firmenname"
-    }
-  },
-  {
-    "id": "27fd9365-5163-4af5-ba62-5946abda12e5",
-    "name": "Anschrift.Land",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "country",
-      "attribute.name": "Anschrift.Land"
-    }
-  },
-  {
-    "id": "f6630aea-f91d-4ade-a2a9-1f9c6a39fdde",
-    "name": "umsatzsteuerId",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "umsatzsteuerId",
-      "attribute.name": "umsatzsteuerId"
-    }
-  },
-  {
-    "id": "55e8791c-fd27-4250-8f1b-5b86a0129638",
-    "name": "Taetigkeit",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "taetigkeit",
-      "attribute.name": "Taetigkeit"
-    }
-  },
-  {
-    "id": "7d4d3c99-cf07-4914-ae81-5f774f7d5391",
-    "name": "PersTyp",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "persTyp",
-      "attribute.name": "PersTyp"
-    }
-  },
-  {
-    "id": "faff56a2-f151-480e-a202-d874e941f4d5",
-    "name": "TaetigkeitText",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "taetigkeitText",
-      "attribute.name": "TaetigkeitText"
-    }
-  },
-  {
-    "id": "50c50354-60d8-4229-b8a4-37941bfa10ba",
-    "name": "StNr",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "stNr",
-      "attribute.name": "StNr"
-    }
-  },
-  {
-    "id": "5ea416ce-b6a3-40fd-9f67-ea962d7cf65c",
-    "name": "Unternehmensanschrift.Ortsteil",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "unternehmensanschriftOrtsteil",
-      "attribute.name": "Unternehmensanschrift.Ortsteil"
-    }
-  },
-  {
-    "id": "26a7c437-75cc-4420-8c39-c5f9243af8c4",
-    "name": "Rechtsform",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "rechtsform",
-      "attribute.name": "Rechtsform"
-    }
-  },
-  {
-    "id": "934ba66e-1347-4159-9e68-48dabd348a20",
-    "name": "Unternehmensanschrift",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "unternehmensanschrift",
-      "attribute.name": "Unternehmensanschrift"
-    }
-  },
-  {
-    "id": "c5ccddf5-d500-442b-9715-7e0b0e618bc6",
-    "name": "Anschrift.Strasse",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "postalAddress",
-      "attribute.name": "Anschrift.Strasse"
-    }
-  },
-  {
-    "id": "c5a98260-000d-4ab7-9396-40f9b6111809",
-    "name": "Geburtsort",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "placeOfBirth",
-      "attribute.name": "Geburtsort"
-    }
-  },
-  {
-    "id": "63d089ca-83cf-40af-96b4-e27c74583ecd",
-    "name": "IdNr",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "idNr",
-      "attribute.name": "IdNr"
-    }
-  },
-  {
-    "id": "bc7f4864-d5ee-4c95-8d96-4dbdef2ea641",
-    "name": "Geburtsland",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "geburtsland",
-      "attribute.name": "Geburtsland"
-    }
-  },
-  {
-    "id": "cab7e41f-3792-449a-b975-87cd454ee74f",
-    "name": "Datenkranztyp",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "datenkranzTyp",
-      "attribute.name": "DatenkranzTyp"
-    }
-  },
-  {
-    "id": "a523de84-ffbe-4f23-a535-e9f7463fc8de",
-    "name": "AkademischerGrad",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
+    "id": "b2ede423-3bbc-49dd-90b5-7acb03e78b64",
+    "name": "personalTitle",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
     "config": {
       "syncMode": "INHERIT",
       "user.attribute": "personalTitle",
-      "attribute.name": "AkademischerGrad"
+      "attribute.friendly.name": "personalTitle",
+      "attribute.scope": "profile",
+      "attribute.name": "urn:oid:0.9.2342.19200300.100.1.40"
     }
   },
   {
-    "id": "5f7df2f7-3931-4487-979b-ea2e7e91611f",
-    "name": "RechtsformText",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
+    "id": "c1cbd1ec-261e-4342-9522-6589ab34b3e4",
+    "name": "artisticName",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
     "config": {
       "syncMode": "INHERIT",
-      "user.attribute": "rechtsformText",
-      "attribute.name": "RechtsformText"
+      "user.attribute": "artisticName",
+      "attribute.friendly.name": "artisticName",
+      "attribute.scope": "profile",
+      "attribute.name": "urn:oid:1.2.40.0.10.2.1.1.552233"
     }
   },
   {
-    "id": "62fe57ed-dc20-49a3-9ddb-c98a5adf54c4",
-    "name": "ElsterVertrauensniveauAuthentifizierung_gemappt",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "custom-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "authlevel",
-      "Mapping": "[{\"key\":\"substanziell\",\"value\":\"level3\"},{\"key\":\"hoch\",\"value\":\"level4\"}]",
-      "attribute.name": "ElsterVertrauensniveauAuthentifizierung"
-    }
-  },
-  {
-    "id": "1efbd80d-102e-4d10-82d1-bb935bc3ecb9",
-    "name": "Unternehmensanschrift.Strasse",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "unternehmensanschriftStrasse",
-      "attribute.name": "Unternehmensanschrift.Strasse"
-    }
-  },
-  {
-    "id": "d774c286-1b83-47b1-8816-f71e0b147b35",
-    "name": "betriebsEndeDatum",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "betriebsEndeDatum",
-      "attribute.name": "betriebsEndeDatum"
-    }
-  },
-  {
-    "id": "75a2eda7-f750-490c-967f-6ee64a4266bd",
-    "name": "Registerart",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "registerart",
-      "attribute.name": "Registerart"
-    }
-  },
-  {
-    "id": "094c0545-e1f3-434e-8c7a-04f038c4ecca",
-    "name": "ElsterVertrauensniveauAuthentifizierung->authlevel_original",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "authlevel_original",
-      "attribute.name": "ElsterVertrauensniveauAuthentifizierung"
-    }
-  },
-  {
-    "id": "1a73b363-7565-4b68-b762-c283a4c0b4a8",
-    "name": "Registernummer",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "registernummer",
-      "attribute.name": "Registernummer"
-    }
-  },
-  {
-    "id": "18c7b347-6a6b-4f2d-89a2-6d0836d8bc25",
-    "name": "DatenuebermittlerPseudonymId",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "datenuebermittlerPseudonymId",
-      "attribute.name": "DatenuebermittlerPseudonymId"
-    }
-  },
-  {
-    "id": "269c3f07-9500-4533-bae0-884632f6951e",
-    "name": "Vorname",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "firstName",
-      "attribute.name": "Vorname"
-    }
-  },
-  {
-    "id": "422e18b3-0a45-4903-aaef-232e60844544",
-    "name": "Anschrift",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "anschrift",
-      "attribute.name": "Anschrift"
-    }
-  },
-  {
-    "id": "24dae134-8ce5-4af0-9441-9a662419d0cb",
-    "name": "Anschrift.Adressergaenzung",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "anschriftAdressergaenzung",
-      "attribute.name": "Anschrift.Adressergaenzung"
-    }
-  },
-  {
-    "id": "b7332ec3-fc71-45f9-bb8c-d9be0af00617",
-    "name": "ElsterVertrauensniveauAuthentifizierung",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "custom-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "authlevel_legacy",
-      "Mapping": "[{\"key\":\"substanziell\",\"value\":\"STORK-QAA-Level-3\"},{\"key\":\"hoch\",\"value\":\"STORK-QAA-Level-4\"}]",
-      "attribute.name": "ElsterVertrauensniveauAuthentifizierung"
-    }
-  },
-  {
-    "id": "5d868f14-b8de-418a-812f-099e59f07829",
-    "name": "Unternehmensanschrift.Typ",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "unternehmensanschriftTyp",
-      "attribute.name": "Unternehmensanschrift.Typ"
-    }
-  },
-  {
-    "id": "036ecde9-8dd1-458c-9758-82573c172ab2",
-    "name": "ElsterVertrauensniveauIdentifizierung",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "vertrauensniveauIdentifizierung",
-      "attribute.name": "ElsterVertrauensniveauIdentifizierung"
-    }
-  },
-  {
-    "id": "a9a3b638-8d5e-4322-9678-33074e10d0e3",
-    "name": "Anschrift.PLZ",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "postalCode",
-      "attribute.name": "Anschrift.PLZ"
-    }
-  },
-  {
-    "id": "64521989-e0fd-41d4-a17d-249d0c35b830",
-    "name": "Anschrift.Hausnummer",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "anschriftHausnummer",
-      "attribute.name": "Anschrift.Hausnummer"
-    }
-  },
-  {
-    "id": "a1ce1579-764a-42b3-86de-ea9e56961ef1",
-    "name": "Unternehmensanschrift.Hausnummer->houseNumber",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
+    "id": "5039f6bc-6e41-473b-a335-c99ff2f4cfc3",
+    "name": "houseNumber",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
     "config": {
       "syncMode": "INHERIT",
       "user.attribute": "houseNumber",
-      "attribute.name": "Unternehmensanschrift.Hausnummer"
+      "attribute.friendly.name": "houseNumber",
+      "attribute.scope": "companyaddress",
+      "attribute.name": "urn:oid:2.5.4.9"
     }
   },
   {
-    "id": "6f31c64c-3607-4e85-9d85-0e504bee1f6d",
-    "name": "Anschrift.Ort",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
+    "id": "34f8b604-ec55-41d9-b00d-4098215779b6",
+    "name": "placeOfBirth",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "placeOfBirth",
+      "attribute.friendly.name": "placeOfBirth",
+      "attribute.scope": "birth",
+      "attribute.name": "urn:oid:1.3.6.1.5.5.7.9.2"
+    }
+  },
+  {
+    "id": "9343ed5f-a58b-4396-b2a5-82851bc99886",
+    "name": "country",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "country",
+      "attribute.friendly.name": "country",
+      "attribute.scope": "address",
+      "attribute.name": "urn:oid:1.2.40.0.10.2.1.1.225599"
+    }
+  },
+  {
+    "id": "17cf00a2-5c54-4ed3-92ad-11f946223692",
+    "name": "localityName",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
     "config": {
       "syncMode": "INHERIT",
       "user.attribute": "localityName",
-      "attribute.name": "Anschrift.Ort"
+      "attribute.friendly.name": "localityName",
+      "attribute.scope": "address",
+      "attribute.name": "urn:oid:2.5.4.7"
     }
   },
   {
-    "id": "6eb9c198-3954-4b1c-925e-235573943972",
-    "name": "Unternehmensanschrift.PLZ",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
+    "id": "8ba92529-282a-4b56-8bb3-5910f0ca09e7",
+    "name": "nationality",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
     "config": {
       "syncMode": "INHERIT",
-      "user.attribute": "unternehmensanschriftPLZ",
-      "attribute.name": "Unternehmensanschrift.PLZ"
+      "user.attribute": "nationality",
+      "attribute.friendly.name": "nationality",
+      "attribute.scope": "birth",
+      "attribute.name": "urn:oid:1.2.40.0.10.2.1.1.225577"
     }
   },
   {
-    "id": "13789fd0-a663-47c6-b73a-b5412769f5a8",
-    "name": "IstTestkonto",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
+    "id": "ba034d4a-3b67-4728-8d24-9bfe7f07096e",
+    "name": "registerLocation",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
     "config": {
       "syncMode": "INHERIT",
-      "user.attribute": "istTestkonto",
-      "attribute.name": "IstTestkonto"
+      "user.attribute": "registerLocation",
+      "attribute.friendly.name": "registerLocation",
+      "attribute.scope": "organization",
+      "attribute.name": "urn:oid:akdb:registerLocation"
     }
   },
   {
-    "id": "fd5bc820-3eb6-4de8-83b6-ca94eca4d8e8",
-    "name": "betriebsGruendungsDatum",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
+    "id": "112304cf-e501-431a-a6fa-a1bb14ec469c",
+    "name": "postOfficeBox",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
     "config": {
       "syncMode": "INHERIT",
-      "user.attribute": "betriebsGruendungsDatum",
-      "attribute.name": "betriebsGruendungsDatum"
+      "user.attribute": "postOfficeBox",
+      "attribute.friendly.name": "postOfficeBox",
+      "attribute.scope": "organization",
+      "attribute.name": "urn:oid:2.5.4.18"
     }
   },
   {
-    "id": "74682f4a-9fc6-4e49-ac7b-8907ec14d87c",
+    "id": "7b4b9efa-ea06-451e-9137-32ab68dcae12",
+    "name": "AssertionProvedBy",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "AssertionProvedBy",
+      "attribute.friendly.name": "AssertionProvedBy",
+      "attribute.scope": "profile",
+      "attribute.name": "urn:oid:1.3.6.1.4.1.25484.494450.2"
+    }
+  },
+  {
+    "id": "e75f5607-1f81-4cdc-a0fe-44599b321919",
+    "name": "eIDAS-Issuing-Country",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "eIDAS-Issuing-Country",
+      "attribute.friendly.name": "eIDAS-Issuing-Country",
+      "attribute.scope": "profile",
+      "attribute.name": "urn:oid:1.3.6.1.4.1.25484.494450.10.1"
+    }
+  },
+  {
+    "id": "aa521d69-6412-48c6-90e3-f799b433cdda",
+    "name": "DeMail",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "DeMail",
+      "attribute.friendly.name": "DeMail",
+      "attribute.scope": "email",
+      "attribute.name": "urn:oid:1.3.6.1.4.1.55605.70737875.1.1.1.7.1"
+    }
+  },
+  {
+    "id": "aaef0556-e401-4792-a4e4-527499842d96",
+    "name": "legacyPostkorbHandle",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "legacyPostkorbHandle",
+      "attribute.friendly.name": "legacyPostkorbHandle",
+      "attribute.scope": "profile",
+      "attribute.name": "urn:oid:2.5.4.18"
+    }
+  },
+  {
+    "id": "cff76bb8-9a3c-47d1-a96f-b583b1e6a5de",
+    "name": "organizationName",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "organizationName",
+      "attribute.friendly.name": "organizationName",
+      "attribute.scope": "organization",
+      "attribute.name": "urn:oid:2.5.4.10"
+    }
+  },
+  {
+    "id": "8e449702-9ee0-4265-93c8-865117d43cf3",
+    "name": "givenName",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "firstName",
+      "attribute.friendly.name": "givenName",
+      "attribute.scope": "profile",
+      "attribute.name": "urn:oid:2.5.4.42"
+    }
+  },
+  {
+    "id": "10586f00-9125-4ac4-a904-0cab683f9da8",
     "name": "accountSource",
-    "identityProviderAlias": "nezo",
+    "identityProviderAlias": "buergerkonto",
     "identityProviderMapper": "hardcoded-attribute-idp-mapper",
     "config": {
-      "attribute.value": "ELSTER_NEZO",
+      "attribute.value": "BayernID",
       "syncMode": "INHERIT",
       "attribute": "accountSource"
     }
   },
   {
-    "id": "596240dc-ecf5-45d4-aff3-7947fd69a856",
-    "name": "Name",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "lastName",
-      "attribute.name": "Name"
-    }
-  },
-  {
-    "id": "47dedbfb-4321-4b4c-9d45-d36909485259",
-    "name": "Unternehmensanschrift.Ort",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "unternehmensanschriftOrt",
-      "attribute.name": "Unternehmensanschrift.Ort"
-    }
-  },
-  {
-    "id": "5a5f4621-a86e-4e66-84de-1f37078546d1",
-    "name": "Anschrift.Ortsteil",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "anschriftOrtsteil",
-      "attribute.name": "Anschrift.Ortsteil"
-    }
-  },
-  {
-    "id": "da3e6c2d-f484-41f9-8467-e81f74fb3b50",
-    "name": "Unternehmensanschrift.Hausnummer",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "unternehmensanschriftHausnummer",
-      "attribute.name": "Unternehmensanschrift.Hausnummer"
-    }
-  },
-  {
-    "id": "0209e6ac-7a40-4f7d-be15-a24794174d27",
-    "name": "firmenname->organizationName",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "organizationName",
-      "attribute.name": "Firmenname"
-    }
-  },
-  {
-    "id": "87ff3be6-a7e9-4ca6-9b0f-3637f9cd33ad",
-    "name": "Registergericht->registerLocation",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "registerLocation",
-      "attribute.name": "Registergericht"
-    }
-  },
-  {
-    "id": "bf7b3f8d-089d-4362-a964-6149b6432361",
-    "name": "Registernummer->registerNumber",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "registerNumber",
-      "attribute.name": "Registernummer"
-    }
-  },
-  {
-    "id": "676a1a62-92c3-4d00-bfcf-a8aca0d414b3",
-    "name": "Unternehmensanschrift.Land",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "unternehmensanschriftLand",
-      "attribute.name": "Unternehmensanschrift.Land"
-    }
-  },
-  {
-    "id": "5ed18bae-b5fc-4713-9c4f-68ed38697d9a",
-    "name": "Geburtsdatum",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
-    "config": {
-      "syncMode": "INHERIT",
-      "user.attribute": "birthdate",
-      "attribute.name": "Geburtsdatum"
-    }
-  },
-  {
-    "id": "240a3651-9123-4feb-8ddd-ac8b8f48b2b2",
-    "name": "Unternehmensanschrift.Adressergaenzung->adresszusatz",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
+    "id": "870142e7-e070-4767-9db1-5c19f48ee6cf",
+    "name": "adresszusatz",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
     "config": {
       "syncMode": "INHERIT",
       "user.attribute": "adresszusatz",
-      "attribute.name": "Unternehmensanschrift.Adressergaenzung"
+      "attribute.friendly.name": "adresszusatz",
+      "attribute.scope": "companyaddress",
+      "attribute.name": "urn:oid:akdb:adresszusatz"
     }
   },
   {
-    "id": "4ebccd47-4d78-48fe-9a64-2d3e36a1af19",
-    "name": "RechtsformText->legalForm",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
+    "id": "e7ca8156-35d4-457b-b0c7-2560621bf1b1",
+    "name": "bPK",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "bPK",
+      "attribute.friendly.name": "bPK",
+      "attribute.scope": "profile",
+      "attribute.name": "urn:oid:1.2.40.0.10.2.1.1.149"
+    }
+  },
+  {
+    "id": "f4f48a71-1a12-4bfc-9515-dbac33ecd9ab",
+    "name": "gender",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "gender",
+      "attribute.friendly.name": "gender",
+      "attribute.scope": "profile",
+      "attribute.name": "urn:oid:1.3.6.1.4.1.33592.1.3.5"
+    }
+  },
+  {
+    "id": "420ce356-4ef4-4ce4-a827-ba03abbc4e2e",
+    "name": "telephoneNumber",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "telephoneNumber",
+      "attribute.friendly.name": "telephoneNumber",
+      "attribute.scope": "phone",
+      "attribute.name": "urn:oid:2.5.4.20"
+    }
+  },
+  {
+    "id": "d2551c34-d1c1-4272-99f7-481c9a08b58b",
+    "name": "birthName",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "birthName",
+      "attribute.friendly.name": "birthName",
+      "attribute.scope": "birth",
+      "attribute.name": "urn:oid:1.2.40.0.10.2.1.1.225566"
+    }
+  },
+  {
+    "id": "dcca5a31-d08e-4d12-ae08-531b739ac963",
+    "name": "Version",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "Version",
+      "attribute.friendly.name": "Version",
+      "attribute.scope": "profile",
+      "attribute.name": "urn:oid:1.3.6.1.4.1.25484.494450.1"
+    }
+  },
+  {
+    "id": "37c58057-a9a9-44b8-86a5-3bc933958257",
+    "name": "mail",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "email",
+      "attribute.friendly.name": "mail",
+      "attribute.scope": "email",
+      "attribute.name": "urn:oid:0.9.2342.19200300.100.1.3"
+    }
+  },
+  {
+    "id": "c8afb16f-eb37-47e7-8e3d-0852a89d9b4d",
+    "name": "registerNumber",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "registerNumber",
+      "attribute.friendly.name": "registerNumber",
+      "attribute.scope": "organization",
+      "attribute.name": "urn:oid:akdb:registerNumber"
+    }
+  },
+  {
+    "id": "4e696b51-ef9d-4b89-8b90-4d5b3c8c6578",
+    "name": "ID",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-custom-id-idp-mapper",
+    "config": {
+      "template": "${ATTRIBUTE.bPK}${ATTRIBUTE.organizationId}",
+      "syncMode": "INHERIT"
+    }
+  },
+  {
+    "id": "9e49d620-032a-42ef-844d-9aa0c5e8b94e",
+    "name": "postalAddress",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "postalAddress",
+      "attribute.friendly.name": "postalAddress",
+      "attribute.scope": "address",
+      "attribute.name": "urn:oid:2.5.4.16"
+    }
+  },
+  {
+    "id": "ca22c5db-9c2d-4532-93c6-47117a2fb5e9",
+    "name": "authlevel",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "custom-saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "authlevel",
+      "Mapping": "[{\"key\":\"STORK-QAA-Level-1\",\"value\":\"level1\"},{\"key\":\"STORK-QAA-Level-2\",\"value\":\"level2\"},{\"key\":\"STORK-QAA-Level-3\",\"value\":\"level3\"},{\"key\":\"STORK-QAA-Level-4\",\"value\":\"level4\"}]",
+      "attribute.friendly.name": "EID-CITIZEN-QAA-LEVEL",
+      "attribute.scope": "authlevel",
+      "attribute.name": "urn:oid:1.2.40.0.10.2.1.1.261.94"
+    }
+  },
+  {
+    "id": "2e8c5542-f69a-4de3-87a6-996f199d731b",
+    "name": "ukHandle",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "ukHandle",
+      "attribute.friendly.name": "ukHandle",
+      "attribute.scope": "organization",
+      "attribute.name": "urn:oid:akdb:ukHandle"
+    }
+  },
+  {
+    "id": "cd62a34d-b9a0-4a90-a68d-1fcfde061e07",
+    "name": "OrganisationsspezifischesKennzeichen",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "OrganisationsspezifischesKennzeichen",
+      "attributes": "[]",
+      "attribute.friendly.name": "OrganisationsspezifischesKennzeichen",
+      "attribute.scope": "organization",
+      "attribute.name": "urn:oid:1.3.6.1.4.1.25484.494450.12.1"
+    }
+  },
+  {
+    "id": "7f961263-9d28-42ae-9f72-bab413ab1395",
+    "name": "hausnummerzusatz",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "hausnummerzusatz",
+      "attribute.friendly.name": "hausnummerzusatz",
+      "attribute.scope": "address",
+      "attribute.name": "urn:oid:akdb:hausnummerzusatz"
+    }
+  },
+  {
+    "id": "7ea8df65-a7f5-4734-ae8f-f9c102b0a544",
+    "name": "organizationId",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "organizationId",
+      "attribute.friendly.name": "organizationId",
+      "attribute.scope": "organization",
+      "attribute.name": "urn:oid:2.5.4.11"
+    }
+  },
+  {
+    "id": "5f44f733-f4f3-4d75-b721-e8601027a757",
+    "name": "surname",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "lastName",
+      "attribute.friendly.name": "surname",
+      "attribute.scope": "profile",
+      "attribute.name": "urn:oid:2.5.4.4"
+    }
+  },
+  {
+    "id": "755185c7-8487-4c74-9551-957be1256672",
+    "name": "issuingState",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "issuingState",
+      "attribute.friendly.name": "issuingState",
+      "attribute.scope": "profile",
+      "attribute.name": "urn:oid:1.2.40.0.10.2.1.1.552244"
+    }
+  },
+  {
+    "id": "9c2a04cc-7b6d-4ea9-aab8-ba66fd7416c7",
+    "name": "Username",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-username-idp-mapper",
+    "config": {
+      "template": "${ATTRIBUTE.bPK}${ATTRIBUTE.organizationId}"
+    }
+  },
+  {
+    "id": "11028afa-44a3-4d41-85a1-e4136fdea69c",
+    "name": "bPK2",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "attribute.required": "true",
+      "syncMode": "INHERIT",
+      "user.attribute": "bPK2",
+      "attributes": "[]",
+      "attribute.friendly.name": "bPK2",
+      "attribute.scope": "profile",
+      "attribute.name": "urn:oid:1.3.6.1.4.1.25484.494450.3"
+    }
+  },
+  {
+    "id": "79db85e5-d459-4557-b75f-c8b7c73001d7",
+    "name": "EID-CITIZEN-QAA-LEVEL",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "authlevel_legacy",
+      "attribute.friendly.name": "EID-CITIZEN-QAA-LEVEL",
+      "attribute.scope": "authlevel_legacy",
+      "attribute.name": "urn:oid:1.2.40.0.10.2.1.1.261.94"
+    }
+  },
+  {
+    "id": "ba17c8e2-aac6-4482-8ad9-1e3cf82c17af",
+    "name": "postalCode",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
+    "config": {
+      "syncMode": "INHERIT",
+      "user.attribute": "postalCode",
+      "attribute.friendly.name": "postalCode",
+      "attribute.scope": "address",
+      "attribute.name": "urn:oid:2.5.4.17"
+    }
+  },
+  {
+    "id": "76df4e2b-2a8c-4242-8cd0-3f17fa7e762c",
+    "name": "legalForm",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
     "config": {
       "syncMode": "INHERIT",
       "user.attribute": "legalForm",
-      "attribute.name": "RechtsformText"
+      "attribute.friendly.name": "legalForm",
+      "attribute.scope": "organization",
+      "attribute.name": "urn:oid:akdb:legalForm"
     }
   },
   {
-    "id": "ae560016-1969-4a73-8033-6c60000c857c",
-    "name": "Adresse.Typ",
-    "identityProviderAlias": "nezo",
-    "identityProviderMapper": "elster-saml-user-attribute-idp-mapper",
+    "id": "483d6680-d53b-4c00-9dbf-4c00f64d6165",
+    "name": "birthdate",
+    "identityProviderAlias": "buergerkonto",
+    "identityProviderMapper": "saml-user-attribute-idp-mapper",
     "config": {
       "syncMode": "INHERIT",
-      "user.attribute": "anschriftTyp",
-      "attribute.name": "Anschrift.Typ"
+      "user.attribute": "birthdate",
+      "attribute.friendly.name": "birthdate",
+      "attribute.scope": "birthdate",
+      "attribute.name": "urn:oid:1.2.40.0.10.2.1.1.55"
     }
   }
 ]
