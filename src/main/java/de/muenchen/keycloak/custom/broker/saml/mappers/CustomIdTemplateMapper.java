@@ -9,15 +9,11 @@ import org.keycloak.dom.saml.v2.assertion.AttributeStatementType;
 import org.keycloak.dom.saml.v2.assertion.AttributeType;
 import org.keycloak.dom.saml.v2.assertion.NameIDType;
 import org.keycloak.dom.saml.v2.assertion.SubjectType;
-import org.keycloak.models.IdentityProviderMapperModel;
-import org.keycloak.models.KeycloakSession;
-import org.keycloak.models.RealmModel;
-import org.keycloak.models.UserModel;
+import org.keycloak.models.*;
 import org.keycloak.models.utils.KeycloakModelUtils;
 import org.keycloak.provider.ProviderConfigProperty;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.jboss.logging.Logger;
@@ -33,7 +29,7 @@ public class CustomIdTemplateMapper extends AbstractIdentityProviderMapper {
     private static final Logger LOGGER = Logger.getLogger(CustomIdTemplateMapper.class);
 
     public static final String[] COMPATIBLE_PROVIDERS = {SAMLIdentityProviderFactory.PROVIDER_ID};
-
+    private static final Set<IdentityProviderSyncMode> IDENTITY_PROVIDER_SYNC_MODES = new HashSet<>(Arrays.asList(IdentityProviderSyncMode.values()));
     private static final List<ProviderConfigProperty> configProperties = new ArrayList<>();
 
     public static final String TEMPLATE = "template";
@@ -51,6 +47,10 @@ public class CustomIdTemplateMapper extends AbstractIdentityProviderMapper {
 
     public static final String PROVIDER_ID = "saml-custom-id-idp-mapper";
 
+    @Override
+    public boolean supportsSyncMode(IdentityProviderSyncMode syncMode) {
+        return IDENTITY_PROVIDER_SYNC_MODES.contains(syncMode);
+    }
     @Override
     public List<ProviderConfigProperty> getConfigProperties() {
         return configProperties;
@@ -131,11 +131,11 @@ public class CustomIdTemplateMapper extends AbstractIdentityProviderMapper {
         //ERWEITERUNG
         String id = sb.toString();
 
-        if (id.trim().equals("")) {
+        if (id.trim().isEmpty()) {
             id = "ID_MISSING_DO_NOT_USE";
         }
 
-        LOGGER.info("(if new:) Setting ID to " + id);
+        LOGGER.debug("(if new:) Setting ID to " + id);
         context.setId(id);
         //ERWEITRUNG ENDE
     }

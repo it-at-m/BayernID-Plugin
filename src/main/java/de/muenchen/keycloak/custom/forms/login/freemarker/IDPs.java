@@ -9,19 +9,25 @@ public enum IDPs {
     //M-Login:           sso --> n/a;          ssotest --> mlogin;       ssodev --> oidc
     //NutzerkontoBund:   sso --> n/a;          ssotest --> n/a;          ssodev --> nutzerkontobund
     //Verimi:            zukünftig falls eingeführt: verimi
-    //ELSTER_NEZO:       zukünftig falls eingeführt: nezo
+    //ELSTER_NEZO:      sso --> nezo;          ssotest --> nezo;         ssodev --> nezo
+    //Google:           sso --> google;        ssotest --> google;       ssodev --> google
+    //Intern:           sso --> intern;        ssotest --> intern;       ssodev --> intern
 
     //       Scope                   Alias                                 Authlevels                                             RequestedAttributeSet
     BayernID(
             "BayernID",        new String[]{"buergerkonto", "saml"}, new String[]{"level1", "level2", "level3", "level4"}, new String[]{"person", "legalEntity", "any"}),
     MLogin(
-            "M-Login",         new String[]{"mlogin", "oidc"},       new String[]{"level1", "level2"},                     new String[]{"person", "any"}),
+            "M-Login",         new String[]{"mlogin", "oidc"},       new String[]{"level1"},                               new String[]{"person", "any"}),
     NutzerkontoBund(
             "NutzerkontoBund", new String[]{"nutzerkontobund"},      new String[]{"level1", "level2", "level3", "level4"}, new String[]{"person", "any"}),
     ELSTER_NEZO(
             "ELSTER_NEZO",     new String[]{"nezo"},                 new String[]{"level1", "level2", "level3"},           new String[]{"legalEntity", "any"}),
     Verimi(
-            "Verimi",          new String[]{"verimi"},               new String[]{"level1", "level2", "level3"},            new String[]{"person", "any"});
+            "Verimi",          new String[]{"verimi"},               new String[]{"level1", "level2", "level3"},           new String[]{"person", "any"}),
+    Google(
+            "Google",          new String[]{"google"},               new String[]{"level1"},                               new String[]{"person", "any"}),
+    Intern(
+            "Intern",          new String[]{"intern"},               new String[]{"level1", "level2", "level3"},           new String[]{"person", "legalEntity", "any"});
 
     public final String scope;
     public final String[] alias;

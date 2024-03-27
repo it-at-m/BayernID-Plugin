@@ -23,9 +23,7 @@ public class RequireEffectiveScopesAuthenticator implements Authenticator {
 
     @Override
     public void authenticate(final AuthenticationFlowContext context) {
-        logger.info("In RequireEffectiveScopesAuthenticator --> authenticate");
-
-        final RealmModel realm = context.getRealm();
+       final RealmModel realm = context.getRealm();
         final UserModel user = context.getUser();
         final AuthenticatorConfigModel authenticatorConfig = context.getAuthenticatorConfig();
         String errorString;
@@ -95,18 +93,14 @@ public class RequireEffectiveScopesAuthenticator implements Authenticator {
      * @return true wenn Wert vorhanden, false sonst
      */
     private boolean isUserWithAttribute(final AuthenticationFlowContext context, final UserModel user, final String attributeName, final Set<String> effectiveScopes) {
-        // user.getAttribute(attributeName) ist deprecated
-        // Neue Weg via Stream
-        // user.getAttributeStream(attributeName).collect(Collectors.toList());
-
         if (user == null || user.getAttributeStream(attributeName) == null) {
             logger.info("Could not find attribute " + attributeName + " on user  " + (user != null ? user.getUsername() : "UNKNOWN"));
             return false;
         }
 
         final List<String> userAttributeValues = user.getAttributeStream(attributeName).collect(Collectors.toList());
-        logger.info("Checking scopes " + String.join(",", effectiveScopes) + " against values " + String.join(",", userAttributeValues));
-        if (userAttributeValues.size() > 0) {
+        logger.debug("Checking scopes " + String.join(",", effectiveScopes) + " against values " + String.join(",", userAttributeValues));
+        if (!userAttributeValues.isEmpty()) {
             if (userAttributeValues.containsAll(effectiveScopes)) {
                 logger.info("Found all attribute values " + String.join("", userAttributeValues));
                 return true;

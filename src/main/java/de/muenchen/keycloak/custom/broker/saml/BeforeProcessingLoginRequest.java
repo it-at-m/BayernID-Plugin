@@ -43,13 +43,13 @@ public class BeforeProcessingLoginRequest {
         ExtensionsType extensions = authnRequest.getExtensions();
 
         if (extensions != null) {
-            logger.info("Found Extensions. Iterating.");
+            logger.debug("Found Extensions. Iterating.");
             List<Object> list = extensions.getAny();
             for (Object o : list) {
                 Element el = (Element) o;
                 String tagName = el.getLocalName();
-                logger.info("Checking Extension with tagName " + tagName);
-                if (tagName != null && !tagName.equals("")) {
+                logger.debug("Checking Extension with tagName " + tagName);
+                if (tagName != null && !tagName.isEmpty()) {
 
                     if (tagName.equalsIgnoreCase(REQUESTED_ATTRIBUTE_SET)) {
                         AuthNoteHelper.setRequestedAttributeSet(el.getTextContent(), authSession);
@@ -92,21 +92,21 @@ public class BeforeProcessingLoginRequest {
     private void parseAuthenticationRequest(Element el, AuthenticationSessionModel authSession) {
         for (Element child : getChildElementsAsList(el)) {
             String tagName = child.getLocalName();
-            logger.info("Checking child tagName " + tagName);
+            logger.debug("Checking child tagName " + tagName);
             if (tagName == null) {
                 return;
             }
 
             // AllowedMethods
             if (tagName.equalsIgnoreCase("AllowedMethods")) { //V1
-                logger.info("Found child tagName AllowedMethods.");
+                logger.debug("Found child tagName AllowedMethods.");
                 String allowedMethods = getChildElementsAsList(child).stream()
                         .map(Node::getTextContent).collect(Collectors.joining("##"));
                 AuthNoteHelper.setAllowedMethods(allowedMethods, authSession);
 
                 // AuthnMethods
             } else if (tagName.equalsIgnoreCase("AuthnMethods")) { //V2
-                logger.info("Found child tagName AuthnMethods.");
+                logger.debug("Found child tagName AuthnMethods.");
                 List<String> authnMethodsList = new ArrayList<>();
                 for (Element authnMethod : getChildElementsAsList(child)) {
                     if (getChildElementsAsMap(authnMethod).get("Enabled") != null &&
@@ -114,13 +114,13 @@ public class BeforeProcessingLoginRequest {
                         authnMethodsList.add(authnMethod.getLocalName());
                     }
                 }
-                String authMethods = authnMethodsList.stream().collect(Collectors.joining("##"));
+                String authMethods = String.join("##", authnMethodsList);
                 AuthNoteHelper.setAuthMethods(authMethods, authSession);
 
             }
             // RequestedAttributes
             else if (tagName.equalsIgnoreCase("RequestedAttributes")) { //V1 und V2
-                logger.info("Found child tagName RequestedAttributes.");
+                logger.debug("Found child tagName RequestedAttributes.");
                 String requestedAttributes = getChildElementsAsList(child).stream()
                         .map(c->c.getAttribute("Name") + "|" + c.getAttribute("RequiredAttribute"))
                         .collect(Collectors.joining("##"));
@@ -147,7 +147,7 @@ public class BeforeProcessingLoginRequest {
             if (o instanceof Element) {
                 list.add((Element) o);
             } else {
-                logger.info("Found child of type " + o.getClass() + " which is not Element.");
+                logger.debug("Found child of type " + o.getClass() + " which is not Element.");
             }
         }
         return list;
@@ -160,7 +160,7 @@ public class BeforeProcessingLoginRequest {
             if (o instanceof Element) {
                 map.put(((Element) o).getLocalName(), (Element) o);
             } else {
-                logger.info("Found child of type " + o.getClass() + " which is not Element.");
+                logger.debug("Found child of type " + o.getClass() + " which is not Element.");
             }
         }
         return map;

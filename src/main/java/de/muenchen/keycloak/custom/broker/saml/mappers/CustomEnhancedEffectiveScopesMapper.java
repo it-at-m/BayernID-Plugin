@@ -5,15 +5,10 @@ import org.jboss.logging.Logger;
 import org.keycloak.broker.provider.AbstractIdentityProviderMapper;
 import org.keycloak.broker.provider.BrokeredIdentityContext;
 import org.keycloak.broker.saml.SAMLIdentityProviderFactory;
-import org.keycloak.models.IdentityProviderMapperModel;
-import org.keycloak.models.KeycloakSession;
-import org.keycloak.models.RealmModel;
-import org.keycloak.models.UserModel;
+import org.keycloak.models.*;
 import org.keycloak.provider.ProviderConfigProperty;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**TODO
  *
@@ -25,7 +20,7 @@ public class CustomEnhancedEffectiveScopesMapper extends AbstractIdentityProvide
     private static final Logger LOGGER = Logger.getLogger(CustomEnhancedEffectiveScopesMapper.class);
 
     public static final String[] COMPATIBLE_PROVIDERS = {SAMLIdentityProviderFactory.PROVIDER_ID};
-
+    private static final Set<IdentityProviderSyncMode> IDENTITY_PROVIDER_SYNC_MODES = new HashSet<>(Arrays.asList(IdentityProviderSyncMode.values()));
     private static final List<ProviderConfigProperty> configProperties = new ArrayList<>();
 
     public static final String ATTRIBUTE = "Attribute";
@@ -42,7 +37,10 @@ public class CustomEnhancedEffectiveScopesMapper extends AbstractIdentityProvide
     }
 
     public static final String PROVIDER_ID = "saml-custom-effective-scopes-mapper";
-
+    @Override
+    public boolean supportsSyncMode(IdentityProviderSyncMode syncMode) {
+        return IDENTITY_PROVIDER_SYNC_MODES.contains(syncMode);
+    }
     @Override
     public List<ProviderConfigProperty> getConfigProperties() {
         return configProperties;

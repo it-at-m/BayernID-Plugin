@@ -28,7 +28,6 @@ public class BeforeProcessingLoginResponse {
      * @param responseType
      */
     public void authenticationFinished(AuthenticationSessionModel authSession, StatusResponseType responseType) {
-        logger.info("Auth finished");
         //Print Response
         //--------------
         if (logger.isDebugEnabled() || PreprocessorHelper.hasDebugScope(authSession)) {

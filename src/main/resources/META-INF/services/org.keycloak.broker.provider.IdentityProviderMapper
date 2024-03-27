@@ -3,4 +3,6 @@ de.muenchen.keycloak.custom.broker.saml.mappers.CustomUsernameTemplateMapper
 de.muenchen.keycloak.custom.broker.saml.mappers.CustomUserAttributeMapper
 de.muenchen.keycloak.custom.broker.saml.mappers.CustomEnhancedEffectiveScopesMapper
 de.muenchen.keycloak.custom.broker.saml.mappers.CustomUserAttributeWithMappingMapper
+de.muenchen.keycloak.custom.broker.saml.mappers.CustomGeneratedIdMapper
+de.muenchen.keycloak.custom.broker.saml.mappers.CustomCurrentTimestampMapper
 org.keycloak.broker.saml.mappers.UserAttributeMapper

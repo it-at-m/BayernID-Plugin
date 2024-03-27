@@ -43,12 +43,20 @@ public class CustomFreeMarkerLoginFormsProvider extends FreeMarkerLoginFormsProv
         AuthenticationSessionModel authenticationSession = session.getContext().getAuthenticationSession();
 
         final String authLevel = IdentityProviderHelper.findAuthLevel(authenticationSession);
-        logger.info("Requested authLevel found on Scopes " + authLevel);
+        logger.debug("Requested authLevel found on Scopes " + authLevel);
 
         String requestedAttributeSet = IdentityProviderHelper.findRequestedAttributeSet(authenticationSession);
         logger.info("RequestedAttributeSet found " + requestedAttributeSet);
 
         IdentityProviderBean ipb = (IdentityProviderBean) this.attributes.get(SOCIAL);
+
+        if (authLevel != null) {
+            this.attributes.put("authlevel", authLevel);
+            logger.debug("Setting authlevel " + authLevel + " as attribute for login-Template");
+        } else {
+            this.attributes.put("authlevel", "nicht gesetzt");
+            logger.debug("Setting authlevel to nicht-gesetzt as attribute for login-Template");
+        }
 
         if (ipb == null) {
             //Kein Attribut "social" gefunden - dadurch auch keine IdentityProvider konfiguriert

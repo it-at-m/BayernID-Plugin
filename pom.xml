@@ -15,15 +15,10 @@
         <scm.plugin.version>1.11.2</scm.plugin.version>
     </properties>
 
-    <scm>
-        <connection>scm:git:https://git.muenchen.de/ccse/rh-sso-plugins/bayernid-plugin/public.git</connection>
-        <developerConnection>scm:git:https://git.muenchen.de/ccse/rh-sso-plugins/bayernid-plugin/public.git</developerConnection>
-    </scm>
-
 
     <artifactId>bayernid-plugin</artifactId>
     <groupId>de.muenchen.keycloak</groupId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <dependencies>

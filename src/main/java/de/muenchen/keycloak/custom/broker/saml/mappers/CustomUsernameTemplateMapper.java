@@ -8,7 +8,6 @@ import org.jboss.logging.Logger;
 import org.keycloak.broker.provider.BrokeredIdentityContext;
 import org.keycloak.broker.saml.SAMLEndpoint;
 import org.keycloak.broker.saml.SAMLIdentityProviderFactory;
-import static org.keycloak.broker.saml.mappers.UsernameTemplateMapper.TEMPLATE;
 import org.keycloak.dom.saml.v2.assertion.AssertionType;
 import org.keycloak.dom.saml.v2.assertion.AttributeStatementType;
 import org.keycloak.dom.saml.v2.assertion.AttributeType;
@@ -90,11 +89,11 @@ public class CustomUsernameTemplateMapper extends UsernameTemplateMapper {
         //ERWEITERUNG
         String id = sb.toString();
 
-        if (id.trim().equals("")) {
+        if (id.trim().isEmpty()) {
             id = "ID_MISSING_DO_NOT_USE";
         }
 
-        LOGGER.info("(if new:) Setting Username to " + id);
+        LOGGER.debug("(if new:) Setting Username to " + id);
         context.setModelUsername(id);
         //ERWEITRUNG ENDE
 

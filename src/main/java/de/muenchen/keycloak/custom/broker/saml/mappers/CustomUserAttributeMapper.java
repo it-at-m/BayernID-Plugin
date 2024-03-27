@@ -1,6 +1,5 @@
 package de.muenchen.keycloak.custom.broker.saml.mappers;
 
-import de.muenchen.keycloak.custom.broker.saml.CustomSamlAuthenticationPreprocessor;
 import org.jboss.logging.Logger;
 import org.keycloak.broker.provider.BrokeredIdentityContext;
 import org.keycloak.broker.saml.mappers.UserAttributeMapper;
@@ -44,9 +43,7 @@ public class CustomUserAttributeMapper extends UserAttributeMapper {
 
     private ProviderConfigProperty findOrCreateProperty(String name) {
         for (ProviderConfigProperty property : getConfigProperties()) {
-            logger.info("checking " + property.getName() + " against " + name);
             if (property.getName().equals(name)) {
-                logger.info("found!");
                 return property;
             }
         }

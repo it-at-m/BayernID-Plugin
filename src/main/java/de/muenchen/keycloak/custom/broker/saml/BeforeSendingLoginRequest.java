@@ -36,12 +36,12 @@ public class BeforeSendingLoginRequest {
     public void process(AuthnRequestType authnRequest, AuthenticationSessionModel clientSession) {
         //Effective Scopes sammeln und als AuthNote ablegen
         Set<String> effectiveScopes = PreprocessorHelper.collectEffectiveScopes(clientSession);
-        logger.info("EffectiveScopes: " + String.join(", ", effectiveScopes));
+        logger.debug("EffectiveScopes: " + String.join(", ", effectiveScopes));
         AuthNoteHelper.setEffectiveScopes(effectiveScopes, clientSession);
 
         //Effective Scopes um die Scopes anreichern (enhance), die aus den explizit angeforderten Attributen abgeleitet (deducted) werden
         Set<String> deductedScopes = PreprocessorHelper.enhanceEffectiveScopes(effectiveScopes, clientSession);
-        logger.info("deductedScopes: " + String.join(", ", deductedScopes));
+        logger.debug("deductedScopes: " + String.join(", ", deductedScopes));
         AuthNoteHelper.setEnhancedEffectiveScopes(deductedScopes, clientSession);
 
         //BayernID-Erweiterungen im SAML-Request ergänzen
@@ -81,7 +81,7 @@ public class BeforeSendingLoginRequest {
         String requestedAttributeSetElement = IdentityProviderHelper.findRequestedAttributeSet(clientSession);
 
         if (requestedAttributeSetElement != null) {
-            logger.info("Settin requested Attribute Set: " + requestedAttributeSetElement);
+            logger.debug("Setting requested Attribute Set: " + requestedAttributeSetElement);
             addExtension(authnRequest, makeAccountTypeExtension(requestedAttributeSetElement));
         } else {
             logger.debug("No requested attribute set found.");
@@ -90,8 +90,8 @@ public class BeforeSendingLoginRequest {
 
     private void makeRequestedAuthContext(AuthnRequestType authnRequest, AuthenticationSessionModel clientSession) {
         String storkLevel = findStorkLevel(clientSession);
-        if (storkLevel != null && !storkLevel.equals("")) {
-            logger.info("Setting requested authLevel: " + storkLevel);
+        if (storkLevel != null && !storkLevel.isEmpty()) {
+            logger.debug("Setting requested authLevel: " + storkLevel);
             addRequestedAuthnContext(authnRequest, storkLevel);
         }
     }
@@ -227,7 +227,6 @@ public class BeforeSendingLoginRequest {
                 }
             } else {
                 //SAML Call
-//                return clientSession.getAuthNote("AUTH_CONTEXT");
                 return AuthNoteHelper.getAuthContext(clientSession);
             }
         }

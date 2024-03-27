@@ -90,7 +90,7 @@ public class PreprocessorHelper {
                 //bei SAML: nur falls keine Scopes und keine Attribute im Request angefordert sind, sind die
                 //default scopes "effective" (da diese normalerweise alle Attribute umfassen --> rückwärts-kompatible Lösung)
                 if (AuthNoteHelper.getRequestedAttributes(clientSession) == null ||
-                        !AuthNoteHelper.getRequestedAttributes(clientSession).equals("")) {
+                        !AuthNoteHelper.getRequestedAttributes(clientSession).isEmpty()) {
                     effectiveScopes.addAll(
                             ScopesHelper.stripScopes(defaultClientScopes.keySet())
                     );
@@ -121,7 +121,7 @@ public class PreprocessorHelper {
         //alle Mapper iterieren
         clientSession.getRealm().getIdentityProviderMappersStream().forEach(identityProviderMapperModel -> {
             String scope = identityProviderMapperModel.getConfig().get(CustomUserAttributeMapper.FIELD_SCOPE);
-            if (scope != null && !scope.equals("")) {
+            if (scope != null && !scope.isEmpty()) {
                 //scope Attribut gesetzt
 
                 //attributeName aus Mapper holen
@@ -191,7 +191,7 @@ public class PreprocessorHelper {
 
         String scopeParam = clientSession.getClientNote(OAuth2Constants.SCOPE);
         if (scopeParam != null) {
-            logger.info("Scope Parameter in Request " + scopeParam);
+            logger.debug("Scope Parameter in Request " + scopeParam);
             scopes = Arrays.asList(scopeParam.split("\\s+"));
         }
 
@@ -220,9 +220,7 @@ public class PreprocessorHelper {
         String protocol = clientSession.getProtocol();
         if (protocol == null) {
             logger.warn("No protocol found - cannot determine whether OIDC or SAML2 Call!");
-        } else if (protocol.equals("openid-connect")) {
-            return true;
-        }
+        } else return protocol.equals("openid-connect");
         return false;
     }
 
@@ -230,18 +228,13 @@ public class PreprocessorHelper {
         String protocol = clientSession.getProtocol();
         if (protocol == null) {
             logger.warn("No protocol found - cannot determine whether OIDC or SAML2 Call!");
-        } else if (protocol.equals("saml")) {
-            return true;
-        }
+        } else return protocol.equals("saml");
         return false;
     }
 
 
     public static boolean isPublicRealm(String realm) {
-        if (realm != null && realm.equalsIgnoreCase("public") || realm.equalsIgnoreCase("demo") || realm.equalsIgnoreCase("A61")) {
-            return true;
-        }
-        return false;
+        return realm != null && realm.equalsIgnoreCase("public") || realm.equalsIgnoreCase("demo") || realm.equalsIgnoreCase("A61");
     }
 
     public static void printRequest(AuthnRequestType authnRequest) {

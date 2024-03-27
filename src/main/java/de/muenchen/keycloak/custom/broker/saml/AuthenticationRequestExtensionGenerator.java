@@ -8,8 +8,6 @@ import org.keycloak.saml.common.util.StaxUtil;
 
 import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +20,11 @@ public class AuthenticationRequestExtensionGenerator implements SamlProtocolExte
 
     public static final String NS_URI = "https://www.akdb.de/request/2018/09";
 
+    public static final String CLASSIC_UI_URI = "https://www.akdb.de/request/2018/09/classic-ui/v1";
+
     public static final String NS_PREFIX = "akdb";
+
+    public static final String CLASSIC_UI_PREFIX = "classic-ui";
 
     public static final String KC_KEY_INFO_ELEMENT_NAME = "AuthenticationRequest";
 
@@ -42,7 +44,7 @@ public class AuthenticationRequestExtensionGenerator implements SamlProtocolExte
         StaxUtil.writeNameSpace(writer, NS_PREFIX, NS_URI);
 
         //Abschnitt AuthnMethods
-        if (methods != null && methods.size() > 0) {
+        if (methods != null && !methods.isEmpty()) {
             StaxUtil.writeStartElement(writer, NS_PREFIX, "AuthnMethods", NS_URI);
             for (String method : methods) {
                 StaxUtil.writeStartElement(writer, NS_PREFIX, method, NS_URI); //Anfang method (z.B. akdb:eID)
@@ -66,40 +68,26 @@ public class AuthenticationRequestExtensionGenerator implements SamlProtocolExte
             }
             StaxUtil.writeEndElement(writer);
         }
-        /*
-        //bPK
-        StaxUtil.writeStartElement(writer, NS_PREFIX, "RequestedAttribute", NS_URI);
-        StaxUtil.writeAttribute(writer, "Name", "urn:oid:1.2.40.0.10.2.1.1.149");
-        StaxUtil.writeAttribute(writer, "RequiredAttribute", "true");
-        StaxUtil.writeEndElement(writer);
-
-        //legacyPostkorbHandle
-        StaxUtil.writeStartElement(writer, NS_PREFIX, "RequestedAttribute", NS_URI);
-        StaxUtil.writeAttribute(writer, "Name", "urn:oid:2.5.4.18");
-        StaxUtil.writeAttribute(writer, "RequiredAttribute", "true");
-        StaxUtil.writeEndElement(writer);
-
-        //givenName
-        StaxUtil.writeStartElement(writer, NS_PREFIX, "RequestedAttribute", NS_URI);
-        StaxUtil.writeAttribute(writer, "Name", "urn:oid:2.5.4.42");
-        StaxUtil.writeAttribute(writer, "RequiredAttribute", "true");
-        StaxUtil.writeEndElement(writer);
-
-        //surname
-        StaxUtil.writeStartElement(writer, NS_PREFIX, "RequestedAttribute", NS_URI);
-        StaxUtil.writeAttribute(writer, "Name", "urn:oid:2.5.4.4");
-        StaxUtil.writeAttribute(writer, "RequiredAttribute", "true");
-        StaxUtil.writeEndElement(writer);
-
-        //mail
-        StaxUtil.writeStartElement(writer, NS_PREFIX, "RequestedAttribute", NS_URI);
-        StaxUtil.writeAttribute(writer, "Name", "urn:oid:0.9.2342.19200300.100.1.3");
-        StaxUtil.writeAttribute(writer, "RequiredAttribute", "false");
-        StaxUtil.writeEndElement(writer);
-
-         */
 
         StaxUtil.writeEndElement(writer); //RequestedAttributes
+
+        StaxUtil.writeStartElement(writer, NS_PREFIX, "DisplayInformation", NS_URI);
+
+        StaxUtil.writeNameSpace(writer, CLASSIC_UI_PREFIX, CLASSIC_UI_URI);
+
+        StaxUtil.writeStartElement(writer, CLASSIC_UI_PREFIX, "Version", CLASSIC_UI_URI);
+
+        StaxUtil.writeStartElement(writer, CLASSIC_UI_PREFIX, "OrganizationDisplayName", CLASSIC_UI_URI);
+        StaxUtil.writeCharacters(writer, "Landeshauptstadt M\u00FCnchen");
+        StaxUtil.writeEndElement(writer); //OrganizationDisplayName
+
+        StaxUtil.writeStartElement(writer, CLASSIC_UI_PREFIX, "Lang", CLASSIC_UI_URI);
+        StaxUtil.writeCharacters(writer, "de");
+        StaxUtil.writeEndElement(writer); //Lang
+
+        StaxUtil.writeEndElement(writer); //Version
+        StaxUtil.writeEndElement(writer); //DisplayInformation
+
 
         StaxUtil.writeEndElement(writer); //AuthenticationRequest
         StaxUtil.flush(writer);

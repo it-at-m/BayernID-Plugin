@@ -23,8 +23,6 @@ public class RequireAttributeAuthenticator implements Authenticator {
 
     @Override
     public void authenticate(final AuthenticationFlowContext context) {
-//        logger.info("In RequireAttributeAuthenticator --> authenticate");
-
         final RealmModel realm = context.getRealm();
         final UserModel user = context.getUser();
         final AuthenticatorConfigModel authenticatorConfig = context.getAuthenticatorConfig();
@@ -148,16 +146,12 @@ public class RequireAttributeAuthenticator implements Authenticator {
      * @return true wenn Wert vorhanden, false sonst
      */
     private boolean isUserWithAttribute(final AuthenticationFlowContext context, final UserModel user, final String attributeName, final List<String> attributeValues, final String regExp) {
-        // user.getAttribute(attributeName) ist deprecated
-        // Neue Weg via Stream
-        // user.getAttributeStream(attributeName).collect(Collectors.toList());
-
         if (user == null || user.getAttributeStream(attributeName) == null) {
             logger.info("Could not find attribute " + attributeName + " on user  " + (user != null ? user.getUsername() : "UNKNOWN"));
             return false;
         }
 
-        if (attributeValues == null || attributeValues.size() == 0) {
+        if (attributeValues == null || attributeValues.isEmpty()) {
             String client = "UNKNOWN";
             if (context.getAuthenticationSession() != null && context.getAuthenticationSession().getClient() != null) {
                 client = context.getAuthenticationSession().getClient().getName();
@@ -167,14 +161,13 @@ public class RequireAttributeAuthenticator implements Authenticator {
             return false;
         }
         final List<String> userAttributeValues = user.getAttributeStream(attributeName).collect(Collectors.toList());
-        if (userAttributeValues.size() > 0) {
+        if (!userAttributeValues.isEmpty()) {
             if (userAttributeValues.size() > 1) {
                 logger.error("Found more than one attribute value on user --> error, but taking first one");
             }
             final String userAttributeValue = userAttributeValues.get(0);
-            logger.info("Found attribute " + attributeName + " on user with value " + userAttributeValue);
-
-            logger.info("Comparing " + attributeValues.get(0) + " with " + userAttributeValue + " is " + attributeValues.get(0).matches(userAttributeValue));
+            logger.debug("Found attribute " + attributeName + " on user with value " + userAttributeValue);
+            logger.debug("Comparing " + attributeValues.get(0) + " with " + userAttributeValue + " is " + attributeValues.get(0).matches(userAttributeValue));
 
             boolean match = false;
             if (regExp.equalsIgnoreCase("true") &&
@@ -203,7 +196,7 @@ public class RequireAttributeAuthenticator implements Authenticator {
      */
     private String createErrorString(final UserModel user, final String attributeName, final List<String> attributeValues) {
         final String userName = user.getUsername();
-        final String attributeValuesString = attributeValues.stream().collect(Collectors.joining(", "));
+        final String attributeValuesString = String.join(", ", attributeValues);
         if (attributeValuesString.trim().equalsIgnoreCase("")) {
             return "User " + userName + " hat in Attribut " + attributeName + " keinen zulässigen Wert.";
         }

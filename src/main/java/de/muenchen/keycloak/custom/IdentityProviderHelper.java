@@ -42,7 +42,7 @@ public class IdentityProviderHelper {
 
         if (idp == null) {
             logger.warn("IDP " + alias + " not found in configured list. No Authlevel-Mapping available. Will not be processed / potentially removed.");
-            return false;
+            return true;
         }
 
         if (activeClientScopes == null || !activeClientScopes.contains(idp.scope)) {
@@ -153,7 +153,6 @@ public class IdentityProviderHelper {
         if (clientSession != null) {
             final String scopeParam = clientSession.getClientNote(OAuth2Constants.SCOPE);
             if (scopeParam != null) {
-                logger.info("Scope Parameter in Request " + scopeParam);
                 scopes = Arrays.asList(scopeParam.split("\\s+"));
             }
         }
@@ -189,7 +188,7 @@ public class IdentityProviderHelper {
         } else {
             //SAML Call
             String requestedAttributeSet = AuthNoteHelper.getRequestedAttributeSet(clientSession);
-            logger.info("Found requestedAttributeSet " + requestedAttributeSet);
+            logger.debug("Found requestedAttributeSet " + requestedAttributeSet);
             return requestedAttributeSet;
         }
 
@@ -200,9 +199,7 @@ public class IdentityProviderHelper {
         String protocol = clientSession.getProtocol();
         if (protocol == null) {
             logger.warn("No protocol found - cannot determine whether OIDC or SAML2 Call!");
-        } else if (protocol.equals("openid-connect")) {
-            return true;
-        }
+        } else return protocol.equals("openid-connect");
         return false;
     }
 
