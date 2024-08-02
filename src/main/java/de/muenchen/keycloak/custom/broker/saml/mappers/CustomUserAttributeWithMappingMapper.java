@@ -75,6 +75,7 @@ public class CustomUserAttributeWithMappingMapper extends UserAttributeMapper {
         applyMapping(mapperModel, user);
     }
 
+    //Version Keycloak 22
     private void applyMapping(final IdentityProviderMapperModel mapperModel, final UserModel user) {
         if (user == null || mapperModel == null) {
             return;
@@ -92,4 +93,27 @@ public class CustomUserAttributeWithMappingMapper extends UserAttributeMapper {
             user.setSingleAttribute(attribute, newAttributeValue);
         }
     }
+
+    //Version Keycloak 24
+//    private void applyMapping(final IdentityProviderMapperModel mapperModel, final UserModel user) {
+//        if (user == null || mapperModel == null) {
+//            return;
+//        }
+//        final String attribute = mapperModel.getConfig().get(USER_ATTRIBUTE);
+//        final String attributeValue = user.getFirstAttribute(attribute);
+//
+//        logger.debug("Checking attribute " + attribute + ", found value " + attributeValue);
+//
+//        final Map<String, List<String>> mapping = mapperModel.getConfigMap(MAPPING);
+//
+//        if (attributeValue != null && mapping != null && mapping.containsKey(attributeValue)) {
+//            final List<String> newAttributeValueList = mapping.get(attributeValue);
+//            if (newAttributeValueList == null || newAttributeValueList.size() > 1) {
+//                logger.info("Liste für " + attributeValue + " ist nicht 1.");
+//            }
+//            final String newAttributeValue = newAttributeValueList.get(0);
+//            logger.info("Setting " + attribute + " to " + newAttributeValue + " (mapping from " + attributeValue + ")");
+//            user.setSingleAttribute(attribute, newAttributeValue);
+//        }
+//    }
 }

@@ -7,14 +7,11 @@ import org.keycloak.forms.login.freemarker.FreeMarkerLoginFormsProvider;
 import org.keycloak.forms.login.freemarker.model.IdentityProviderBean;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.sessions.AuthenticationSessionModel;
-import org.keycloak.theme.FreeMarkerUtil;
 import org.keycloak.theme.Theme;
 
-import javax.ws.rs.core.UriBuilder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Properties;
+import jakarta.ws.rs.core.UriBuilder;
+
+import java.util.*;
 
 /**
  * siehe https://stackoverflow.com/questions/44072608/keycloak-access-cookie-and-or-url-query-params-inside-freemarker-template
@@ -25,38 +22,34 @@ public class CustomFreeMarkerLoginFormsProvider extends FreeMarkerLoginFormsProv
 
     public static final String SOCIAL = "social";
     public static final String PUBLIC = "public";
+    public static final String DEMO = "demo";
+    public static final String A61 = "A61";
 
-    public CustomFreeMarkerLoginFormsProvider(final KeycloakSession session, final FreeMarkerUtil freeMarker) {
-        super(session, freeMarker);
+    public CustomFreeMarkerLoginFormsProvider(final KeycloakSession session) {
+        super(session);
     }
 
     @Override
     protected void createCommonAttributes(final Theme theme, final Locale locale, final Properties messagesBundle, final UriBuilder baseUriBuilder, final LoginFormsPages page) {
         super.createCommonAttributes(theme, locale, messagesBundle, baseUriBuilder, page);
 
-        //die folgenden Prüfungen nur im Realm "public" durchführen (um Nebenwirkungen in anderen Realms zu minimieren)
+
+
+        //die folgenden Prüfungen nur im Realm "public" (und aus historischen Gründen alternativ "demo" und "A61") durchführen (um Nebenwirkungen in anderen Realms zu minimieren)
         if (session == null || session.getContext() == null || session.getContext().getRealm() == null ||
-                !session.getContext().getRealm().getName().trim().equalsIgnoreCase(PUBLIC)) {
+                !Arrays.asList(PUBLIC, DEMO, A61).contains(session.getContext().getRealm().getName().trim())) {
             return;
         }
 
         AuthenticationSessionModel authenticationSession = session.getContext().getAuthenticationSession();
 
         final String authLevel = IdentityProviderHelper.findAuthLevel(authenticationSession);
-        logger.debug("Requested authLevel found on Scopes " + authLevel);
+        logger.info("Requested authLevel found on Scopes " + authLevel);
 
         String requestedAttributeSet = IdentityProviderHelper.findRequestedAttributeSet(authenticationSession);
         logger.info("RequestedAttributeSet found " + requestedAttributeSet);
 
         IdentityProviderBean ipb = (IdentityProviderBean) this.attributes.get(SOCIAL);
-
-        if (authLevel != null) {
-            this.attributes.put("authlevel", authLevel);
-            logger.debug("Setting authlevel " + authLevel + " as attribute for login-Template");
-        } else {
-            this.attributes.put("authlevel", "nicht gesetzt");
-            logger.debug("Setting authlevel to nicht-gesetzt as attribute for login-Template");
-        }
 
         if (ipb == null) {
             //Kein Attribut "social" gefunden - dadurch auch keine IdentityProvider konfiguriert

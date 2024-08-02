@@ -5,20 +5,26 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
         <!--        <keycloak.version>9.0.3</keycloak.version>-->
-        <keycloak.version>15.0.2</keycloak.version>
+        <keycloak.version>22.0.5</keycloak.version>
         <jboss-logging.version>3.3.1.Final</jboss-logging.version>
         <!-- Plugins -->
         <wildfly.version>2.0.0.Final</wildfly.version>
         <scm.plugin.version>1.11.2</scm.plugin.version>
+        <java.version>17</java.version>
     </properties>
+
+    <scm>
+        <connection>scm:git:https://git.muenchen.de/ccse/rh-sso-plugins/bayernid-plugin/public.git</connection>
+        <developerConnection>scm:git:https://git.muenchen.de/ccse/rh-sso-plugins/bayernid-plugin/public.git</developerConnection>
+    </scm>
 
 
     <artifactId>bayernid-plugin</artifactId>
     <groupId>de.muenchen.keycloak</groupId>
-    <version>1.0.2</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <dependencies>

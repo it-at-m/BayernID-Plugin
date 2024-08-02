@@ -86,17 +86,12 @@ public class PreprocessorHelper {
             List<String> requestedScopes = AuthNoteHelper.getRequestedScopesAsList(clientSession);
             if (requestedScopes != null) {
                 effectiveScopes.addAll(requestedScopes);
-            } else {
-                //bei SAML: nur falls keine Scopes und keine Attribute im Request angefordert sind, sind die
-                //default scopes "effective" (da diese normalerweise alle Attribute umfassen --> rückwärts-kompatible Lösung)
-                if (AuthNoteHelper.getRequestedAttributes(clientSession) == null ||
-                        !AuthNoteHelper.getRequestedAttributes(clientSession).isEmpty()) {
-                    effectiveScopes.addAll(
-                            ScopesHelper.stripScopes(defaultClientScopes.keySet())
-                    );
-                }
-
             }
+
+            //und alle default Scopes sind "effective"
+            effectiveScopes.addAll(
+                    ScopesHelper.stripScopes(defaultClientScopes.keySet())
+            );
         }
 
         return effectiveScopes;

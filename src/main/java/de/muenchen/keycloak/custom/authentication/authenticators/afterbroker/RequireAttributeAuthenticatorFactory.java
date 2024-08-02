@@ -18,11 +18,8 @@
 package de.muenchen.keycloak.custom.authentication.authenticators.afterbroker;
 
 import org.keycloak.Config;
-import org.keycloak.OAuth2Constants;
 import org.keycloak.authentication.Authenticator;
 import org.keycloak.authentication.AuthenticatorFactory;
-import org.keycloak.authentication.DisplayTypeAuthenticatorFactory;
-import org.keycloak.authentication.authenticators.AttemptedAuthenticator;
 import org.keycloak.models.AuthenticationExecutionModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
@@ -31,7 +28,7 @@ import org.keycloak.provider.ProviderConfigProperty;
 import java.util.Arrays;
 import java.util.List;
 
-public class RequireAttributeAuthenticatorFactory implements AuthenticatorFactory, DisplayTypeAuthenticatorFactory {
+public class RequireAttributeAuthenticatorFactory implements AuthenticatorFactory {
     public static final String PROVIDER_ID = "require-attribute";
     public static final String REG_EXP = "regExp";
     static final String ATTRIBUTE = "attribute";
@@ -46,12 +43,12 @@ public class RequireAttributeAuthenticatorFactory implements AuthenticatorFactor
         return SINGLETON;
     }
 
-    @Override
-    public Authenticator createDisplay(KeycloakSession session, String displayType) {
-        if (displayType == null) return SINGLETON;
-        if (!OAuth2Constants.DISPLAY_CONSOLE.equalsIgnoreCase(displayType)) return null;
-        return AttemptedAuthenticator.SINGLETON;  // ignore this authenticator
-    }
+//    @Override
+//    public Authenticator createDisplay(KeycloakSession session, String displayType) {
+//        if (displayType == null) return SINGLETON;
+//        if (!OAuth2Constants.DISPLAY_CONSOLE.equalsIgnoreCase(displayType)) return null;
+//        return AttemptedAuthenticator.SINGLETON;  // ignore this authenticator
+//    }
 
     @Override
     public void init(Config.Scope config) {
@@ -111,7 +108,10 @@ public class RequireAttributeAuthenticatorFactory implements AuthenticatorFactor
         attribute.setHelpText("Required attribute name that a user needs to have to proceed with the authentication. ");
 
         ProviderConfigProperty attributeValue = new ProviderConfigProperty();
-        attributeValue.setType(ProviderConfigProperty.MULTIVALUED_STRING_TYPE);
+//        attributeValue.setType(ProviderConfigProperty.MULTIVALUED_STRING_TYPE);
+        //Multi-Valued-String scheint im Keycloak22 und Keycloak24 nicht zu funktionieren.
+        //Stattdessen als Workaround normaler String, die Werte werden mit ## abgetrennt
+        attributeValue.setType(ProviderConfigProperty.STRING_TYPE);
         attributeValue.setName(ATTRIBUTE_VALUES);
         attributeValue.setLabel("Attribute value(s)");
         attributeValue.setHelpText("Required attribute value(s) that the attribute needs to have to proceed with the authentication.");

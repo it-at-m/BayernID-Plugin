@@ -21,7 +21,7 @@ import org.keycloak.Config;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.authentication.Authenticator;
 import org.keycloak.authentication.AuthenticatorFactory;
-import org.keycloak.authentication.DisplayTypeAuthenticatorFactory;
+//import org.keycloak.authentication.DisplayTypeAuthenticatorFactory;
 import org.keycloak.authentication.authenticators.AttemptedAuthenticator;
 import org.keycloak.models.AuthenticationExecutionModel;
 import org.keycloak.models.KeycloakSession;
@@ -31,7 +31,7 @@ import org.keycloak.provider.ProviderConfigProperty;
 import java.util.Arrays;
 import java.util.List;
 
-public class RequireEffectiveScopesAuthenticatorFactory implements AuthenticatorFactory, DisplayTypeAuthenticatorFactory {
+public class RequireEffectiveScopesAuthenticatorFactory implements AuthenticatorFactory {
     public static final String PROVIDER_ID = "require-effective-scopes";
     static final String ATTRIBUTE = "attribute";
     static final String CUSTOM_ERROR = "customError";
@@ -43,12 +43,12 @@ public class RequireEffectiveScopesAuthenticatorFactory implements Authenticator
         return SINGLETON;
     }
 
-    @Override
-    public Authenticator createDisplay(KeycloakSession session, String displayType) {
-        if (displayType == null) return SINGLETON;
-        if (!OAuth2Constants.DISPLAY_CONSOLE.equalsIgnoreCase(displayType)) return null;
-        return AttemptedAuthenticator.SINGLETON;  // ignore this authenticator
-    }
+//    @Override
+//    public Authenticator createDisplay(KeycloakSession session, String displayType) {
+//        if (displayType == null) return SINGLETON;
+//        if (!OAuth2Constants.DISPLAY_CONSOLE.equalsIgnoreCase(displayType)) return null;
+//        return AttemptedAuthenticator.SINGLETON;  // ignore this authenticator
+//    }
 
     @Override
     public void init(Config.Scope config) {

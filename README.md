@@ -27,35 +27,6 @@ Die Datei `bayernid-plugin-[VERSION].jar` aus dem Verzeichnis `target` (existier
 
 Siehe Dokument `KeyCloak-Konfiguration.pdf`
 
-## Mapper und Authenticators
-
-Die folgenden Mapper werden durch das Plugin ergänzt:
-- **CUSTOM Current-Timestamp mapper**: Setzt den aktuellen Timestamp (Unix Epoch) in Sekunden. Sollte als "force" (immer updaten) konfiguriert werden.
-Damit weiß man später, wann der letzte Login des Users erfolgte.
-- **Custom effective scopes mapper**: Wird benötigt, damit die angeforderten Scopes beim SSO (Wechsel zwischen zwei Clients) mit betrachtet werden
-können. Führt dazu, dass kein SSO zugelassen wird, wenn bei einem Wechsel zwischen zwei Clients nicht alle benötigten Scopes im User vorliegen.
-- **CUSTOM UUID generator**: Setzt eine randomisiert generierte UUID. Sollte als "import" (nur bei der ersten Anlage des Datensatzes) verwendet werden,
-um eine interne ID zu setzen.
-- **Custom ID Template Importer**: Erweiterung des ID Template Importers. Zusätzlich kann auch auf die bPK (die ja anders als die bPK2 noch per BASE64
-ausgepackt und ausgeschnitten werden muss) zugegriffen werden. Außerdem wird der String ID_MISSING_DO_NOT_USE gesetzt, falls kein Wert ermittelt werden kann.
-- **CUSTOM Attribute-with-Scope Importer**: Erweiterung des Attribute Importers. Es kann zusätzlich noch ein Scope definiert werden. Nur wenn dieser Scope
-beim Zugriff auf den Client angefordert wird (explizit oder implizit), wird das entsprechende Attribut bei der BayernID angefordert. Außerdem kann
-per "Required Attribute" festgelegt werden, ob das Attribut zwingend bei der BayernID angefragt wird (führt zu einem Fehler, wenn es nicht vorliegt).
-- **CUSTOM Attribute-with-Mapping Importer**: Erweiterung des Attribut Importers. Es kann ein Mapping angegeben werden, so dass ein eingehender Wert
-auf einen anderen Wert umgeschrieben werden kann.
-- **Custom Username Template Importer**: Erweiterung des Username Template Importers. Zusätzlich kann auch auf die bPK (die ja anders als die bPK2 noch per BASE64
-  ausgepackt und ausgeschnitten werden muss) zugegriffen werden. Außerdem wird der String ID_MISSING_DO_NOT_USE gesetzt, falls kein Wert ermittelt werden kann.
-
-Die folgenden Authenticators werden durch das Plugin ergänzt:
-- **Require Attribute**: Forciert, dass ein User nach dem Login in einem Attribut einen bestimmten Wert hat. Der Wert kann entweder in Form einer Liste
-angegeben werden oder per RegEx. Zusätzlich kann noch gefordert werden, dass im aktuellen Client ein gleichnamiger Scope mindestens optional zugeordnet
-ist. Damit kann man bspw. erreichen, dass in einem Client nur bestimmte IDPs zugelassen sind.
-- **CUSTOM Identity Provider Redirector**: Eine Erweiterung des Identity Provider Redirectors. Ein IDP-Hint kann damit auch in einem SAML-Request
-mitgegeben werden (im Extensions-Bereich). Außerdem erfolgt eine direkte Weiterleitung zum externen IDP, wenn aufgrund versch. Filterungen nur
-einer zur Auswahl steht.
-- **CUSTOM Require Effective Scopes**: Wird im Zusammenspiel mit dem o.g. "Custom effective scopes mapper" genutzt, damit beim SSO (Wechsel zwischen zwei
-Clients) geprüft wird, ob alle angeforderten Scopes im User auch vorliegen.
-
 ## Testen
 
 Je nachdem, ob das Plugin per SAML2-Client oder OIDC-Client aufgerufen wird, verhält es sich unterschiedlich 

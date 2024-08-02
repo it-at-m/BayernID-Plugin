@@ -26,12 +26,12 @@ public class CustomIdentityProviderAuthenticatorFactory extends IdentityProvider
         return new CustomIdentityProviderAuthenticator();
     }
 
-    @Override
-    public Authenticator createDisplay(KeycloakSession session, String displayType) {
-        if (displayType == null) return new CustomIdentityProviderAuthenticator();
-        if (!OAuth2Constants.DISPLAY_CONSOLE.equalsIgnoreCase(displayType)) return null;
-        return AttemptedAuthenticator.SINGLETON;  // ignore this authenticator
-    }
+//    @Override
+//    public Authenticator createDisplay(KeycloakSession session, String displayType) {
+//        if (displayType == null) return new CustomIdentityProviderAuthenticator();
+//        if (!OAuth2Constants.DISPLAY_CONSOLE.equalsIgnoreCase(displayType)) return null;
+//        return AttemptedAuthenticator.SINGLETON;  // ignore this authenticator
+//    }
 
     @Override
     public String getId() {
