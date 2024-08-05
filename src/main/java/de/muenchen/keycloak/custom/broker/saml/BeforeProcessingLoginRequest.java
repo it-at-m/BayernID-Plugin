@@ -1,5 +1,7 @@
 package de.muenchen.keycloak.custom.broker.saml;
 
+import java.util.*;
+import java.util.stream.Collectors;
 import org.jboss.logging.Logger;
 import org.keycloak.dom.saml.v2.protocol.AuthnRequestType;
 import org.keycloak.dom.saml.v2.protocol.ExtensionsType;
@@ -8,12 +10,9 @@ import org.keycloak.sessions.AuthenticationSessionModel;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
-
 /**
- * Verarbeitet im Fall von per SAML angebundenen Clients den SAML-Request und legt verschiedene Inhalte (v.a. aus dem Extensions-Bereich)
+ * Verarbeitet im Fall von per SAML angebundenen Clients den SAML-Request und legt verschiedene
+ * Inhalte (v.a. aus dem Extensions-Bereich)
  * in AuthNotes.
  */
 public class BeforeProcessingLoginRequest {
@@ -53,25 +52,15 @@ public class BeforeProcessingLoginRequest {
 
                     if (tagName.equalsIgnoreCase(REQUESTED_ATTRIBUTE_SET)) {
                         AuthNoteHelper.setRequestedAttributeSet(el.getTextContent(), authSession);
-                    }
-
-                    else if (tagName.equalsIgnoreCase(AUTHENTICATION_REQUEST)) {
+                    } else if (tagName.equalsIgnoreCase(AUTHENTICATION_REQUEST)) {
                         parseAuthenticationRequest(el, authSession);
-                    }
-
-                    else if (tagName.equalsIgnoreCase(REQUESTED_SCOPES)) {
+                    } else if (tagName.equalsIgnoreCase(REQUESTED_SCOPES)) {
                         parseRequestedScopes(el, authSession);
-                    }
-
-                    else if (tagName.equalsIgnoreCase(OTHER_OPTIONS)) {
+                    } else if (tagName.equalsIgnoreCase(OTHER_OPTIONS)) {
                         AuthNoteHelper.setOtherOptions(el.getTextContent(), authSession);
-                    }
-
-                    else if (tagName.equalsIgnoreCase(IDP_HINT)) {
+                    } else if (tagName.equalsIgnoreCase(IDP_HINT)) {
                         AuthNoteHelper.setIdpHint(el.getTextContent(), authSession);
-                    }
-
-                    else {
+                    } else {
                         //Fallback für unbekannte Elemente
                         AuthNoteHelper.setAuthNote(el, el.getTextContent(), authSession);
                     }
@@ -116,20 +105,16 @@ public class BeforeProcessingLoginRequest {
                 }
                 String authMethods = String.join("##", authnMethodsList);
                 AuthNoteHelper.setAuthMethods(authMethods, authSession);
-
-            }
-            // RequestedAttributes
-            else if (tagName.equalsIgnoreCase("RequestedAttributes")) { //V1 und V2
+            } else if (tagName.equalsIgnoreCase("RequestedAttributes")) { //V1 und V2
+                // RequestedAttributes
                 logger.debug("Found child tagName RequestedAttributes.");
                 String requestedAttributes = getChildElementsAsList(child).stream()
-                        .map(c->c.getAttribute("Name") + "|" + c.getAttribute("RequiredAttribute"))
+                        .map(c -> c.getAttribute("Name") + "|" + c.getAttribute("RequiredAttribute"))
                         .collect(Collectors.joining("##"));
                 AuthNoteHelper.setRequestedAttributes(requestedAttributes, authSession);
             }
         }
     }
-
-
 
     private void parseRequestedScopes(Element el, AuthenticationSessionModel authSession) {
         String requestedScopes = getChildElementsAsList(el).stream()
@@ -139,10 +124,9 @@ public class BeforeProcessingLoginRequest {
         AuthNoteHelper.setRequestedScopes(requestedScopes, authSession);
     }
 
-
     private List<Element> getChildElementsAsList(Element element) {
         List<Element> list = new ArrayList<>();
-        for (int i = 0 ; i < element.getChildNodes().getLength(); i++) {
+        for (int i = 0; i < element.getChildNodes().getLength(); i++) {
             Object o = element.getChildNodes().item(i);
             if (o instanceof Element) {
                 list.add((Element) o);
@@ -155,7 +139,7 @@ public class BeforeProcessingLoginRequest {
 
     private Map<String, Element> getChildElementsAsMap(Element element) {
         Map<String, Element> map = new HashMap<>();
-        for (int i = 0 ; i < element.getChildNodes().getLength(); i++) {
+        for (int i = 0; i < element.getChildNodes().getLength(); i++) {
             Object o = element.getChildNodes().item(i);
             if (o instanceof Element) {
                 map.put(((Element) o).getLocalName(), (Element) o);
@@ -165,6 +149,5 @@ public class BeforeProcessingLoginRequest {
         }
         return map;
     }
-
 
 }

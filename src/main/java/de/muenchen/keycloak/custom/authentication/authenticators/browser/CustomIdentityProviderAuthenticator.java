@@ -2,6 +2,13 @@ package de.muenchen.keycloak.custom.authentication.authenticators.browser;
 
 import de.muenchen.keycloak.custom.IdentityProviderHelper;
 import de.muenchen.keycloak.custom.broker.saml.AuthNoteHelper;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriBuilder;
+import java.net.URI;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.jboss.logging.Logger;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.authentication.AuthenticationFlowContext;
@@ -11,14 +18,6 @@ import org.keycloak.models.IdentityProviderModel;
 import org.keycloak.protocol.oidc.OIDCLoginProtocol;
 import org.keycloak.services.Urls;
 import org.keycloak.services.managers.ClientSessionCode;
-
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriBuilder;
-import java.net.URI;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class CustomIdentityProviderAuthenticator extends IdentityProviderAuthenticator {
 
@@ -51,11 +50,13 @@ public class CustomIdentityProviderAuthenticator extends IdentityProviderAuthent
     }
 
     /**
-     * Prüft ob nach Filterung aufgrund von Auth-Level oder RequestedAttributeSet nur ein einziger IDP übrig bleibt.
+     * Prüft ob nach Filterung aufgrund von Auth-Level oder RequestedAttributeSet nur ein einziger IDP
+     * übrig bleibt.
      * Falls ja, wird direkt dorthin weitergeleitet.
      *
      * @param context AuthenticationFlowContext
-     @return true wenn nach Filterung nur ein IDP gefunden und redirect initiiert wurde, false otherwise
+     * @return true wenn nach Filterung nur ein IDP gefunden und redirect initiiert wurde, false
+     *         otherwise
      */
     private boolean redirectIfOnlyOneIdp(AuthenticationFlowContext context) {
         final String authLevel = IdentityProviderHelper.findAuthLevel(context.getAuthenticationSession());
@@ -88,9 +89,11 @@ public class CustomIdentityProviderAuthenticator extends IdentityProviderAuthent
             String accessCode = new ClientSessionCode<>(context.getSession(), context.getRealm(), context.getAuthenticationSession()).getOrGenerateCode();
             String clientId = context.getAuthenticationSession().getClient().getClientId();
             String tabId = context.getAuthenticationSession().getTabId();
-            URI location = Urls.identityProviderAuthnRequest(context.getUriInfo().getBaseUri(), providerId, context.getRealm().getName(), accessCode, clientId, tabId);
+            URI location = Urls.identityProviderAuthnRequest(context.getUriInfo().getBaseUri(), providerId, context.getRealm().getName(), accessCode, clientId,
+                    tabId);
             if (context.getAuthenticationSession().getClientNote(OAuth2Constants.DISPLAY) != null) {
-                location = UriBuilder.fromUri(location).queryParam(OAuth2Constants.DISPLAY, context.getAuthenticationSession().getClientNote(OAuth2Constants.DISPLAY)).build();
+                location = UriBuilder.fromUri(location)
+                        .queryParam(OAuth2Constants.DISPLAY, context.getAuthenticationSession().getClientNote(OAuth2Constants.DISPLAY)).build();
             }
             Response response = Response.seeOther(location)
                     .build();

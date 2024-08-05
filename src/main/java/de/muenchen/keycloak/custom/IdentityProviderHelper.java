@@ -2,13 +2,12 @@ package de.muenchen.keycloak.custom;
 
 import de.muenchen.keycloak.custom.broker.saml.AuthNoteHelper;
 import de.muenchen.keycloak.custom.forms.login.freemarker.IDPs;
+import java.util.Arrays;
+import java.util.List;
 import org.jboss.logging.Logger;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.sessions.AuthenticationSessionModel;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class IdentityProviderHelper {
 
@@ -25,7 +24,8 @@ public class IdentityProviderHelper {
     public static final String AUTH_CONTEXT = "AUTH_CONTEXT";
 
     /**
-     * Checks whether the given Identity Provider should be removed from the list of login option if the provided
+     * Checks whether the given Identity Provider should be removed from the list of login option if the
+     * provided
      * authLevel ist required as a minimum.
      *
      * @param alias The alias of the IdentityProvider to check
@@ -69,9 +69,9 @@ public class IdentityProviderHelper {
         return false;
     }
 
-
     /**
-     * Finds the authlevel in the scopes of the current request (there should be only one set, otherwise indeterministic)
+     * Finds the authlevel in the scopes of the current request (there should be only one set, otherwise
+     * indeterministic)
      * for OIDC or the requestedAuthnContext (mapped to an authlevel) for SAML2.
      *
      * @param authenticationSession AuthenticationSessionModel
@@ -108,6 +108,7 @@ public class IdentityProviderHelper {
 
     /**
      * Maps the given STORK-QAA-Level to the corresponding authlevel ("level1" ... "level4").
+     *
      * @param stork STORK-QAA-Level to map
      * @return the corresponding authlevel
      */
@@ -124,7 +125,7 @@ public class IdentityProviderHelper {
         return null;
     }
 
-    public static String mapAuthLevelToEIDAS(final String authlevel) {
+    public static String mapAuthLevelToEidas(final String authlevel) {
         if (authlevel.equalsIgnoreCase(STORK_QAA_LEVEL_1) || authlevel.equalsIgnoreCase(LEVEL_1)) {
             return "http://eidas.europa.eu/LoA/low";
         } else if (authlevel.equalsIgnoreCase(STORK_QAA_LEVEL_2) || authlevel.equalsIgnoreCase(LEVEL_2)) {
@@ -139,11 +140,9 @@ public class IdentityProviderHelper {
         }
     }
 
-
-
-
     /**
      * Return the scopes currently set in the request.
+     *
      * @param clientSession AuthenticationSessionModel
      * @return the scopes in the current request as List of String, or null if not existing
      */
@@ -162,6 +161,7 @@ public class IdentityProviderHelper {
     /**
      * Prüft, ob (im Fall von OIDC) einer der Scopes any oder legalEntity existiert und
      * gibt in dem Fall diesen String zurück. Wird dann im Request als RequestedAttributeSet gesetzt.
+     *
      * @param clientSession the AuthenticationSessionModel
      * @return requestedAttributeSet als String
      */
@@ -172,7 +172,7 @@ public class IdentityProviderHelper {
 
         List<String> scopes = IdentityProviderHelper.findScopeParams(clientSession);
 
-        if (scopes != null && isOIDCRequest(clientSession)) {
+        if (scopes != null && isOidcRequest(clientSession)) {
             //OIDC Call
             for (String scope : scopes) {
                 if (scope.equalsIgnoreCase("any")) {
@@ -180,7 +180,7 @@ public class IdentityProviderHelper {
                 } else if (scope.equalsIgnoreCase("legalEntity")) {
                     return "legalEntity";
                 } else if (scope.equalsIgnoreCase("person")) {
-                return "person";
+                    return "person";
                 } else {
                     //Buergerkonto ist standard, keine Extension benoetigt
                 }
@@ -195,7 +195,7 @@ public class IdentityProviderHelper {
         return null;
     }
 
-    public static boolean isOIDCRequest(AuthenticationSessionModel clientSession) {
+    public static boolean isOidcRequest(AuthenticationSessionModel clientSession) {
         String protocol = clientSession.getProtocol();
         if (protocol == null) {
             logger.warn("No protocol found - cannot determine whether OIDC or SAML2 Call!");

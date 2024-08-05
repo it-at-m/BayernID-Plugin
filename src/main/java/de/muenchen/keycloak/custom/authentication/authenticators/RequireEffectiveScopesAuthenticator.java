@@ -1,16 +1,15 @@
 package de.muenchen.keycloak.custom.authentication.authenticators;
 
 import de.muenchen.keycloak.custom.broker.saml.PreprocessorHelper;
-import org.jboss.logging.Logger;
-import org.keycloak.authentication.AuthenticationFlowContext;
-import org.keycloak.authentication.Authenticator;
-import org.keycloak.models.*;
-
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.jboss.logging.Logger;
+import org.keycloak.authentication.AuthenticationFlowContext;
+import org.keycloak.authentication.Authenticator;
+import org.keycloak.models.*;
 
 public class RequireEffectiveScopesAuthenticator implements Authenticator {
 
@@ -23,14 +22,15 @@ public class RequireEffectiveScopesAuthenticator implements Authenticator {
 
     @Override
     public void authenticate(final AuthenticationFlowContext context) {
-       final RealmModel realm = context.getRealm();
+        final RealmModel realm = context.getRealm();
         final UserModel user = context.getUser();
         final AuthenticatorConfigModel authenticatorConfig = context.getAuthenticatorConfig();
         String errorString;
 
-        final String attributeName = resolveConfiguration(authenticatorConfig.getConfig(), de.muenchen.keycloak.custom.authentication.authenticators.RequireEffectiveScopesAuthenticatorFactory.ATTRIBUTE);
-        final String customError = resolveConfiguration(authenticatorConfig.getConfig(), de.muenchen.keycloak.custom.authentication.authenticators.RequireEffectiveScopesAuthenticatorFactory.CUSTOM_ERROR);
-
+        final String attributeName = resolveConfiguration(authenticatorConfig.getConfig(),
+                de.muenchen.keycloak.custom.authentication.authenticators.RequireEffectiveScopesAuthenticatorFactory.ATTRIBUTE);
+        final String customError = resolveConfiguration(authenticatorConfig.getConfig(),
+                de.muenchen.keycloak.custom.authentication.authenticators.RequireEffectiveScopesAuthenticatorFactory.CUSTOM_ERROR);
 
         if (attributeName == null || attributeName.trim().equalsIgnoreCase("")) {
             logger.error("Wrong / missing konfiguration in require-effective-scopes-plugin! AttributeName " + attributeName);
@@ -70,7 +70,6 @@ public class RequireEffectiveScopesAuthenticator implements Authenticator {
         context.forceChallenge(challenge);
     }
 
-
     private void logoutUser(final AuthenticationFlowContext context, final UserModel user) {
         if (context == null || context.getRealm() == null || context.getSession() == null || context.getSession().sessions() == null) {
             return;
@@ -85,14 +84,15 @@ public class RequireEffectiveScopesAuthenticator implements Authenticator {
         }
     }
 
-
     /**
      * Prüft, ob der angegebene User im Attribut attributeName einen der Werte aus attributeValues hat.
+     *
      * @param user User zur Prüfung
      * @param attributeName attributName zur Prüfung
      * @return true wenn Wert vorhanden, false sonst
      */
-    private boolean isUserWithAttribute(final AuthenticationFlowContext context, final UserModel user, final String attributeName, final Set<String> effectiveScopes) {
+    private boolean isUserWithAttribute(final AuthenticationFlowContext context, final UserModel user, final String attributeName,
+            final Set<String> effectiveScopes) {
         if (user == null || user.getAttributeStream(attributeName) == null) {
             logger.info("Could not find attribute " + attributeName + " on user  " + (user != null ? user.getUsername() : "UNKNOWN"));
             return false;
@@ -113,10 +113,11 @@ public class RequireEffectiveScopesAuthenticator implements Authenticator {
 
     /**
      * Erzeugt einen Error-String aus den angegebenen Parametern (für die Login-Seite).
-     * @param user
-     * @param attributeName
-     * @param deductedScopes
-     * @return
+     *
+     * @param user the User
+     * @param attributeName der attribute-name
+     * @param deductedScopes die abgeleiteten Scopes
+     * @return error String
      */
     private String createErrorString(final UserModel user, final String attributeName, final Set<String> deductedScopes) {
         final String userName = user.getUsername();
@@ -131,6 +132,7 @@ public class RequireEffectiveScopesAuthenticator implements Authenticator {
 
     /**
      * Fetches Configuration item with the given key from the given config Map.
+     *
      * @param config the config map
      * @param key the key
      * @return the entry

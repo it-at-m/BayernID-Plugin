@@ -3,6 +3,16 @@ package de.muenchen.keycloak.custom.broker.saml;
 import de.muenchen.keycloak.custom.ScopesHelper;
 import de.muenchen.keycloak.custom.broker.saml.domain.RequestedAttribute;
 import de.muenchen.keycloak.custom.broker.saml.mappers.CustomUserAttributeMapper;
+import java.io.StringWriter;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.stream.Collectors;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.jboss.logging.Logger;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.broker.saml.mappers.UserAttributeMapper;
@@ -16,21 +26,9 @@ import org.keycloak.saml.processing.api.saml.v2.request.SAML2Request;
 import org.keycloak.sessions.AuthenticationSessionModel;
 import org.w3c.dom.Document;
 
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.StringWriter;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.stream.Collectors;
-
 public class PreprocessorHelper {
 
     protected static final Logger logger = Logger.getLogger(PreprocessorHelper.class);
-
 
     public static Set<String> enhanceEffectiveScopes(Set<String> effectiveScopes, AuthenticationSessionModel clientSession) {
         Set<String> deductedScopes = PreprocessorHelper.deductScopesFromRequestedAttributes(clientSession);
@@ -45,11 +43,14 @@ public class PreprocessorHelper {
 
     /**
      * Stellt die "effective Scopes" zusammen. Und zwar wie folgt:
-     * - bei OIDC: alle default client scopes sowie alle optional client scopes, die explizit im Request angefordert wurden.
-     * - bei SAML2: alle im SAML-Request unter Extensions explizit angeforderten scopes ODER (falls keine scopes explizit
+     * - bei OIDC: alle default client scopes sowie alle optional client scopes, die explizit im Request
+     * angefordert wurden.
+     * - bei SAML2: alle im SAML-Request unter Extensions explizit angeforderten scopes ODER (falls
+     * keine scopes explizit
      * angefordert wurden) alle default client scopes.
      *
-     * Hinweis: Bei den Client Scopes wird ggf. zunächst das Suffix "_oidc" bzw "_saml" entfernt, falls vorhanden.
+     * Hinweis: Bei den Client Scopes wird ggf. zunächst das Suffix "_oidc" bzw "_saml" entfernt, falls
+     * vorhanden.
      *
      * @param clientSession AuthenticationSessionModel
      * @return Effective Scopes als Set<String>
@@ -66,11 +67,10 @@ public class PreprocessorHelper {
         //Version für RH-SSO 7.5 / Keycloak 15.0.2
         final Map<String, ClientScopeModel> defaultClientScopes = currentClient.getClientScopes(true);
 
-        if (PreprocessorHelper.isOIDCRequest(clientSession)) {
+        if (PreprocessorHelper.isOidcRequest(clientSession)) {
             //bei OIDC: alle default client scopes sind "effective" (aber Suffix _oidc vorher entfernen)
             effectiveScopes.addAll(
-                    ScopesHelper.stripScopes(defaultClientScopes.keySet())
-            );
+                    ScopesHelper.stripScopes(defaultClientScopes.keySet()));
 
             //bei OIDC: alle optional scopes, die explizit im Request angefordert wurden, sind "effective"
             final Map<String, ClientScopeModel> optionalClientScopes = currentClient.getClientScopes(false);
@@ -78,10 +78,9 @@ public class PreprocessorHelper {
 
             if (requestedScopes != null) {
                 effectiveScopes.addAll(
-                        requestedScopes.stream().filter(optionalClientScopes::containsKey).collect(Collectors.toList())
-                );
+                        requestedScopes.stream().filter(optionalClientScopes::containsKey).collect(Collectors.toList()));
             }
-        } else if (PreprocessorHelper.isSAMLRequest(clientSession)) {
+        } else if (PreprocessorHelper.isSamlRequest(clientSession)) {
             //bei SAML: alle im SAML Request angeforderten Scopes sind "effective"
             List<String> requestedScopes = AuthNoteHelper.getRequestedScopesAsList(clientSession);
             if (requestedScopes != null) {
@@ -90,22 +89,23 @@ public class PreprocessorHelper {
 
             //und alle default Scopes sind "effective"
             effectiveScopes.addAll(
-                    ScopesHelper.stripScopes(defaultClientScopes.keySet())
-            );
+                    ScopesHelper.stripScopes(defaultClientScopes.keySet()));
         }
 
         return effectiveScopes;
     }
 
     /**
-     * Falls im SAML-Request explizit Attribute angefordert wurden (Funktionalität ist aufgrund von Kompatibilität
-     * zur Original-AKDB-Schnittstelle vorhanden), werden die dabei komplett abgedeckten Scopes ermittelt.
+     * Falls im SAML-Request explizit Attribute angefordert wurden (Funktionalität ist aufgrund von
+     * Kompatibilität
+     * zur Original-AKDB-Schnittstelle vorhanden), werden die dabei komplett abgedeckten Scopes
+     * ermittelt.
      *
      * @param clientSession AuthenticationSessionModel
      * @return vollständig durch im SAML-Request angeforderte Attribute abgedeckte Scopes
      */
     public static Set<String> deductScopesFromRequestedAttributes(AuthenticationSessionModel clientSession) {
-        Map<String, RequestedAttribute> requestedAttributes = deriveRequestedAttributesFromSAMLRequest(clientSession);
+        Map<String, RequestedAttribute> requestedAttributes = deriveRequestedAttributesFromSamlRequest(clientSession);
 
         if (requestedAttributes == null || requestedAttributes.isEmpty()) {
             return null;
@@ -141,19 +141,23 @@ public class PreprocessorHelper {
 
         //alle Scopes sammeln, die auf TRUE stehen und zurückliefern
         Set<String> scopesSet = new HashSet<>();
-        scopes.forEach((s, b) -> {if (b == Boolean.TRUE) { scopesSet.add(s); }});
+        scopes.forEach((s, b) -> {
+            if (b == Boolean.TRUE) {
+                scopesSet.add(s);
+            }
+        });
         return scopesSet;
     }
 
-
     /**
-     * Liefert die im SAML-Request angeforderten Attribute in Form einer Map (zur späteren schnelleren Auffindbarkeit
+     * Liefert die im SAML-Request angeforderten Attribute in Form einer Map (zur späteren schnelleren
+     * Auffindbarkeit
      * mit dem Attribut-Namen als Key.
      *
      * @param clientSession AuthenticationSessionModel
      * @return die im SAML-Request angeforderten Attribute in Form einer Map
      */
-    public static Map<String, RequestedAttribute> deriveRequestedAttributesFromSAMLRequest(AuthenticationSessionModel clientSession) {
+    public static Map<String, RequestedAttribute> deriveRequestedAttributesFromSamlRequest(AuthenticationSessionModel clientSession) {
         String requestedAttributesString = AuthNoteHelper.getRequestedAttributes(clientSession);
 
         if (requestedAttributesString != null) {
@@ -193,11 +197,10 @@ public class PreprocessorHelper {
         return scopes; //Wichtig: scopes muss null nein, wenn keine ClientNote --> bezeichnet den SAML-Call
     }
 
-
     public static boolean hasDebugScope(AuthenticationSessionModel clientSession) {
         if (clientSession != null) {
             List<String> scopes = PreprocessorHelper.findScopeParams(clientSession);
-            if (scopes != null && isOIDCRequest(clientSession)) {
+            if (scopes != null && isOidcRequest(clientSession)) {
                 //OIDC Call
                 return scopes.contains("debug");
             } else {
@@ -210,8 +213,7 @@ public class PreprocessorHelper {
         return false;
     }
 
-
-    public static boolean isOIDCRequest(AuthenticationSessionModel clientSession) {
+    public static boolean isOidcRequest(AuthenticationSessionModel clientSession) {
         String protocol = clientSession.getProtocol();
         if (protocol == null) {
             logger.warn("No protocol found - cannot determine whether OIDC or SAML2 Call!");
@@ -219,14 +221,13 @@ public class PreprocessorHelper {
         return false;
     }
 
-    public static boolean isSAMLRequest(AuthenticationSessionModel clientSession) {
+    public static boolean isSamlRequest(AuthenticationSessionModel clientSession) {
         String protocol = clientSession.getProtocol();
         if (protocol == null) {
             logger.warn("No protocol found - cannot determine whether OIDC or SAML2 Call!");
         } else return protocol.equals("saml");
         return false;
     }
-
 
     public static boolean isPublicRealm(String realm) {
         return realm != null && realm.equalsIgnoreCase("public") || realm.equalsIgnoreCase("demo") || realm.equalsIgnoreCase("A61");
@@ -257,6 +258,5 @@ public class PreprocessorHelper {
 
         return writer.toString();
     }
-
 
 }

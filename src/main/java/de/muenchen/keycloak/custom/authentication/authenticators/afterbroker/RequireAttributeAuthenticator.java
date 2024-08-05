@@ -1,16 +1,15 @@
 package de.muenchen.keycloak.custom.authentication.authenticators.afterbroker;
 
 import de.muenchen.keycloak.custom.ScopesHelper;
-import org.jboss.logging.Logger;
-import org.keycloak.authentication.AuthenticationFlowContext;
-import org.keycloak.authentication.Authenticator;
-import org.keycloak.models.*;
-
 import jakarta.ws.rs.core.Response;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.jboss.logging.Logger;
+import org.keycloak.authentication.AuthenticationFlowContext;
+import org.keycloak.authentication.Authenticator;
+import org.keycloak.models.*;
 
 public class RequireAttributeAuthenticator implements Authenticator {
 
@@ -43,7 +42,7 @@ public class RequireAttributeAuthenticator implements Authenticator {
         }
 
         if (attributeName == null || attributeName.trim().equalsIgnoreCase("")
-        || attributeValues == null || attributeValues.trim().equalsIgnoreCase("")) {
+                || attributeValues == null || attributeValues.trim().equalsIgnoreCase("")) {
             logger.error("Wrong / missing konfiguration in require-attribute-plugin! AttributeName " + attributeName
                     + " attributeValues " + attributeValues + " dependOnScopes " + dependOnScopes
                     + " regExp " + regExp);
@@ -92,7 +91,6 @@ public class RequireAttributeAuthenticator implements Authenticator {
         context.forceChallenge(challenge);
     }
 
-
     private void logoutUser(final AuthenticationFlowContext context, final UserModel user) {
         if (context == null || context.getRealm() == null || context.getSession() == null || context.getSession().sessions() == null) {
             return;
@@ -108,7 +106,9 @@ public class RequireAttributeAuthenticator implements Authenticator {
     }
 
     /**
-     * Prüft, ob der aktuelle client einen der im String angegebenen Scopes als default oder optional scope gesetzt hat.
+     * Prüft, ob der aktuelle client einen der im String angegebenen Scopes als default oder optional
+     * scope gesetzt hat.
+     *
      * @param context AuthenticationFlowContext
      * @param attributeValues List<String>
      * @return reduzierte Liste
@@ -124,28 +124,28 @@ public class RequireAttributeAuthenticator implements Authenticator {
         }
 
         //entferne Suffix "_oidc" oder "_saml" falls existent
-        final List<String> strippedClientScopes  = ScopesHelper.stripScopes(clientScopes);
+        final List<String> strippedClientScopes = ScopesHelper.stripScopes(clientScopes);
 
-        final List<String> filteredAttributeValues = attributeValues.stream().filter(attributeValue ->
-                (strippedClientScopes != null && strippedClientScopes.contains(attributeValue)))
-        .collect(Collectors.toList());
+        final List<String> filteredAttributeValues = attributeValues.stream()
+                .filter(attributeValue -> (strippedClientScopes != null && strippedClientScopes.contains(attributeValue)))
+                .collect(Collectors.toList());
 
-        logger.info("Filtered attribute values from config: " + String.join(", " , filteredAttributeValues));
+        logger.info("Filtered attribute values from config: " + String.join(", ", filteredAttributeValues));
 
         return filteredAttributeValues;
     }
 
-
-
     /**
      * Prüft, ob der angegebene User im Attribut attributeName einen der Werte aus attributeValues hat.
+     *
      * @param user User zur Prüfung
      * @param attributeName attributName zur Prüfung
      * @param attributeValues die Werte, auf deren Existenz geprüft werden soll
      * @param regExp "true" wenn reguläre Expressions aktiv
      * @return true wenn Wert vorhanden, false sonst
      */
-    private boolean isUserWithAttribute(final AuthenticationFlowContext context, final UserModel user, final String attributeName, final List<String> attributeValues, final String regExp) {
+    private boolean isUserWithAttribute(final AuthenticationFlowContext context, final UserModel user, final String attributeName,
+            final List<String> attributeValues, final String regExp) {
         if (user == null || user.getAttributeStream(attributeName) == null) {
             logger.info("Could not find attribute " + attributeName + " on user  " + (user != null ? user.getUsername() : "UNKNOWN"));
             return false;
@@ -189,6 +189,7 @@ public class RequireAttributeAuthenticator implements Authenticator {
 
     /**
      * Erzeugt einen Error-String aus den angegebenen Parametern (für die Login-Seite).
+     *
      * @param user UserModel
      * @param attributeName der attributeName
      * @param attributeValues List<String>
@@ -205,6 +206,7 @@ public class RequireAttributeAuthenticator implements Authenticator {
 
     /**
      * Fetches Configuration item with the given key from the given config Map.
+     *
      * @param config the config map
      * @param key the key
      * @return the entry

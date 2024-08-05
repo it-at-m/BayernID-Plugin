@@ -3,6 +3,7 @@ package de.muenchen.keycloak.custom.forms.login.freemarker;
 import java.util.Arrays;
 
 public enum IDPs {
+    // spotless:off
     //Benennung in den versch. Umgebungen:
     //------------------------------------
     //BayernID:          sso --> buergerkonto; ssotest --> buergerkonto; ssodev --> saml
@@ -28,6 +29,7 @@ public enum IDPs {
             "Google",          new String[]{"google"},               new String[]{"level1"},                               new String[]{"person", "any"}),
     Intern(
             "Intern",          new String[]{"intern"},               new String[]{"level1", "level2", "level3"},           new String[]{"person", "legalEntity", "any"});
+    // spotless:on
 
     public final String scope;
     public final String[] alias;

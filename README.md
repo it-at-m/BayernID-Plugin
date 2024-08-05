@@ -144,3 +144,31 @@ Dabei gibt es folgende Möglichkeiten:
 
 
 Diese Möglichkeiten kann man bspw. bei Shibboleth erreichen, indem man in der Datei `shibboleth2.xml` einen `SessionInitiator` mit entsprechendem Inhalt definiert.
+
+## Built with
+    Java 17
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
+
+If you have a suggestion that would make this better, please open an issue with the tag "enhancement", fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement". Don't forget to give the project a star! Thanks again!
+
+    Open an issue with the tag "enhancement"
+    Fork the Project
+    Create your Feature Branch (git checkout -b feature/AmazingFeature)
+    Commit your Changes (git commit -m 'Add some AmazingFeature')
+    Push to the Branch (git push origin feature/AmazingFeature)
+    Open a Pull Request
+
+### Coding Conventions
+
+We use the [itm-java-codeformat](https://github.com/it-at-m/itm-java-codeformat) project to apply code formatting conventions.
+To add those conventions to your favorite IDE, please have a look at the [README of itm-java-codeformat](https://github.com/it-at-m/itm-java-codeformat#verwendung).
+
+## License
+
+Distributed under the MIT License. See LICENSE for more information.
+## Contact
+
+it@m - opensource@muenchen.de

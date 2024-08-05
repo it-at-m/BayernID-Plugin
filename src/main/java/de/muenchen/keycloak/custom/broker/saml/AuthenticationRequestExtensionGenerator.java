@@ -1,19 +1,19 @@
 package de.muenchen.keycloak.custom.broker.saml;
 
 import de.muenchen.keycloak.custom.broker.saml.domain.RequestedAttribute;
+import java.io.ByteArrayOutputStream;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.stream.XMLStreamWriter;
 import org.keycloak.saml.SamlProtocolExtensionsAwareBuilder;
 import org.keycloak.saml.common.constants.GeneralConstants;
 import org.keycloak.saml.common.exceptions.ProcessingException;
 import org.keycloak.saml.common.util.StaxUtil;
 
-import javax.xml.stream.XMLStreamWriter;
-import java.io.ByteArrayOutputStream;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * Derived from org.keycloak.saml.processing.core.util.KeycloakKeySamlExtensionGenerator
+ *
  * @author rowe42
  */
 public class AuthenticationRequestExtensionGenerator implements SamlProtocolExtensionsAwareBuilder.NodeGenerator {
@@ -87,7 +87,6 @@ public class AuthenticationRequestExtensionGenerator implements SamlProtocolExte
 
         StaxUtil.writeEndElement(writer); //Version
         StaxUtil.writeEndElement(writer); //DisplayInformation
-
 
         StaxUtil.writeEndElement(writer); //AuthenticationRequest
         StaxUtil.flush(writer);

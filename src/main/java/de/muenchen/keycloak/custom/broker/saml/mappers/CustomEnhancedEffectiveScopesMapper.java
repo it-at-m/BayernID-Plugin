@@ -1,6 +1,7 @@
 package de.muenchen.keycloak.custom.broker.saml.mappers;
 
 import de.muenchen.keycloak.custom.broker.saml.AuthNoteHelper;
+import java.util.*;
 import org.jboss.logging.Logger;
 import org.keycloak.broker.provider.AbstractIdentityProviderMapper;
 import org.keycloak.broker.provider.BrokeredIdentityContext;
@@ -8,9 +9,8 @@ import org.keycloak.broker.saml.SAMLIdentityProviderFactory;
 import org.keycloak.models.*;
 import org.keycloak.provider.ProviderConfigProperty;
 
-import java.util.*;
-
-/**TODO
+/**
+ * Custom Mapper, der die effektiven (hergeleiteten) Scopes in einem User-Attribut ablegt.
  *
  * @author rowe42
  * @version $Revision: 1 $
@@ -19,7 +19,7 @@ public class CustomEnhancedEffectiveScopesMapper extends AbstractIdentityProvide
 
     private static final Logger LOGGER = Logger.getLogger(CustomEnhancedEffectiveScopesMapper.class);
 
-    public static final String[] COMPATIBLE_PROVIDERS = {SAMLIdentityProviderFactory.PROVIDER_ID};
+    public static final String[] COMPATIBLE_PROVIDERS = { SAMLIdentityProviderFactory.PROVIDER_ID };
     private static final Set<IdentityProviderSyncMode> IDENTITY_PROVIDER_SYNC_MODES = new HashSet<>(Arrays.asList(IdentityProviderSyncMode.values()));
     private static final List<ProviderConfigProperty> configProperties = new ArrayList<>();
 
@@ -37,10 +37,12 @@ public class CustomEnhancedEffectiveScopesMapper extends AbstractIdentityProvide
     }
 
     public static final String PROVIDER_ID = "saml-custom-effective-scopes-mapper";
+
     @Override
     public boolean supportsSyncMode(IdentityProviderSyncMode syncMode) {
         return IDENTITY_PROVIDER_SYNC_MODES.contains(syncMode);
     }
+
     @Override
     public List<ProviderConfigProperty> getConfigProperties() {
         return configProperties;
@@ -66,9 +68,9 @@ public class CustomEnhancedEffectiveScopesMapper extends AbstractIdentityProvide
         return "Custom effective scopes mapper";
     }
 
-
     @Override
-    public void preprocessFederatedIdentity(KeycloakSession session, RealmModel realm, IdentityProviderMapperModel mapperModel, BrokeredIdentityContext context) {
+    public void preprocessFederatedIdentity(KeycloakSession session, RealmModel realm, IdentityProviderMapperModel mapperModel,
+            BrokeredIdentityContext context) {
         String effectiveScopes = AuthNoteHelper.getEnhancedEffectiveScopes(context.getAuthenticationSession());
         if (effectiveScopes != null) {
             final String attribute = mapperModel.getConfig().get(ATTRIBUTE);
@@ -78,7 +80,8 @@ public class CustomEnhancedEffectiveScopesMapper extends AbstractIdentityProvide
     }
 
     @Override
-    public void updateBrokeredUser(KeycloakSession session, RealmModel realm, UserModel user, IdentityProviderMapperModel mapperModel, BrokeredIdentityContext context) {
+    public void updateBrokeredUser(KeycloakSession session, RealmModel realm, UserModel user, IdentityProviderMapperModel mapperModel,
+            BrokeredIdentityContext context) {
         String effectiveScopes = AuthNoteHelper.getEnhancedEffectiveScopes(context.getAuthenticationSession());
         if (effectiveScopes != null) {
             final String attribute = mapperModel.getConfig().get(ATTRIBUTE);

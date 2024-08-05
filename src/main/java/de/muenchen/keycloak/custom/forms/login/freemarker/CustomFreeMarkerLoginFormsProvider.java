@@ -1,6 +1,8 @@
 package de.muenchen.keycloak.custom.forms.login.freemarker;
 
 import de.muenchen.keycloak.custom.IdentityProviderHelper;
+import jakarta.ws.rs.core.UriBuilder;
+import java.util.*;
 import org.jboss.logging.Logger;
 import org.keycloak.forms.login.LoginFormsPages;
 import org.keycloak.forms.login.freemarker.FreeMarkerLoginFormsProvider;
@@ -9,12 +11,9 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.sessions.AuthenticationSessionModel;
 import org.keycloak.theme.Theme;
 
-import jakarta.ws.rs.core.UriBuilder;
-
-import java.util.*;
-
 /**
- * siehe https://stackoverflow.com/questions/44072608/keycloak-access-cookie-and-or-url-query-params-inside-freemarker-template
+ * siehe
+ * https://stackoverflow.com/questions/44072608/keycloak-access-cookie-and-or-url-query-params-inside-freemarker-template
  */
 public class CustomFreeMarkerLoginFormsProvider extends FreeMarkerLoginFormsProvider {
 
@@ -30,10 +29,9 @@ public class CustomFreeMarkerLoginFormsProvider extends FreeMarkerLoginFormsProv
     }
 
     @Override
-    protected void createCommonAttributes(final Theme theme, final Locale locale, final Properties messagesBundle, final UriBuilder baseUriBuilder, final LoginFormsPages page) {
+    protected void createCommonAttributes(final Theme theme, final Locale locale, final Properties messagesBundle, final UriBuilder baseUriBuilder,
+            final LoginFormsPages page) {
         super.createCommonAttributes(theme, locale, messagesBundle, baseUriBuilder, page);
-
-
 
         //die folgenden Prüfungen nur im Realm "public" (und aus historischen Gründen alternativ "demo" und "A61") durchführen (um Nebenwirkungen in anderen Realms zu minimieren)
         if (session == null || session.getContext() == null || session.getContext().getRealm() == null ||
@@ -77,9 +75,5 @@ public class CustomFreeMarkerLoginFormsProvider extends FreeMarkerLoginFormsProv
         }
 
     }
-
-
-
-
 
 }

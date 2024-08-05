@@ -12,6 +12,7 @@ import org.keycloak.saml.common.util.StaxUtil;
 
 /**
  * Derived from org.keycloak.saml.processing.core.util.KeycloakKeySamlExtensionGenerator
+ *
  * @author rowe42
  */
 public class AccounttypeExtensionGenerator implements SamlProtocolExtensionsAwareBuilder.NodeGenerator {
@@ -51,8 +52,7 @@ public class AccounttypeExtensionGenerator implements SamlProtocolExtensionsAwar
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             XMLStreamWriter xmlStreamWriter = StaxUtil.getXMLStreamWriter(bos);
             write(xmlStreamWriter);
-            String res = new String(bos.toByteArray(), GeneralConstants.SAML_CHARSET);
-            return res;
+            return new String(bos.toByteArray(), GeneralConstants.SAML_CHARSET);
         } catch (ProcessingException ex) {
             Logger.getLogger(AccounttypeExtensionGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }

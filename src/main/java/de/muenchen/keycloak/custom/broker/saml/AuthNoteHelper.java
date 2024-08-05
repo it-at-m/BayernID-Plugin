@@ -1,10 +1,8 @@
 package de.muenchen.keycloak.custom.broker.saml;
 
+import java.util.*;
 import org.keycloak.sessions.AuthenticationSessionModel;
 import org.w3c.dom.Element;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class AuthNoteHelper {
     public static void setRequestedScopes(String requestedScopes, AuthenticationSessionModel authSession) {
@@ -146,6 +144,5 @@ public class AuthNoteHelper {
         }
         return null;
     }
-
 
 }

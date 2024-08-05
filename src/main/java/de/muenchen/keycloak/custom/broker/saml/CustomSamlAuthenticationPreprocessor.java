@@ -67,7 +67,8 @@ public class CustomSamlAuthenticationPreprocessor implements SamlAuthenticationP
     }
 
     @Override
-    public LogoutRequestType beforeProcessingLogoutRequest(LogoutRequestType logoutRequest, UserSessionModel authSession, AuthenticatedClientSessionModel clientSession) {
+    public LogoutRequestType beforeProcessingLogoutRequest(LogoutRequestType logoutRequest, UserSessionModel authSession,
+            AuthenticatedClientSessionModel clientSession) {
         logger.debug("beforeProcessingLogoutRequest");
         return SamlAuthenticationPreprocessor.super.beforeProcessingLogoutRequest(logoutRequest, authSession, clientSession);
     }
@@ -122,7 +123,8 @@ public class CustomSamlAuthenticationPreprocessor implements SamlAuthenticationP
     // SCHRITT 4
     /**
      * Wird aufgerufen, wenn der Keycloak letztlich wieder zur Anwendung
-     * zurückleitet. Hier setzen wir das authlevel noch zusätzlich in der EIDAS-Form in den AuthnContext,
+     * zurückleitet. Hier setzen wir das authlevel noch zusätzlich in der EIDAS-Form in den
+     * AuthnContext,
      * damit wir daraus im Formularserver zugreifen können.
      *
      * @param statusResponse StatusResponseType

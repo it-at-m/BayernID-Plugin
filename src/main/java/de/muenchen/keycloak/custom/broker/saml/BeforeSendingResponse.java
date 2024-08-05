@@ -1,15 +1,14 @@
 package de.muenchen.keycloak.custom.broker.saml;
 
 import de.muenchen.keycloak.custom.IdentityProviderHelper;
-import org.jboss.logging.Logger;
-import org.keycloak.dom.saml.v2.assertion.*;
-import org.keycloak.dom.saml.v2.protocol.ResponseType;
-import org.keycloak.dom.saml.v2.protocol.StatusResponseType;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Set;
+import org.jboss.logging.Logger;
+import org.keycloak.dom.saml.v2.assertion.*;
+import org.keycloak.dom.saml.v2.protocol.ResponseType;
+import org.keycloak.dom.saml.v2.protocol.StatusResponseType;
 
 public class BeforeSendingResponse {
 
@@ -17,6 +16,7 @@ public class BeforeSendingResponse {
 
     /**
      * List das authlevel aus dem AttributeStatement und schreibt es in den AuthnContext.
+     *
      * @param statusResponse StatusResponseType
      */
     public void process(StatusResponseType statusResponse) {
@@ -37,7 +37,7 @@ public class BeforeSendingResponse {
                             String authlevel = getAuthlevelFromAttributeStatement(statements);
 
                             if (authlevel != null) {
-                                String eidasLevel = IdentityProviderHelper.mapAuthLevelToEIDAS(authlevel);
+                                String eidasLevel = IdentityProviderHelper.mapAuthLevelToEidas(authlevel);
 
                                 if (eidasLevel != null) {
                                     setAuthlevelToAuthnStatement(eidasLevel, statements);
@@ -50,9 +50,9 @@ public class BeforeSendingResponse {
         }
     }
 
-
     /**
      * Holt das Authlevel aus dem Attribute Statement.
+     *
      * @param statements Die Statements des SAML-Response.
      * @return Das Authlevel als String.
      */
@@ -60,11 +60,12 @@ public class BeforeSendingResponse {
         for (StatementAbstractType statement : statements) {
             if (statement instanceof AttributeStatementType) {
                 AttributeStatementType attributeStatement = (AttributeStatementType) statement;
-                for(AttributeStatementType.ASTChoiceType act : attributeStatement.getAttributes()) {
+                for (AttributeStatementType.ASTChoiceType act : attributeStatement.getAttributes()) {
                     if (act != null && act.getAttribute() != null && act.getAttribute().getName().equalsIgnoreCase("authlevel")) {
                         if (act.getAttribute().getAttributeValue() != null) {
                             if (act.getAttribute().getAttributeValue().size() != 1) {
-                                logger.warn("Found Attribute " + act.getAttribute().getName() + " with " + act.getAttribute().getAttributeValue().size() + " Values! Should not happen!");
+                                logger.warn("Found Attribute " + act.getAttribute().getName() + " with " + act.getAttribute().getAttributeValue().size()
+                                        + " Values! Should not happen!");
                             }
                             if (act.getAttribute().getAttributeValue().iterator().next() instanceof String) {
                                 return (String) act.getAttribute().getAttributeValue().iterator().next();
@@ -79,6 +80,7 @@ public class BeforeSendingResponse {
 
     /**
      * Setzt das Authlevel in den AuthnContext.
+     *
      * @param authlevel Das authlevel, das gesetzt werden soll
      * @param statements Die Statements im SAML-Response.
      */
@@ -99,9 +101,5 @@ public class BeforeSendingResponse {
             }
         }
     }
-
-
-
-
 
 }

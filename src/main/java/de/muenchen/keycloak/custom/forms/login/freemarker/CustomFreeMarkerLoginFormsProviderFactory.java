@@ -28,7 +28,6 @@ import org.keycloak.models.KeycloakSessionFactory;
  */
 public class CustomFreeMarkerLoginFormsProviderFactory implements LoginFormsProviderFactory {
 
-
     @Override
     public LoginFormsProvider create(KeycloakSession session) {
         return new CustomFreeMarkerLoginFormsProvider(session);
@@ -42,6 +41,7 @@ public class CustomFreeMarkerLoginFormsProviderFactory implements LoginFormsProv
     public void postInit(KeycloakSessionFactory factory) {
 
     }
+
     @Override
     public void close() {
     }
@@ -50,7 +50,5 @@ public class CustomFreeMarkerLoginFormsProviderFactory implements LoginFormsProv
     public String getId() {
         return "freemarker";
     }
-
-
 
 }

@@ -55,12 +55,14 @@ public class CustomUserAttributeMapper extends UserAttributeMapper {
     }
 
     @Override
-    public void importNewUser(final KeycloakSession session, final RealmModel realm, final UserModel user, final IdentityProviderMapperModel mapperModel, final BrokeredIdentityContext context) {
+    public void importNewUser(final KeycloakSession session, final RealmModel realm, final UserModel user, final IdentityProviderMapperModel mapperModel,
+            final BrokeredIdentityContext context) {
         super.importNewUser(session, realm, user, mapperModel, context);
     }
 
     @Override
-    public void updateBrokeredUser(final KeycloakSession session, final RealmModel realm, final UserModel user, final IdentityProviderMapperModel mapperModel, final BrokeredIdentityContext context) {
+    public void updateBrokeredUser(final KeycloakSession session, final RealmModel realm, final UserModel user, final IdentityProviderMapperModel mapperModel,
+            final BrokeredIdentityContext context) {
         super.updateBrokeredUser(session, realm, user, mapperModel, context);
     }
 }

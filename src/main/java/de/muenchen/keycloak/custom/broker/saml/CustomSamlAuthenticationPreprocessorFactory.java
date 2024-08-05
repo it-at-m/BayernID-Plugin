@@ -11,26 +11,26 @@ import org.keycloak.protocol.saml.preprocessor.SamlAuthenticationPreprocessor;
 public class CustomSamlAuthenticationPreprocessorFactory {
 
     public static final String PROVIDER_ID = "custompreprocessor";
-    
-//    @Override
+
+    //    @Override
     public String getId() {
         return PROVIDER_ID;
     }
-    
-//    @Override
+
+    //    @Override
     public void init(Config.Scope config) {
     }
 
-//    @Override
+    //    @Override
     public SamlAuthenticationPreprocessor create(KeycloakSession session) {
         return new CustomSamlAuthenticationPreprocessor();
     }
 
-//    @Override
+    //    @Override
     public void postInit(KeycloakSessionFactory factory) {
     }
 
-//    @Override
+    //    @Override
     public void close() {
     }
 

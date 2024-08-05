@@ -1,8 +1,6 @@
 package de.muenchen.keycloak.custom.authentication.authenticators.browser;
 
-import org.keycloak.OAuth2Constants;
 import org.keycloak.authentication.Authenticator;
-import org.keycloak.authentication.authenticators.AttemptedAuthenticator;
 import org.keycloak.authentication.authenticators.browser.IdentityProviderAuthenticatorFactory;
 import org.keycloak.models.KeycloakSession;
 
@@ -26,12 +24,12 @@ public class CustomIdentityProviderAuthenticatorFactory extends IdentityProvider
         return new CustomIdentityProviderAuthenticator();
     }
 
-//    @Override
-//    public Authenticator createDisplay(KeycloakSession session, String displayType) {
-//        if (displayType == null) return new CustomIdentityProviderAuthenticator();
-//        if (!OAuth2Constants.DISPLAY_CONSOLE.equalsIgnoreCase(displayType)) return null;
-//        return AttemptedAuthenticator.SINGLETON;  // ignore this authenticator
-//    }
+    //    @Override
+    //    public Authenticator createDisplay(KeycloakSession session, String displayType) {
+    //        if (displayType == null) return new CustomIdentityProviderAuthenticator();
+    //        if (!OAuth2Constants.DISPLAY_CONSOLE.equalsIgnoreCase(displayType)) return null;
+    //        return AttemptedAuthenticator.SINGLETON;  // ignore this authenticator
+    //    }
 
     @Override
     public String getId() {

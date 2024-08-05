@@ -1,5 +1,8 @@
 package de.muenchen.keycloak.custom.broker.saml.mappers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import org.jboss.logging.Logger;
 import org.keycloak.broker.provider.BrokeredIdentityContext;
 import org.keycloak.broker.saml.SAMLIdentityProviderFactory;
@@ -10,17 +13,13 @@ import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.provider.ProviderConfigProperty;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 public class CustomUserAttributeWithMappingMapper extends UserAttributeMapper {
 
     protected static final Logger logger = Logger.getLogger(CustomUserAttributeWithMappingMapper.class);
 
     //ELSTER hardcoded ergänzt, damit man den Mapper auch in elster-authenticator verwenden kann
     //entspricht dort ElsterIdentityProviderFactory.PROVIDER_ID
-    public static final String[] COMPATIBLE_PROVIDERS = {SAMLIdentityProviderFactory.PROVIDER_ID, "ELSTER"};
+    public static final String[] COMPATIBLE_PROVIDERS = { SAMLIdentityProviderFactory.PROVIDER_ID, "ELSTER" };
 
     public static final String PROVIDER_ID = "custom-saml-user-attribute-idp-mapper";
     public static final String MAPPING = "Mapping";
@@ -64,35 +63,37 @@ public class CustomUserAttributeWithMappingMapper extends UserAttributeMapper {
     }
 
     @Override
-    public void importNewUser(final KeycloakSession session, final RealmModel realm, final UserModel user, final IdentityProviderMapperModel mapperModel, final BrokeredIdentityContext context) {
+    public void importNewUser(final KeycloakSession session, final RealmModel realm, final UserModel user, final IdentityProviderMapperModel mapperModel,
+            final BrokeredIdentityContext context) {
         super.importNewUser(session, realm, user, mapperModel, context);
         applyMapping(mapperModel, user);
     }
 
     @Override
-    public void updateBrokeredUser(final KeycloakSession session, final RealmModel realm, final UserModel user, final IdentityProviderMapperModel mapperModel, final BrokeredIdentityContext context) {
+    public void updateBrokeredUser(final KeycloakSession session, final RealmModel realm, final UserModel user, final IdentityProviderMapperModel mapperModel,
+            final BrokeredIdentityContext context) {
         super.updateBrokeredUser(session, realm, user, mapperModel, context);
         applyMapping(mapperModel, user);
     }
 
     //Version Keycloak 22
-//    private void applyMapping(final IdentityProviderMapperModel mapperModel, final UserModel user) {
-//        if (user == null || mapperModel == null) {
-//            return;
-//        }
-//        final String attribute = mapperModel.getConfig().get(USER_ATTRIBUTE);
-//        final String attributeValue = user.getFirstAttribute(attribute);
-//
-//        logger.debug("Checking attribute " + attribute + ", found value " + attributeValue);
-//
-//        final Map<String, String> mapping = mapperModel.getConfigMap(MAPPING);
-//
-//        if (attributeValue != null && mapping != null && mapping.containsKey(attributeValue)) {
-//            final String newAttributeValue = mapping.get(attributeValue);
-//            logger.info("Setting " + attribute + " to " + newAttributeValue + " (mapping from " + attributeValue + ")");
-//            user.setSingleAttribute(attribute, newAttributeValue);
-//        }
-//    }
+    //    private void applyMapping(final IdentityProviderMapperModel mapperModel, final UserModel user) {
+    //        if (user == null || mapperModel == null) {
+    //            return;
+    //        }
+    //        final String attribute = mapperModel.getConfig().get(USER_ATTRIBUTE);
+    //        final String attributeValue = user.getFirstAttribute(attribute);
+    //
+    //        logger.debug("Checking attribute " + attribute + ", found value " + attributeValue);
+    //
+    //        final Map<String, String> mapping = mapperModel.getConfigMap(MAPPING);
+    //
+    //        if (attributeValue != null && mapping != null && mapping.containsKey(attributeValue)) {
+    //            final String newAttributeValue = mapping.get(attributeValue);
+    //            logger.info("Setting " + attribute + " to " + newAttributeValue + " (mapping from " + attributeValue + ")");
+    //            user.setSingleAttribute(attribute, newAttributeValue);
+    //        }
+    //    }
 
     //Version Keycloak 24
     private void applyMapping(final IdentityProviderMapperModel mapperModel, final UserModel user) {

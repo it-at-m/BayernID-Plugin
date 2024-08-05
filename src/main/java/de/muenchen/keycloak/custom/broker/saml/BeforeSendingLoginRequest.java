@@ -3,6 +3,7 @@ package de.muenchen.keycloak.custom.broker.saml;
 import de.muenchen.keycloak.custom.IdentityProviderHelper;
 import de.muenchen.keycloak.custom.broker.saml.domain.RequestedAttribute;
 import de.muenchen.keycloak.custom.broker.saml.mappers.CustomUserAttributeMapper;
+import java.util.*;
 import org.jboss.logging.Logger;
 import org.keycloak.dom.saml.v2.protocol.AuthnContextComparisonType;
 import org.keycloak.dom.saml.v2.protocol.AuthnRequestType;
@@ -11,11 +12,11 @@ import org.keycloak.dom.saml.v2.protocol.RequestedAuthnContextType;
 import org.keycloak.saml.SamlProtocolExtensionsAwareBuilder;
 import org.keycloak.sessions.AuthenticationSessionModel;
 
-import java.util.*;
-
 /**
- * Reichert den SAML-Request, der an die BayernID geschickt wird, um verschiedene Elemente v.a. im Extensions-Bereich an.
- * Diese kommen zum Teil aus dem SAML-Request, der von der Client-Applikation geschickt wurde, zum Teil aus der Keycloak-Konfiguration.
+ * Reichert den SAML-Request, der an die BayernID geschickt wird, um verschiedene Elemente v.a. im
+ * Extensions-Bereich an.
+ * Diese kommen zum Teil aus dem SAML-Request, der von der Client-Applikation geschickt wurde, zum
+ * Teil aus der Keycloak-Konfiguration.
  */
 public class BeforeSendingLoginRequest {
 
@@ -68,7 +69,7 @@ public class BeforeSendingLoginRequest {
 
         //AuthenticationRequest: AuthnMethods / otherOptions und RequestedAttributes
         //--------------------------------------------------------------------------
-       makeAuthenticationRequest(authnRequest, clientSession);
+        makeAuthenticationRequest(authnRequest, clientSession);
 
         //Print Request
         //-------------
@@ -100,7 +101,7 @@ public class BeforeSendingLoginRequest {
         Set<String> authnMethods = null;
 
         //bei SAML können die AuthMethods explizit im Extensions-Bereich angegeben werden
-        if (PreprocessorHelper.isSAMLRequest(clientSession)) {
+        if (PreprocessorHelper.isSamlRequest(clientSession)) {
             authnMethods = AuthNoteHelper.getAuthMethodsAsSet(clientSession);
             if (authnMethods == null) {
                 //V1 der Schnittstelle hat die authnMethods noch in AllowedMethods stehen
@@ -119,7 +120,6 @@ public class BeforeSendingLoginRequest {
         addExtension(authnRequest, makeAuthenticationRequestExtension(authnMethods, requestedAttributes));
     }
 
-
     /**
      * Holt die Requested Attributes für den SAML-Request an die BayernID aus den angeforderten Scopes
      * und / oder aus den Requested Attributes aus dem SAML-Request aus dem Client-Aufruf.
@@ -131,16 +131,16 @@ public class BeforeSendingLoginRequest {
      */
     public Set<RequestedAttribute> retrieveRequestedAttributes(AuthenticationSessionModel clientSession) {
         Map<String, RequestedAttribute> requestedAttributesFromScopes = deductAttributesFromEffectiveScopes(clientSession);
-        Map<String, RequestedAttribute> requestedAttributesFromSAMLRequest = PreprocessorHelper.deriveRequestedAttributesFromSAMLRequest(clientSession);
+        Map<String, RequestedAttribute> requestedAttributesFromSamlRequest = PreprocessorHelper.deriveRequestedAttributesFromSamlRequest(clientSession);
 
         Set<RequestedAttribute> requestedAttributes = new HashSet<>();
-        if (requestedAttributesFromSAMLRequest != null && !requestedAttributesFromSAMLRequest.isEmpty()) {
+        if (requestedAttributesFromSamlRequest != null && !requestedAttributesFromSamlRequest.isEmpty()) {
             //start mit allen angeforderten Attributes aus dem SAML Request
-            requestedAttributes.addAll(requestedAttributesFromSAMLRequest.values());
+            requestedAttributes.addAll(requestedAttributesFromSamlRequest.values());
 
             //alle requestedAttributesFromScopes ergänzen, die noch nicht aus dem SAML Request gekommen sind
             for (RequestedAttribute requestedAttributeFromScopes : requestedAttributesFromScopes.values()) {
-                if (!requestedAttributesFromSAMLRequest.containsKey(requestedAttributeFromScopes.getName())) {
+                if (!requestedAttributesFromSamlRequest.containsKey(requestedAttributeFromScopes.getName())) {
                     requestedAttributes.add(requestedAttributeFromScopes);
                 }
             }
@@ -175,10 +175,6 @@ public class BeforeSendingLoginRequest {
         return requestedAttributes;
     }
 
-
-
-
-
     private void addExtension(AuthnRequestType authnRequest, SamlProtocolExtensionsAwareBuilder.NodeGenerator extension) {
         ExtensionsType et = authnRequest.getExtensions();
         if (et == null) {
@@ -196,23 +192,20 @@ public class BeforeSendingLoginRequest {
         return accounttypeExtension;
     }
 
-
     private SamlProtocolExtensionsAwareBuilder.NodeGenerator makeAuthenticationRequestExtension(Set<String> methods,
-                                                                                                Set <RequestedAttribute> requestedAttributes) {
+            Set<RequestedAttribute> requestedAttributes) {
         AuthenticationRequestExtensionGenerator allowedMethodsExtension = new AuthenticationRequestExtensionGenerator(methods,
                 requestedAttributes);
         logger.debugf("  ---> %s", allowedMethodsExtension.toString());
         return allowedMethodsExtension;
     }
 
-
-
     private String findStorkLevel(AuthenticationSessionModel clientSession) {
 
         if (clientSession != null) {
             List<String> scopes = PreprocessorHelper.findScopeParams(clientSession);
 
-            if (scopes != null && PreprocessorHelper.isOIDCRequest(clientSession)) {
+            if (scopes != null && PreprocessorHelper.isOidcRequest(clientSession)) {
                 //OIDC Call
                 for (String scopeParam : scopes) {
                     if (scopeParam.equalsIgnoreCase(LEVEL_1)) {
@@ -234,8 +227,6 @@ public class BeforeSendingLoginRequest {
         return "";
     }
 
-
-
     private void addRequestedAuthnContext(AuthnRequestType authnRequest, String level) {
         RequestedAuthnContextType type = new RequestedAuthnContextType();
         type.addAuthnContextClassRef(level);
@@ -248,13 +239,14 @@ public class BeforeSendingLoginRequest {
      * - bei OIDC in den Scopes der Scope "otherOptions"
      * - oder bei SAML im Request unter Extensions ein Element <OtherOptions>true</OtherOptions>
      * existiert. In dem Fall wird der true zurückgeliefert, sonst false.
+     *
      * @param clientSession die clientSession, über die man die Scopes bekommt
      * @return true oder false
      */
     private boolean findOtherOptions(AuthenticationSessionModel clientSession) {
         List<String> scopes = PreprocessorHelper.findScopeParams(clientSession);
 
-        if (scopes != null && PreprocessorHelper.isOIDCRequest(clientSession)) {
+        if (scopes != null && PreprocessorHelper.isOidcRequest(clientSession)) {
             //OIDC Call
             for (String scope : scopes) {
                 if (scope.equalsIgnoreCase("otherOptions")) {
@@ -269,6 +261,5 @@ public class BeforeSendingLoginRequest {
 
         return false;
     }
-
 
 }

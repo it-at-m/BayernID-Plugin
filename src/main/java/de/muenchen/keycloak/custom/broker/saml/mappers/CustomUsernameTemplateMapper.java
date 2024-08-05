@@ -1,6 +1,5 @@
 package de.muenchen.keycloak.custom.broker.saml.mappers;
 
-import org.keycloak.broker.saml.mappers.UsernameTemplateMapper;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,6 +7,7 @@ import org.jboss.logging.Logger;
 import org.keycloak.broker.provider.BrokeredIdentityContext;
 import org.keycloak.broker.saml.SAMLEndpoint;
 import org.keycloak.broker.saml.SAMLIdentityProviderFactory;
+import org.keycloak.broker.saml.mappers.UsernameTemplateMapper;
 import org.keycloak.dom.saml.v2.assertion.AssertionType;
 import org.keycloak.dom.saml.v2.assertion.AttributeStatementType;
 import org.keycloak.dom.saml.v2.assertion.AttributeType;
@@ -20,13 +20,14 @@ import org.keycloak.models.utils.KeycloakModelUtils;
 
 /**
  * Ermöglicht, das bPK auch als Username zu setzen.
+ *
  * @author rowe42
  */
 public class CustomUsernameTemplateMapper extends UsernameTemplateMapper {
 
     private static final Logger LOGGER = Logger.getLogger(CustomUsernameTemplateMapper.class);
 
-    public static final String[] COMPATIBLE_PROVIDERS = {SAMLIdentityProviderFactory.PROVIDER_ID};
+    public static final String[] COMPATIBLE_PROVIDERS = { SAMLIdentityProviderFactory.PROVIDER_ID };
 
     @Override
     public String[] getCompatibleProviders() {
@@ -41,7 +42,8 @@ public class CustomUsernameTemplateMapper extends UsernameTemplateMapper {
     static Pattern substitution = Pattern.compile("\\$\\{([^}]+)\\}");
 
     @Override
-    public void preprocessFederatedIdentity(KeycloakSession session, RealmModel realm, IdentityProviderMapperModel mapperModel, BrokeredIdentityContext context) {
+    public void preprocessFederatedIdentity(KeycloakSession session, RealmModel realm, IdentityProviderMapperModel mapperModel,
+            BrokeredIdentityContext context) {
         AssertionType assertion = (AssertionType) context.getContextData().get(SAMLEndpoint.SAML_ASSERTION);
         String template = mapperModel.getConfig().get(TEMPLATE);
         Matcher m = substitution.matcher(template);

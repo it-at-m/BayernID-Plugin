@@ -1,5 +1,7 @@
 package de.muenchen.keycloak.custom.broker.saml.mappers;
 
+import java.time.Instant;
+import java.util.*;
 import org.keycloak.broker.provider.AbstractIdentityProviderMapper;
 import org.keycloak.broker.provider.BrokeredIdentityContext;
 import org.keycloak.broker.saml.SAMLIdentityProviderFactory;
@@ -7,16 +9,13 @@ import org.keycloak.models.*;
 import org.keycloak.protocol.saml.mappers.AttributeStatementHelper;
 import org.keycloak.provider.ProviderConfigProperty;
 
-import java.time.Instant;
-import java.util.*;
-
 public class CustomCurrentTimestampMapper extends AbstractIdentityProviderMapper {
     public static final String PROVIDER_ID = "custom-current-timestamp-mapper";
     private static final List<ProviderConfigProperty> configProperties = new ArrayList<>();
 
     //ELSTER hardcoded ergänzt, damit man den Mapper auch in elster-authenticator verwenden kann
     //entspricht dort ElsterIdentityProviderFactory.PROVIDER_ID
-    public static final String[] COMPATIBLE_PROVIDERS = {SAMLIdentityProviderFactory.PROVIDER_ID, "ELSTER"};
+    public static final String[] COMPATIBLE_PROVIDERS = { SAMLIdentityProviderFactory.PROVIDER_ID, "ELSTER" };
     private static final Set<IdentityProviderSyncMode> IDENTITY_PROVIDER_SYNC_MODES = new HashSet<>(Arrays.asList(IdentityProviderSyncMode.values()));
 
     public static final String USER_ATTRIBUTE = "user.attribute";
@@ -64,15 +63,16 @@ public class CustomCurrentTimestampMapper extends AbstractIdentityProviderMapper
         return "CUSTOM Mapper to set the current timestamp (Unix epoch time in seconds) into the configured user attribute.";
     }
 
-
     @Override
-    public void importNewUser(final KeycloakSession session, final RealmModel realm, final UserModel user, final IdentityProviderMapperModel mapperModel, final BrokeredIdentityContext context) {
+    public void importNewUser(final KeycloakSession session, final RealmModel realm, final UserModel user, final IdentityProviderMapperModel mapperModel,
+            final BrokeredIdentityContext context) {
         super.importNewUser(session, realm, user, mapperModel, context);
         applyMapping(mapperModel, user);
     }
 
     @Override
-    public void updateBrokeredUser(final KeycloakSession session, final RealmModel realm, final UserModel user, final IdentityProviderMapperModel mapperModel, final BrokeredIdentityContext context) {
+    public void updateBrokeredUser(final KeycloakSession session, final RealmModel realm, final UserModel user, final IdentityProviderMapperModel mapperModel,
+            final BrokeredIdentityContext context) {
         super.updateBrokeredUser(session, realm, user, mapperModel, context);
         applyMapping(mapperModel, user);
     }
@@ -84,6 +84,5 @@ public class CustomCurrentTimestampMapper extends AbstractIdentityProviderMapper
         final String attribute = mapperModel.getConfig().get(USER_ATTRIBUTE);
         user.setSingleAttribute(attribute, String.valueOf(timeStampSeconds));
     }
-
 
 }

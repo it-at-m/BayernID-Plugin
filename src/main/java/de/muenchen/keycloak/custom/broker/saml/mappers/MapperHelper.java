@@ -12,12 +12,12 @@ public class MapperHelper {
         if (bPK == null) {
             return "";
         }
-        
+
         byte[] decodedBytes = Base64.getDecoder().decode(bPK);
         if (decodedBytes == null) {
             return "";
         }
-        
+
         String decodedString = new String(decodedBytes);
         String[] splitDecodedString = decodedString.split("::");
         if (splitDecodedString.length > 2) {

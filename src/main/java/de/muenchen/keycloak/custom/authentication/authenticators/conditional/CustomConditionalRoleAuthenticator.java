@@ -21,7 +21,7 @@ public class CustomConditionalRoleAuthenticator extends ConditionalRoleAuthentic
         UserModel user = context.getUser();
         RealmModel realm = context.getRealm();
         AuthenticatorConfigModel authConfig = context.getAuthenticatorConfig();
-        if (user != null && authConfig!=null && authConfig.getConfig()!=null) {
+        if (user != null && authConfig != null && authConfig.getConfig() != null) {
             String requiredRole = authConfig.getConfig().get(ConditionalRoleAuthenticatorFactory.CONDITIONAL_USER_ROLE);
             //ERGÄNZUNG LHM START
             logger.debug("Original role: " + requiredRole); //ergänzt

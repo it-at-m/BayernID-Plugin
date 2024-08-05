@@ -71,7 +71,7 @@ intendedAudience:
   countries:
     - de
 legal:
-  license: EUPL-1.2
+  license: MIT
   mainCopyrightOwner: Landeshauptstadt München
   repoOwner: Landeshauptstadt München
 localisation:

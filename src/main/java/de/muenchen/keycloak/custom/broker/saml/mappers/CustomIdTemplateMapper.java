@@ -1,5 +1,9 @@
 package de.muenchen.keycloak.custom.broker.saml.mappers;
 
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.jboss.logging.Logger;
 import org.keycloak.broker.provider.AbstractIdentityProviderMapper;
 import org.keycloak.broker.provider.BrokeredIdentityContext;
 import org.keycloak.broker.saml.SAMLEndpoint;
@@ -13,22 +17,18 @@ import org.keycloak.models.*;
 import org.keycloak.models.utils.KeycloakModelUtils;
 import org.keycloak.provider.ProviderConfigProperty;
 
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import org.jboss.logging.Logger;
-
-/**Copied from UsernameTemplateMapper. Extrahiert das eigentliche bPK aus dem base64-kodierten
+/**
+ * Copied from UsernameTemplateMapper. Extrahiert das eigentliche bPK aus dem base64-kodierten
  * bPK-String.
  *
  * @author rowe42
  * @version $Revision: 1 $
  */
 public class CustomIdTemplateMapper extends AbstractIdentityProviderMapper {
-    
+
     private static final Logger LOGGER = Logger.getLogger(CustomIdTemplateMapper.class);
 
-    public static final String[] COMPATIBLE_PROVIDERS = {SAMLIdentityProviderFactory.PROVIDER_ID};
+    public static final String[] COMPATIBLE_PROVIDERS = { SAMLIdentityProviderFactory.PROVIDER_ID };
     private static final Set<IdentityProviderSyncMode> IDENTITY_PROVIDER_SYNC_MODES = new HashSet<>(Arrays.asList(IdentityProviderSyncMode.values()));
     private static final List<ProviderConfigProperty> configProperties = new ArrayList<>();
 
@@ -39,7 +39,8 @@ public class CustomIdTemplateMapper extends AbstractIdentityProviderMapper {
         property = new ProviderConfigProperty();
         property.setName(TEMPLATE);
         property.setLabel("Template");
-        property.setHelpText("Template to use to format the ID to import.  Substitutions are enclosed in ${}.  For example: '${ALIAS}.${NAMEID}'.  ALIAS is the provider alias.  NAMEID is that SAML name id assertion.  ATTRIBUTE.<NAME> references a SAML attribute where name is the attribute name or friendly name.");
+        property.setHelpText(
+                "Template to use to format the ID to import.  Substitutions are enclosed in ${}.  For example: '${ALIAS}.${NAMEID}'.  ALIAS is the provider alias.  NAMEID is that SAML name id assertion.  ATTRIBUTE.<NAME> references a SAML attribute where name is the attribute name or friendly name.");
         property.setType(ProviderConfigProperty.STRING_TYPE);
         property.setDefaultValue("${ATTRIBUTE.bPK}");
         configProperties.add(property);
@@ -51,6 +52,7 @@ public class CustomIdTemplateMapper extends AbstractIdentityProviderMapper {
     public boolean supportsSyncMode(IdentityProviderSyncMode syncMode) {
         return IDENTITY_PROVIDER_SYNC_MODES.contains(syncMode);
     }
+
     @Override
     public List<ProviderConfigProperty> getConfigProperties() {
         return configProperties;
@@ -77,14 +79,17 @@ public class CustomIdTemplateMapper extends AbstractIdentityProviderMapper {
     }
 
     @Override
-    public void updateBrokeredUser(KeycloakSession session, RealmModel realm, UserModel user, IdentityProviderMapperModel mapperModel, BrokeredIdentityContext context) {
+    public void updateBrokeredUser(KeycloakSession session, RealmModel realm, UserModel user, IdentityProviderMapperModel mapperModel,
+            BrokeredIdentityContext context) {
 
     }
+
     static Pattern substitution = Pattern.compile("\\$\\{([^}]+)\\}");
 
     @Override
-    public void preprocessFederatedIdentity(KeycloakSession session, RealmModel realm, IdentityProviderMapperModel mapperModel, BrokeredIdentityContext context) {
-        AssertionType assertion = (AssertionType)context.getContextData().get(SAMLEndpoint.SAML_ASSERTION);
+    public void preprocessFederatedIdentity(KeycloakSession session, RealmModel realm, IdentityProviderMapperModel mapperModel,
+            BrokeredIdentityContext context) {
+        AssertionType assertion = (AssertionType) context.getContextData().get(SAMLEndpoint.SAML_ASSERTION);
         String template = mapperModel.getConfig().get(TEMPLATE);
         Matcher m = substitution.matcher(template);
         StringBuffer sb = new StringBuffer();
@@ -127,7 +132,7 @@ public class CustomIdTemplateMapper extends AbstractIdentityProviderMapper {
         }
         m.appendTail(sb);
         //context.setModelUsername(sb.toString());
-        
+
         //ERWEITERUNG
         String id = sb.toString();
 
@@ -139,7 +144,7 @@ public class CustomIdTemplateMapper extends AbstractIdentityProviderMapper {
         context.setId(id);
         //ERWEITRUNG ENDE
     }
-    
+
     @Override
     public String getHelpText() {
         return "Format the ID to import.";
