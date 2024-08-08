@@ -1,0 +1,57 @@
+{
+  "idp": [
+    {
+      "name": "BayernID",
+      "scope": "BayernID",
+      "alias": ["buergerkonto", "saml"],
+      "authlevels": ["level1", "level2", "level3", "level4"],
+      "requestedAttributeSets": ["person", "legalEntity", "any"]
+    },
+    {
+      "name": "MLogin",
+      "scope": "M-Login",
+      "alias": ["mlogin", "oidc"],
+      "authlevels": ["level1"],
+      "requestedAttributeSets": ["person", "any"]
+    },
+    {
+      "name": "NutzerkontoBund",
+      "scope": "NutzerkontoBund",
+      "alias": ["nutzerkontobund"],
+      "authlevels": ["level1", "level2", "level3", "level4"],
+      "requestedAttributeSets": ["person", "any"]
+    },
+    {
+      "name": "ELSTER_NEZO",
+      "scope": "ELSTER_NEZO",
+      "alias": ["nezo"],
+      "authlevels": ["level1", "level2", "level3"],
+      "requestedAttributeSets": ["legalEntity", "any"]
+    },
+    {
+      "name": "Verimi",
+      "scope": "Verimi",
+      "alias": ["verimi"],
+      "authlevels": ["level1", "level2", "level3"],
+      "requestedAttributeSets": ["person", "any"]
+    },
+    {
+      "name": "Google",
+      "scope": "Google",
+      "alias": ["google"],
+      "authlevels": ["level1"],
+      "requestedAttributeSets": ["person", "any"]
+    },
+    {
+      "name": "Intern",
+      "scope": "Intern",
+      "alias": ["intern"],
+      "authlevels": ["level1", "level2", "level3"],
+      "requestedAttributeSets": ["person", "legalEntity", "any"]
+    }
+  ],
+  "publicRealms" : ["public", "demo", "A61"],
+  "displayInformation": {
+    "organizationDisplayName": "Landeshauptstadt M\u00FCnchen"
+  }
+}

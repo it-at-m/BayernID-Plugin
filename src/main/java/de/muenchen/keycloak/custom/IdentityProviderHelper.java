@@ -1,12 +1,14 @@
 package de.muenchen.keycloak.custom;
 
 import de.muenchen.keycloak.custom.broker.saml.AuthNoteHelper;
-import de.muenchen.keycloak.custom.forms.login.freemarker.IDPs;
+import de.muenchen.keycloak.custom.config.domain.IDP;
+import de.muenchen.keycloak.custom.config.spi.BayernIdConfigProvider;
 import java.util.Arrays;
 import java.util.List;
 import org.jboss.logging.Logger;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.authentication.AuthenticationFlowContext;
+import org.keycloak.models.KeycloakSession;
 import org.keycloak.sessions.AuthenticationSessionModel;
 
 public class IdentityProviderHelper {
@@ -32,20 +34,21 @@ public class IdentityProviderHelper {
      * @param authLevel the AuthLevel to check
      * @return true if to be removed
      */
-    public static boolean shouldBeRemoved(AuthenticationFlowContext context, String alias, final String authLevel, final String requestedAttributeSet) {
+    public static boolean shouldBeRemoved(KeycloakSession session, AuthenticationFlowContext context, String alias, final String authLevel,
+            final String requestedAttributeSet) {
         List<String> activeClientScopes = ScopesHelper.getClientScopes(context);
         activeClientScopes = ScopesHelper.stripScopes(activeClientScopes);
 
         //logger.info("Client Scopes being checked " + activeClientScopes.stream().collect(Collectors.joining(", ")));
-
-        final IDPs idp = IDPs.findIDPByAlias(alias);
+        BayernIdConfigProvider configProvider = session.getProvider(BayernIdConfigProvider.class);
+        final IDP idp = configProvider.findIDPByAlias(alias);
 
         if (idp == null) {
             logger.warn("IDP " + alias + " not found in configured list. No Authlevel-Mapping available. Will not be processed / potentially removed.");
             return true;
         }
 
-        if (activeClientScopes == null || !activeClientScopes.contains(idp.scope)) {
+        if (activeClientScopes == null || !activeClientScopes.contains(idp.getScope())) {
             //entfernen, wenn
             // - keine Client Scopes definiert ODER
             // - nicht als Scope im aktuellen Client definiert
@@ -54,13 +57,13 @@ public class IdentityProviderHelper {
             return true;
         }
 
-        if (authLevel != null && !Arrays.asList(idp.authlevels).contains(authLevel)) {
+        if (authLevel != null && !Arrays.asList(idp.getAuthlevels()).contains(authLevel)) {
             //authLevel wurde im Request angegeben, aber kommt bei den zugelassenen AuthLevels des IDP nicht vor
             logger.debug("removing " + alias + " because of not-matching auth-level.");
             return true;
         }
 
-        if (requestedAttributeSet != null && !Arrays.asList(idp.requestedAttributeSets).contains(requestedAttributeSet)) {
+        if (requestedAttributeSet != null && !Arrays.asList(idp.getRequestedAttributeSets()).contains(requestedAttributeSet)) {
             //requestedAttributeSet wurde im Request angegeben, aber entspricht nicht dem requestedAttributeSet des IDP
             logger.debug("removing " + alias + " because of not-matching requestedAttributeSet.");
             return true;

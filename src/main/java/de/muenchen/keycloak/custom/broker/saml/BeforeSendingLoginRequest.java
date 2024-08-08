@@ -4,6 +4,8 @@ import de.muenchen.keycloak.custom.IdentityProviderHelper;
 import de.muenchen.keycloak.custom.broker.saml.domain.RequestedAttribute;
 import de.muenchen.keycloak.custom.broker.saml.mappers.CustomUserAttributeMapper;
 import java.util.*;
+
+import de.muenchen.keycloak.custom.config.domain.DisplayInformation;
 import org.jboss.logging.Logger;
 import org.keycloak.dom.saml.v2.protocol.AuthnContextComparisonType;
 import org.keycloak.dom.saml.v2.protocol.AuthnRequestType;
@@ -30,6 +32,12 @@ public class BeforeSendingLoginRequest {
     public static final String LEVEL_2 = "level2";
     public static final String LEVEL_3 = "level3";
     public static final String LEVEL_4 = "level4";
+
+    private final DisplayInformation displayInformation;
+
+    BeforeSendingLoginRequest(final DisplayInformation displayInformation) {
+        this.displayInformation = displayInformation;
+    }
 
     // zu SCHRITT 2
     // ------------
@@ -195,7 +203,7 @@ public class BeforeSendingLoginRequest {
     private SamlProtocolExtensionsAwareBuilder.NodeGenerator makeAuthenticationRequestExtension(Set<String> methods,
             Set<RequestedAttribute> requestedAttributes) {
         AuthenticationRequestExtensionGenerator allowedMethodsExtension = new AuthenticationRequestExtensionGenerator(methods,
-                requestedAttributes);
+                requestedAttributes, displayInformation);
         logger.debugf("  ---> %s", allowedMethodsExtension.toString());
         return allowedMethodsExtension;
     }

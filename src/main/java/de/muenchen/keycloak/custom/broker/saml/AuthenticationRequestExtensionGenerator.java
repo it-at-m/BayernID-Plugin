@@ -6,6 +6,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.stream.XMLStreamWriter;
+
+import de.muenchen.keycloak.custom.config.domain.DisplayInformation;
 import org.keycloak.saml.SamlProtocolExtensionsAwareBuilder;
 import org.keycloak.saml.common.constants.GeneralConstants;
 import org.keycloak.saml.common.exceptions.ProcessingException;
@@ -30,10 +32,12 @@ public class AuthenticationRequestExtensionGenerator implements SamlProtocolExte
 
     private final Set<RequestedAttribute> requestedAttributes;
     private final Set<String> methods;
+    private final DisplayInformation displayInformation;
 
-    public AuthenticationRequestExtensionGenerator(Set<String> methods, Set<RequestedAttribute> requestedAttributes) {
+    public AuthenticationRequestExtensionGenerator(Set<String> methods, Set<RequestedAttribute> requestedAttributes, DisplayInformation displayInformation) {
         this.requestedAttributes = requestedAttributes;
         this.methods = methods;
+        this.displayInformation = displayInformation;
     }
 
     @Override
@@ -78,7 +82,7 @@ public class AuthenticationRequestExtensionGenerator implements SamlProtocolExte
         StaxUtil.writeStartElement(writer, CLASSIC_UI_PREFIX, "Version", CLASSIC_UI_URI);
 
         StaxUtil.writeStartElement(writer, CLASSIC_UI_PREFIX, "OrganizationDisplayName", CLASSIC_UI_URI);
-        StaxUtil.writeCharacters(writer, "Landeshauptstadt M\u00FCnchen");
+        StaxUtil.writeCharacters(writer, displayInformation.getOrganizationDisplayName());
         StaxUtil.writeEndElement(writer); //OrganizationDisplayName
 
         StaxUtil.writeStartElement(writer, CLASSIC_UI_PREFIX, "Lang", CLASSIC_UI_URI);

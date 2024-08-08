@@ -1,6 +1,7 @@
 package de.muenchen.keycloak.custom.forms.login.freemarker;
 
 import de.muenchen.keycloak.custom.IdentityProviderHelper;
+import de.muenchen.keycloak.custom.config.spi.BayernIdConfigProvider;
 import jakarta.ws.rs.core.UriBuilder;
 import java.util.*;
 import org.jboss.logging.Logger;
@@ -20,9 +21,6 @@ public class CustomFreeMarkerLoginFormsProvider extends FreeMarkerLoginFormsProv
     protected static final Logger logger = Logger.getLogger(CustomFreeMarkerLoginFormsProvider.class);
 
     public static final String SOCIAL = "social";
-    public static final String PUBLIC = "public";
-    public static final String DEMO = "demo";
-    public static final String A61 = "A61";
 
     public CustomFreeMarkerLoginFormsProvider(final KeycloakSession session) {
         super(session);
@@ -35,7 +33,7 @@ public class CustomFreeMarkerLoginFormsProvider extends FreeMarkerLoginFormsProv
 
         //die folgenden Prüfungen nur im Realm "public" (und aus historischen Gründen alternativ "demo" und "A61") durchführen (um Nebenwirkungen in anderen Realms zu minimieren)
         if (session == null || session.getContext() == null || session.getContext().getRealm() == null ||
-                !Arrays.asList(PUBLIC, DEMO, A61).contains(session.getContext().getRealm().getName().trim())) {
+                !session.getProvider(BayernIdConfigProvider.class).isPublicRealm(session.getContext().getRealm())) {
             return;
         }
 
@@ -64,7 +62,7 @@ public class CustomFreeMarkerLoginFormsProvider extends FreeMarkerLoginFormsProv
         final List<IdentityProviderBean.IdentityProvider> toBeRemoved = new ArrayList<>();
 
         for (IdentityProviderBean.IdentityProvider ip : ips) {
-            if (IdentityProviderHelper.shouldBeRemoved(this.context, ip.getAlias(), authLevel, requestedAttributeSet)) {
+            if (IdentityProviderHelper.shouldBeRemoved(session, this.context, ip.getAlias(), authLevel, requestedAttributeSet)) {
                 toBeRemoved.add(ip);
             }
         }

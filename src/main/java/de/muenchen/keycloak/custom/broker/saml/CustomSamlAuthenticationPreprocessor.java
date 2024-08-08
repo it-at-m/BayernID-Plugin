@@ -1,5 +1,6 @@
 package de.muenchen.keycloak.custom.broker.saml;
 
+import de.muenchen.keycloak.custom.config.spi.BayernIdConfigProvider;
 import org.jboss.logging.Logger;
 import org.keycloak.Config;
 import org.keycloak.dom.saml.v2.protocol.*;
@@ -19,6 +20,7 @@ public class CustomSamlAuthenticationPreprocessor implements SamlAuthenticationP
     public static final String PROVIDER_ID = "custompreprocessor";
 
     protected KeycloakSession session;
+    protected BayernIdConfigProvider configProvider;
 
     @Override
     public void close() {
@@ -26,7 +28,7 @@ public class CustomSamlAuthenticationPreprocessor implements SamlAuthenticationP
 
     @Override
     public SamlAuthenticationPreprocessor create(KeycloakSession session) {
-        this.session = session;
+        // wird niemals aufgerufen
         return this;
     }
 
@@ -36,6 +38,8 @@ public class CustomSamlAuthenticationPreprocessor implements SamlAuthenticationP
 
     @Override
     public void postInit(KeycloakSessionFactory factory) {
+        this.session = factory.create();
+        this.configProvider = session.getProvider(BayernIdConfigProvider.class);
     }
 
     @Override
@@ -58,7 +62,7 @@ public class CustomSamlAuthenticationPreprocessor implements SamlAuthenticationP
      */
     @Override
     public AuthnRequestType beforeProcessingLoginRequest(AuthnRequestType authnRequest, AuthenticationSessionModel authSession) {
-        if (PreprocessorHelper.isPublicRealm(authSession.getRealm().getName())) {
+        if (configProvider.isPublicRealm(authSession.getRealm())) {
             logger.debug("beforeProcessingLoginRequest");
             BeforeProcessingLoginRequest beforeProcessingLoginRequest = new BeforeProcessingLoginRequest();
             beforeProcessingLoginRequest.process(authnRequest, authSession);
@@ -85,9 +89,9 @@ public class CustomSamlAuthenticationPreprocessor implements SamlAuthenticationP
      */
     @Override
     public AuthnRequestType beforeSendingLoginRequest(AuthnRequestType authnRequest, AuthenticationSessionModel clientSession) {
-        if (PreprocessorHelper.isPublicRealm(clientSession.getRealm().getName())) {
+        if (configProvider.isPublicRealm(clientSession.getRealm())) {
             logger.debug("beforeSendingLoginRequest");
-            BeforeSendingLoginRequest beforeSendingLoginRequest = new BeforeSendingLoginRequest();
+            BeforeSendingLoginRequest beforeSendingLoginRequest = new BeforeSendingLoginRequest(configProvider.getDisplayInformation());
             beforeSendingLoginRequest.process(authnRequest, clientSession);
         }
         return SamlAuthenticationPreprocessor.super.beforeSendingLoginRequest(authnRequest, clientSession);
@@ -112,7 +116,7 @@ public class CustomSamlAuthenticationPreprocessor implements SamlAuthenticationP
      */
     @Override
     public StatusResponseType beforeProcessingLoginResponse(StatusResponseType statusResponse, AuthenticationSessionModel authSession) {
-        if (PreprocessorHelper.isPublicRealm(authSession.getRealm().getName())) {
+        if (configProvider.isPublicRealm(authSession.getRealm())) {
             logger.debug("beforeProcessingLoginResponse");
             BeforeProcessingLoginResponse beforeProcessingLoginResponse = new BeforeProcessingLoginResponse();
             beforeProcessingLoginResponse.authenticationFinished(authSession, statusResponse);
@@ -133,7 +137,7 @@ public class CustomSamlAuthenticationPreprocessor implements SamlAuthenticationP
      */
     @Override
     public StatusResponseType beforeSendingResponse(StatusResponseType statusResponse, AuthenticatedClientSessionModel clientSession) {
-        if (PreprocessorHelper.isPublicRealm(clientSession.getRealm().getName())) {
+        if (configProvider.isPublicRealm(clientSession.getRealm())) {
             logger.debug("beforeSendingResponse");
             BeforeSendingResponse beforeSendingResponse = new BeforeSendingResponse();
             beforeSendingResponse.process(statusResponse);

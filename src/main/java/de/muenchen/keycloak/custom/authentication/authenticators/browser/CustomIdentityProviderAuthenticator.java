@@ -61,13 +61,13 @@ public class CustomIdentityProviderAuthenticator extends IdentityProviderAuthent
     private boolean redirectIfOnlyOneIdp(AuthenticationFlowContext context) {
         final String authLevel = IdentityProviderHelper.findAuthLevel(context.getAuthenticationSession());
         LOG.debug("Requested authLevel found on Scopes " + authLevel);
-
         String requestedAttributeSet = IdentityProviderHelper.findRequestedAttributeSet(context.getAuthenticationSession());
         LOG.debug("RequestedAttributeSet found " + requestedAttributeSet);
 
         List<IdentityProviderModel> ipm = context.getRealm().getIdentityProvidersStream()
                 .filter(IdentityProviderModel::isEnabled)
-                .filter(identityProvider -> !IdentityProviderHelper.shouldBeRemoved(context, identityProvider.getAlias(), authLevel, requestedAttributeSet))
+                .filter(identityProvider -> !IdentityProviderHelper.shouldBeRemoved(context.getSession(), context, identityProvider.getAlias(), authLevel,
+                        requestedAttributeSet))
                 .collect(Collectors.toList());
 
         if (ipm.size() == 1) {
