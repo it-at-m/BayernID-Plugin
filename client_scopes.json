@@ -159,19 +159,6 @@
           "friendly.name": "DeMail",
           "attribute.name": "DeMail"
         }
-      },
-      {
-        "id": "92af3027-e76e-4574-89e8-513c0cf3f9f3",
-        "name": "postkorbMailAddress",
-        "protocol": "saml",
-        "protocolMapper": "script-saml2-postkorbMailAddress.js",
-        "consentRequired": false,
-        "config": {
-          "single": "true",
-          "attribute.nameformat": "Unspecified",
-          "friendly.name": "postkorbMailAddress",
-          "attribute.name": "postkorbMailAddress"
-        }
       }
     ]
   },
@@ -808,20 +795,6 @@
         }
       },
       {
-        "id": "ca97dac2-cfe3-41d4-81ae-32b7653955d1",
-        "name": "postkorbMailAddress",
-        "protocol": "openid-connect",
-        "protocolMapper": "script-oidc-postkorbMailAddress.js",
-        "consentRequired": false,
-        "config": {
-          "id.token.claim": "true",
-          "access.token.claim": "false",
-          "claim.name": "postkorbMailAddress",
-          "jsonType.label": "String",
-          "userinfo.token.claim": "true"
-        }
-      },
-      {
         "id": "28b77d71-6025-40ce-9675-916b7b0cd359",
         "name": "DeMail",
         "protocol": "openid-connect",
@@ -984,20 +957,6 @@
           "access.token.claim": "false",
           "claim.name": "artisticName",
           "jsonType.label": "String"
-        }
-      },
-      {
-        "id": "19fdb780-e2a6-4d12-acff-663c4f9725a1",
-        "name": "displayName",
-        "protocol": "openid-connect",
-        "protocolMapper": "script-oidc-displayName.js",
-        "consentRequired": false,
-        "config": {
-          "id.token.claim": "true",
-          "access.token.claim": "false",
-          "claim.name": "displayName",
-          "jsonType.label": "String",
-          "userinfo.token.claim": "true"
         }
       },
       {
@@ -1246,20 +1205,6 @@
         }
       },
       {
-        "id": "8e4f48bf-7cf9-4d52-ba00-e41551549fec",
-        "name": "postalCode",
-        "protocol": "openid-connect",
-        "protocolMapper": "script-oidc-postalCode.js",
-        "consentRequired": false,
-        "config": {
-          "id.token.claim": "true",
-          "access.token.claim": "false",
-          "claim.name": "address.postal_code",
-          "jsonType.label": "String",
-          "userinfo.token.claim": "true"
-        }
-      },
-      {
         "id": "3f789e59-ff47-4304-9381-53c9cd778c5c",
         "name": "anschriftOrtsteil",
         "protocol": "openid-connect",
@@ -1272,20 +1217,6 @@
           "access.token.claim": "false",
           "claim.name": "address.anschriftOrtsteil",
           "jsonType.label": "String"
-        }
-      },
-      {
-        "id": "c5e49420-f2a6-40fe-a9f1-c9b478e17d11",
-        "name": "postalAddress",
-        "protocol": "openid-connect",
-        "protocolMapper": "script-oidc-postalAddress.js",
-        "consentRequired": false,
-        "config": {
-          "id.token.claim": "true",
-          "access.token.claim": "false",
-          "claim.name": "address.street_address",
-          "jsonType.label": "String",
-          "userinfo.token.claim": "true"
         }
       },
       {
@@ -1318,20 +1249,6 @@
         }
       },
       {
-        "id": "85a599e7-3983-489a-816f-3c2356ea64d3",
-        "name": "country",
-        "protocol": "openid-connect",
-        "protocolMapper": "script-oidc-country.js",
-        "consentRequired": false,
-        "config": {
-          "id.token.claim": "true",
-          "access.token.claim": "false",
-          "claim.name": "address.country",
-          "jsonType.label": "String",
-          "userinfo.token.claim": "true"
-        }
-      },
-      {
         "id": "a932fef2-acce-48d5-a6a0-1631fe86f59b",
         "name": "anschriftAdressergaenzung",
         "protocol": "openid-connect",
@@ -1357,20 +1274,6 @@
           "id.token.claim": "true",
           "access.token.claim": "false",
           "claim.name": "address.hausnummerzusatz",
-          "userinfo.token.claim": "true"
-        }
-      },
-      {
-        "id": "c8790acb-d825-46b4-9d1a-f1e132c51846",
-        "name": "localityName",
-        "protocol": "openid-connect",
-        "protocolMapper": "script-oidc-localityName.js",
-        "consentRequired": false,
-        "config": {
-          "id.token.claim": "true",
-          "access.token.claim": "false",
-          "claim.name": "address.locality",
-          "jsonType.label": "String",
           "userinfo.token.claim": "true"
         }
       },
@@ -1737,32 +1640,6 @@
         }
       },
       {
-        "id": "e0aef2e5-8c30-4c89-9c44-4b3dd1ab97cf",
-        "name": "postalAddress",
-        "protocol": "saml",
-        "protocolMapper": "script-saml2-postalAddress.js",
-        "consentRequired": false,
-        "config": {
-          "single": "true",
-          "attribute.nameformat": "Unspecified",
-          "friendly.name": "postalAddress",
-          "attribute.name": "postalAddress"
-        }
-      },
-      {
-        "id": "ee1d3bb1-ff13-4215-804d-82ff7ace407b",
-        "name": "postalCode",
-        "protocol": "saml",
-        "protocolMapper": "script-saml2-postalCode.js",
-        "consentRequired": false,
-        "config": {
-          "single": "true",
-          "attribute.nameformat": "Unspecified",
-          "friendly.name": "postalCode",
-          "attribute.name": "postalCode"
-        }
-      },
-      {
         "id": "414cbeb6-a814-41c9-afae-6b42852c870d",
         "name": "anschrift",
         "protocol": "saml",
@@ -1815,19 +1692,6 @@
         }
       },
       {
-        "id": "b10c553d-782a-4797-a726-41af0e61e8f3",
-        "name": "country",
-        "protocol": "saml",
-        "protocolMapper": "script-saml2-country.js",
-        "consentRequired": false,
-        "config": {
-          "single": "true",
-          "attribute.nameformat": "Unspecified",
-          "friendly.name": "country",
-          "attribute.name": "country"
-        }
-      },
-      {
         "id": "9fe14e93-4d10-43b4-bd6e-5daeb9f7db4d",
         "name": "anschriftOrtsteil",
         "protocol": "saml",
@@ -1851,19 +1715,6 @@
           "user.attribute": "anschriftAdressergaenzung",
           "friendly.name": "anschriftAdressergaenzung",
           "attribute.name": "anschriftAdressergaenzung"
-        }
-      },
-      {
-        "id": "524ec392-32e6-43f1-9e3f-80acfb82c2a1",
-        "name": "localityName",
-        "protocol": "saml",
-        "protocolMapper": "script-saml2-localityName.js",
-        "consentRequired": false,
-        "config": {
-          "single": "true",
-          "attribute.nameformat": "Unspecified",
-          "friendly.name": "localityName",
-          "attribute.name": "localityName"
         }
       },
       {
@@ -2475,19 +2326,6 @@
           "user.attribute": "personalTitle",
           "friendly.name": "personalTitle",
           "attribute.name": "personalTitle"
-        }
-      },
-      {
-        "id": "dfcb5bf4-aabc-406d-ab21-19afa55808c4",
-        "name": "displayName",
-        "protocol": "saml",
-        "protocolMapper": "script-saml2-displayName.js",
-        "consentRequired": false,
-        "config": {
-          "single": "true",
-          "attribute.nameformat": "Unspecified",
-          "friendly.name": "displayName",
-          "attribute.name": "displayName"
         }
       },
       {
