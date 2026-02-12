@@ -10,6 +10,8 @@ public interface BayernIdConfigProvider extends Provider, ProviderFactory<Bayern
 
     public IDP findIDPByAlias(String alias);
 
+    public IDP findIDPByName(String alias);
+
     public boolean isPublicRealm(RealmModel realm);
 
     public DisplayInformation getDisplayInformation();

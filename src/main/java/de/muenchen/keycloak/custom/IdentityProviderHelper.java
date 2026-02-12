@@ -7,9 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 import org.jboss.logging.Logger;
 import org.keycloak.OAuth2Constants;
-import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.sessions.AuthenticationSessionModel;
+import org.slf4j.LoggerFactory;
 
 public class IdentityProviderHelper {
 
@@ -24,19 +24,20 @@ public class IdentityProviderHelper {
     public static final String STORK_QAA_LEVEL_3 = "STORK-QAA-Level-3";
     public static final String STORK_QAA_LEVEL_4 = "STORK-QAA-Level-4";
     public static final String AUTH_CONTEXT = "AUTH_CONTEXT";
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(IdentityProviderHelper.class);
 
     /**
-     * Checks whether the given Identity Provider should be removed from the list of login option if the
-     * provided
-     * authLevel ist required as a minimum.
+     * Checks whether the given Identity Provider should remain on the list of login option (depending
+     * on the
+     * provided authLevel and the effeictive scopes).
      *
      * @param alias The alias of the IdentityProvider to check
      * @param authLevel the AuthLevel to check
      * @return true if to be removed
      */
-    public static boolean shouldBeRemoved(KeycloakSession session, AuthenticationFlowContext context, String alias, final String authLevel,
+    public static boolean keepIdp(KeycloakSession session, String alias, final String authLevel,
             final String requestedAttributeSet) {
-        List<String> activeClientScopes = ScopesHelper.getClientScopes(context);
+        List<String> activeClientScopes = ScopesHelper.getClientScopes(session);
         activeClientScopes = ScopesHelper.stripScopes(activeClientScopes);
 
         //logger.info("Client Scopes being checked " + activeClientScopes.stream().collect(Collectors.joining(", ")));
@@ -45,7 +46,7 @@ public class IdentityProviderHelper {
 
         if (idp == null) {
             logger.warn("IDP " + alias + " not found in configured list. No Authlevel-Mapping available. Will not be processed / potentially removed.");
-            return true;
+            return false;
         }
 
         if (activeClientScopes == null || !activeClientScopes.contains(idp.getScope())) {
@@ -54,22 +55,22 @@ public class IdentityProviderHelper {
             // - nicht als Scope im aktuellen Client definiert
             // (es MUSS pro Client definiert sein, welche AuthLevel zugelassen sind)
             logger.debug("removing " + alias + " because of not-matching client-scopes. ");
-            return true;
+            return false;
         }
 
         if (authLevel != null && !Arrays.asList(idp.getAuthlevels()).contains(authLevel)) {
             //authLevel wurde im Request angegeben, aber kommt bei den zugelassenen AuthLevels des IDP nicht vor
             logger.debug("removing " + alias + " because of not-matching auth-level.");
-            return true;
+            return false;
         }
 
         if (requestedAttributeSet != null && !Arrays.asList(idp.getRequestedAttributeSets()).contains(requestedAttributeSet)) {
             //requestedAttributeSet wurde im Request angegeben, aber entspricht nicht dem requestedAttributeSet des IDP
             logger.debug("removing " + alias + " because of not-matching requestedAttributeSet.");
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     /**

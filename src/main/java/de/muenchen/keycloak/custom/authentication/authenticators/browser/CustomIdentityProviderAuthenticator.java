@@ -2,22 +2,11 @@ package de.muenchen.keycloak.custom.authentication.authenticators.browser;
 
 import de.muenchen.keycloak.custom.IdentityProviderHelper;
 import de.muenchen.keycloak.custom.broker.saml.AuthNoteHelper;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriBuilder;
-import java.net.URI;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import org.jboss.logging.Logger;
-import org.keycloak.OAuth2Constants;
 import org.keycloak.authentication.AuthenticationFlowContext;
-import org.keycloak.authentication.AuthenticationProcessor;
 import org.keycloak.authentication.authenticators.browser.IdentityProviderAuthenticator;
 import org.keycloak.models.IdentityProviderModel;
-import org.keycloak.protocol.oidc.OIDCLoginProtocol;
-import org.keycloak.services.Urls;
-import org.keycloak.services.managers.ClientSessionCode;
 
 public class CustomIdentityProviderAuthenticator extends IdentityProviderAuthenticator {
 
@@ -66,48 +55,16 @@ public class CustomIdentityProviderAuthenticator extends IdentityProviderAuthent
 
         List<IdentityProviderModel> ipm = context.getRealm().getIdentityProvidersStream()
                 .filter(IdentityProviderModel::isEnabled)
-                .filter(identityProvider -> !IdentityProviderHelper.shouldBeRemoved(context.getSession(), context, identityProvider.getAlias(), authLevel,
+                .filter(identityProvider -> IdentityProviderHelper.keepIdp(context.getSession(), identityProvider.getAlias(), authLevel,
                         requestedAttributeSet))
-                .collect(Collectors.toList());
+                .toList();
 
         if (ipm.size() == 1) {
-            LOG.info("Found exactly one IDP after filtering: " + ipm.get(0).getAlias() + " - redirecting.");
-            redirect(context, ipm.get(0).getAlias());
+            LOG.info("Found exactly one IDP after filtering: " + ipm.getFirst().getAlias() + " - redirecting.");
+            redirect(context, ipm.getFirst().getAlias());
             return true;
         }
 
         return false;
-    }
-
-    //vollständig aus IdentityProviderAuthenticator kopiert (wegen private)
-    private void redirect(AuthenticationFlowContext context, String providerId) {
-        Optional<IdentityProviderModel> idp = context.getRealm().getIdentityProvidersStream()
-                .filter(IdentityProviderModel::isEnabled)
-                .filter(identityProvider -> Objects.equals(providerId, identityProvider.getAlias()))
-                .findFirst();
-        if (idp.isPresent()) {
-            String accessCode = new ClientSessionCode<>(context.getSession(), context.getRealm(), context.getAuthenticationSession()).getOrGenerateCode();
-            String clientId = context.getAuthenticationSession().getClient().getClientId();
-            String tabId = context.getAuthenticationSession().getTabId();
-            URI location = Urls.identityProviderAuthnRequest(context.getUriInfo().getBaseUri(), providerId, context.getRealm().getName(), accessCode, clientId,
-                    tabId);
-            if (context.getAuthenticationSession().getClientNote(OAuth2Constants.DISPLAY) != null) {
-                location = UriBuilder.fromUri(location)
-                        .queryParam(OAuth2Constants.DISPLAY, context.getAuthenticationSession().getClientNote(OAuth2Constants.DISPLAY)).build();
-            }
-            Response response = Response.seeOther(location)
-                    .build();
-            // will forward the request to the IDP with prompt=none if the IDP accepts forwards with prompt=none.
-            if ("none".equals(context.getAuthenticationSession().getClientNote(OIDCLoginProtocol.PROMPT_PARAM)) &&
-                    Boolean.valueOf(idp.get().getConfig().get(ACCEPTS_PROMPT_NONE))) {
-                context.getAuthenticationSession().setAuthNote(AuthenticationProcessor.FORWARDED_PASSIVE_LOGIN, "true");
-            }
-            LOG.debugf("Redirecting to %s", providerId);
-            context.forceChallenge(response);
-            return;
-        }
-
-        LOG.warnf("Provider not found or not enabled for realm %s", providerId);
-        context.attempted();
     }
 }

@@ -27,14 +27,12 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.provider.ProviderConfigProperty;
 
-public class RequireEffectiveScopesAuthenticatorFactory implements AuthenticatorFactory {
-    public static final String PROVIDER_ID = "require-effective-scopes";
+public class CheckRequestedAttributeSetAuthenticatorFactory implements AuthenticatorFactory {
+    public static final String PROVIDER_ID = "check-requested-attribute-set";
     public static final String ATTRIBUTE = "attribute";
-    public static final String ACCOUNT_SOURCE = "accountSource";
-    public static final String RESTRICTED_SCOPES = "restrictedScopes";
     public static final String CUSTOM_ERROR = "customError";
 
-    static final RequireEffectiveScopesAuthenticator SINGLETON = new RequireEffectiveScopesAuthenticator();
+    static final CheckRequestedAttributeSetAuthenticator SINGLETON = new CheckRequestedAttributeSetAuthenticator();
 
     @Override
     public Authenticator create(KeycloakSession session) {
@@ -63,7 +61,7 @@ public class RequireEffectiveScopesAuthenticatorFactory implements Authenticator
 
     @Override
     public String getReferenceCategory() {
-        return "require-effective-scopes";
+        return "check-requested-attribute-set";
     }
 
     @Override
@@ -82,12 +80,12 @@ public class RequireEffectiveScopesAuthenticatorFactory implements Authenticator
 
     @Override
     public String getDisplayType() {
-        return "CUSTOM Require Effective Scopes";
+        return "CUSTOM Check Requested Attribute Set";
     }
 
     @Override
     public String getHelpText() {
-        return "CUSTOM - Validates that the given attribute contains only scopes that are effective in the current request.";
+        return "CUSTOM - Checks the requested attribute set (only in SAML requests) against the currently logged-in user.";
     }
 
     @Override
@@ -96,20 +94,7 @@ public class RequireEffectiveScopesAuthenticatorFactory implements Authenticator
         attribute.setType(ProviderConfigProperty.STRING_TYPE);
         attribute.setName(ATTRIBUTE);
         attribute.setLabel("Attribute name");
-        attribute.setHelpText("Attribute where the effective scopes are checked on the user.");
-
-        ProviderConfigProperty accountSource = new ProviderConfigProperty();
-        accountSource.setType(ProviderConfigProperty.STRING_TYPE);
-        accountSource.setName(ACCOUNT_SOURCE);
-        accountSource.setLabel("Account source value so that this check should be executed.");
-        accountSource.setHelpText("Value of the account source of the user - only then is this step applied (optional).");
-
-        ProviderConfigProperty restrictedScopes = new ProviderConfigProperty();
-        restrictedScopes.setType(ProviderConfigProperty.MULTIVALUED_STRING_TYPE);
-        restrictedScopes.setName(RESTRICTED_SCOPES);
-        restrictedScopes.setLabel("Applicable scopes (depending on account source)");
-        restrictedScopes.setHelpText("When account source is set, only these scopes are checked against the user's current scopes."
-                + " But only if they are required on the target client.");
+        attribute.setHelpText("Attribute where the current account source can be found (normally accountSource).");
 
         ProviderConfigProperty customError = new ProviderConfigProperty();
         customError.setType(ProviderConfigProperty.STRING_TYPE);
@@ -117,7 +102,7 @@ public class RequireEffectiveScopesAuthenticatorFactory implements Authenticator
         customError.setLabel("Error message to display if failing.");
         customError.setHelpText("If set, the given message is displayed if this check is failing.");
 
-        return Arrays.asList(attribute, accountSource, restrictedScopes, customError);
+        return Arrays.asList(attribute, customError);
     }
 
     @Override

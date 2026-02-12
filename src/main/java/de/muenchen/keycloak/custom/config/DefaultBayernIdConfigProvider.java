@@ -1,22 +1,21 @@
 package de.muenchen.keycloak.custom.config;
 
+import de.muenchen.keycloak.custom.config.domain.BayernIdConfig;
 import de.muenchen.keycloak.custom.config.domain.DisplayInformation;
 import de.muenchen.keycloak.custom.config.domain.IDP;
-import de.muenchen.keycloak.custom.config.domain.BayernIdConfig;
 import de.muenchen.keycloak.custom.config.spi.BayernIdConfigProvider;
-import org.jboss.logging.Logger;
-import org.keycloak.Config.Scope;
-import org.keycloak.models.KeycloakSession;
-import org.keycloak.models.KeycloakSessionFactory;
-import org.keycloak.models.RealmModel;
-import org.keycloak.util.JsonSerialization;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import org.jboss.logging.Logger;
+import org.keycloak.Config.Scope;
+import org.keycloak.models.KeycloakSession;
+import org.keycloak.models.KeycloakSessionFactory;
+import org.keycloak.models.RealmModel;
+import org.keycloak.util.JsonSerialization;
 
 public class DefaultBayernIdConfigProvider implements BayernIdConfigProvider {
 
@@ -94,6 +93,11 @@ public class DefaultBayernIdConfigProvider implements BayernIdConfigProvider {
     @Override
     public IDP findIDPByAlias(String alias) {
         IDP result = config.getIdp().stream().filter(idp -> Arrays.asList(idp.getAlias()).contains(alias)).findFirst().orElse(null);
+        return result;
+    }
+
+    public IDP findIDPByName(String name) {
+        IDP result = config.getIdp().stream().filter(idp -> idp.getName().equals(name)).findFirst().orElse(null);
         return result;
     }
 

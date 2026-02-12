@@ -1,0 +1,248 @@
+@font-face {
+	font-family: 'Open Sans';
+	src: url(../fonts/OpenSans-Regular.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'Roboto Condensed';
+	src: url(../fonts/RobotoCondensed-VariableFont_wght.ttf) format('truetype');
+}
+
+body {
+	margin: 0;
+}
+
+:root {
+	--header-height: 52px;
+
+	--munich-background-height: 78px;
+
+	--page-max-width: 1840px;
+	--content-padding: 24px;
+	--content-max-width: 1216px;
+
+	--color-brand: #1B98D5;
+	--color-brand-main: #005A9F;
+	--color-neutral-blue: #BDD4EA;
+	--color-neutral-grey: #3A5368;
+	--color-blue-x-light: #F2F6FA;
+}
+
+.site {
+	margin: auto;
+	max-width: var(--page-max-width);
+	background-color: #F2F6FA;
+	box-shadow: 0 0 30px 0 rgba(0,0,0,.5);
+}
+
+header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+	height: var(--header-height);
+	background-color: var(--color-brand);
+}
+
+header .m-button {
+	height: var(--header-height);
+	align-items: center;
+}
+
+.header-image {
+	height: 36px;
+	padding-left: 8px;
+}
+
+footer {
+	width: 100%;
+	height: 24px;
+	background-color: var(--color-brand-main);
+	overflow: hidden;
+	z-index: -1;
+	font-family: Roboto Condensed;
+    font-size: 12px;
+    color: #fff;
+    text-align: right;
+}
+
+h1 {
+	color: var(--color-neutral-grey);
+	font-size: 30px;
+	font-family: Roboto Condensed;
+	font-weight: 700;
+	line-height: 37.50px;
+	word-wrap: break-word;
+	margin: 0;
+}
+
+h2 {
+	color: var(--color-neutral-grey);
+	font-size: 24px;
+	font-family: Roboto Condensed;
+	font-weight: 700;
+	line-height: 30px;
+	word-wrap: break-word;
+	margin: 0;
+}
+
+p {
+	color: var(--color-neutral-grey);
+	font-size: 16px;
+	font-family: Open Sans;
+	font-weight: 400;
+	line-height: 24px;
+	word-wrap: break-word
+}
+
+.spacer {
+	width: 100%;
+}
+
+.heading {
+	width: 100%;
+	text-align: center;
+	padding-top: calc(var(--header-height) + var(--content-padding));
+}
+
+.graphics-container {
+	display: flex;
+	flex-direction: row;
+	padding-top: var(--content-padding);
+	padding-left: var(--content-padding);
+	padding-right: var(--content-padding);
+	max-width: var(--content-max-width);
+	margin: auto;
+}
+
+.munich-background {
+	height: var(--munich-background-height);
+}
+
+.card-container {
+	display: flex;
+	flex-direction: column;
+	padding: 0 var(--content-padding);
+	max-width: var(--content-max-width);
+	margin: auto;
+	padding-bottom: 48px;
+}
+
+.card {
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	padding-left: 24px;
+	padding-right: 24px;
+	padding-top: 24px;
+	padding-bottom: 32px;
+	border: 1px solid var(--color-neutral-blue);
+	background: white;
+	margin-bottom: 24px;
+}
+
+.card p {
+	margin-block-start: 16px;
+	margin-block-end: 24px;
+	text-align: center;
+}
+
+.m-button--link svg{
+	fill: var(--color-brand-main)
+}
+
+.seperator {
+	padding: 24px 0;
+	width: 100%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	display: inline-flex;
+}
+
+.seperator .hr {
+	width: 100%;
+	height: 0;
+	max-width: 180px;
+	border: 1px var(--color-neutral-blue) solid;
+}
+
+.seperator .text {
+	padding: 0 8px;
+	color: var(--color-neutral-grey);
+	font-size: 14px;
+	font-family: Open Sans;
+	font-weight: 400;
+	line-height: 20px;
+	word-wrap: break-word;
+}
+
+
+/* Screen Size SM */
+@media only screen and (min-width: 576px) {
+	:root {
+		--content-padding: 45px;
+	}
+}
+
+/* Screen Size MD */
+@media only screen and (min-width: 768px) {
+	:root {
+		--munich-background-height: 123px;
+	}
+
+	.graphics-container {
+		padding-top: 0;
+		margin-top: -2em;
+	}
+
+	.card-container {
+		padding-bottom: 40px;
+	}
+}
+
+/* Screen Size LG */
+@media only screen and (min-width: 992px) {
+	.card-container {
+		padding-bottom: 64px;
+	}
+}
+
+/* Screen Size XL */
+@media only screen and (min-width: 1200px) {
+	:root {
+		--munich-background-height: 177px;
+		--content-padding: 52px;
+	}
+
+	.graphics-container {
+		padding-top: 0;
+		margin-top: -2em;
+	}
+
+	.card-container {
+		flex-direction: row;
+		justify-content: space-between;
+		padding-bottom: 96px;
+	}
+
+	.card {
+		width: 100%;
+	}
+
+	.card.unternehmen {
+		margin-left: 32px;
+	}
+
+	.card.mitarbeitende {
+		margin-left: 32px;
+	}
+}
+
+/* Screen Size XXL */
+@media only screen and (min-width: 1400px) {
+	:root {
+		--content-padding: 92px;
+	}
+}

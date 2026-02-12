@@ -1,13 +1,12 @@
 package de.muenchen.keycloak.custom.broker.saml;
 
 import de.muenchen.keycloak.custom.broker.saml.domain.RequestedAttribute;
+import de.muenchen.keycloak.custom.config.domain.DisplayInformation;
 import java.io.ByteArrayOutputStream;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.stream.XMLStreamWriter;
-
-import de.muenchen.keycloak.custom.config.domain.DisplayInformation;
 import org.keycloak.saml.SamlProtocolExtensionsAwareBuilder;
 import org.keycloak.saml.common.constants.GeneralConstants;
 import org.keycloak.saml.common.exceptions.ProcessingException;
@@ -19,6 +18,8 @@ import org.keycloak.saml.common.util.StaxUtil;
  * @author rowe42
  */
 public class AuthenticationRequestExtensionGenerator implements SamlProtocolExtensionsAwareBuilder.NodeGenerator {
+
+    protected static final Logger logger = Logger.getLogger(AuthenticationRequestExtensionGenerator.class.getName());
 
     public static final String NS_URI = "https://www.akdb.de/request/2018/09";
 
@@ -64,13 +65,17 @@ public class AuthenticationRequestExtensionGenerator implements SamlProtocolExte
         StaxUtil.writeStartElement(writer, NS_PREFIX, "RequestedAttributes", NS_URI);
 
         for (RequestedAttribute requestedAttribute : requestedAttributes) {
-            StaxUtil.writeStartElement(writer, NS_PREFIX, "RequestedAttribute", NS_URI);
-            StaxUtil.writeAttribute(writer, "Name", requestedAttribute.getName());
-            if (requestedAttribute.getRequiredAttribute() != null) {
-                StaxUtil.writeAttribute(writer, "RequiredAttribute",
-                        requestedAttribute.getRequiredAttribute());
+            if (requestedAttribute.getName() != null && !requestedAttribute.getName().isEmpty()) {
+                StaxUtil.writeStartElement(writer, NS_PREFIX, "RequestedAttribute", NS_URI);
+                StaxUtil.writeAttribute(writer, "Name", requestedAttribute.getName());
+                if (requestedAttribute.getRequiredAttribute() != null) {
+                    StaxUtil.writeAttribute(writer, "RequiredAttribute",
+                            requestedAttribute.getRequiredAttribute());
+                }
+                StaxUtil.writeEndElement(writer);
+            } else {
+                logger.log(Level.WARNING, "Cannot created requested attribute, because name is null or empty!");
             }
-            StaxUtil.writeEndElement(writer);
         }
 
         StaxUtil.writeEndElement(writer); //RequestedAttributes
@@ -102,9 +107,9 @@ public class AuthenticationRequestExtensionGenerator implements SamlProtocolExte
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             XMLStreamWriter xmlStreamWriter = StaxUtil.getXMLStreamWriter(bos);
             write(xmlStreamWriter);
-            return new String(bos.toByteArray(), GeneralConstants.SAML_CHARSET);
+            return bos.toString(GeneralConstants.SAML_CHARSET);
         } catch (ProcessingException ex) {
-            Logger.getLogger(AccounttypeExtensionGenerator.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, null, ex);
         }
         return "";
     }
