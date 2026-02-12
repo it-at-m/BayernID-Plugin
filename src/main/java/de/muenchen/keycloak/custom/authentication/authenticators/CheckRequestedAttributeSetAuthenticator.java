@@ -13,7 +13,8 @@ import org.keycloak.authentication.Authenticator;
 import org.keycloak.models.*;
 
 /**
- * Authenticator to check whether the requestedAttributeSet (only available on SAML requests) fits to the current
+ * Authenticator to check whether the requestedAttributeSet (only available on SAML requests) fits
+ * to the current
  * account type (BayernID, BundID, ELSTER_NEZO) when switching clients through SSO.
  */
 public class CheckRequestedAttributeSetAuthenticator implements Authenticator {
@@ -52,7 +53,9 @@ public class CheckRequestedAttributeSetAuthenticator implements Authenticator {
             }
 
             BayernIdConfigProvider configProvider = context.getSession().getProvider(BayernIdConfigProvider.class);
-            final String accountSource = user.getAttributeStream(attributeName).findFirst().isPresent() ? user.getAttributeStream(attributeName).findFirst().get() : null;
+            final String accountSource = user.getAttributeStream(attributeName).findFirst().isPresent()
+                    ? user.getAttributeStream(attributeName).findFirst().get()
+                    : null;
             logger.debug("Using accountSource: " + accountSource);
             final IDP idp = configProvider.findIDPByName(accountSource);
             logger.debug("requestedAttributeSets of provider is " + Arrays.toString(idp.getRequestedAttributeSets()));
