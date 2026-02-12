@@ -56,17 +56,20 @@
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-services</artifactId>
             <version>${keycloak.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-saml-core-public</artifactId>
             <version>${keycloak.version}</version>
+            <scope>provided</scope>
         </dependency>
         <!--für SAMLIdentityProvider-->
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-saml-core</artifactId>
             <version>${keycloak.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
