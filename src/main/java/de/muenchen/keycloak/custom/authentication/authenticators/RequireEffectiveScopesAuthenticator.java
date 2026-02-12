@@ -12,6 +12,10 @@ import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.Authenticator;
 import org.keycloak.models.*;
 
+/**
+ * Authenticator that checks whether all relevant scopes of the current account-type (BayernID, BundID, ELSTER_NEZO)
+ * that are required on the target client are present on the current user when doing a client-switch through SSO.
+ */
 public class RequireEffectiveScopesAuthenticator implements Authenticator {
 
     protected static final Logger logger = Logger.getLogger(RequireEffectiveScopesAuthenticator.class);

@@ -80,7 +80,7 @@ public class BeforeSendingLoginRequest {
 
         //Print Request
         //-------------
-        if (logger.isInfoEnabled() || PreprocessorHelper.hasDebugScope(clientSession)) {
+        if (logger.isDebugEnabled() || PreprocessorHelper.hasDebugScope(clientSession)) {
             PreprocessorHelper.printRequest(authnRequest);
         }
     }

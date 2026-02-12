@@ -7,12 +7,15 @@ import jakarta.ws.rs.core.Response;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.Authenticator;
 import org.keycloak.models.*;
 
+/**
+ * Authenticator to check whether the requestedAttributeSet (only available on SAML requests) fits to the current
+ * account type (BayernID, BundID, ELSTER_NEZO) when switching clients through SSO.
+ */
 public class CheckRequestedAttributeSetAuthenticator implements Authenticator {
 
     protected static final Logger logger = Logger.getLogger(CheckRequestedAttributeSetAuthenticator.class);
@@ -40,7 +43,7 @@ public class CheckRequestedAttributeSetAuthenticator implements Authenticator {
             //Fehlerhafte Konfiguration - keine weitere Prüfung
         } else {
             String requestedAttributeSet = AuthNoteHelper.getRequestedAttributeSet(context.getAuthenticationSession());
-            logger.info("Found requested attribute set: " + requestedAttributeSet);
+            logger.debug("Found requested attribute set: " + requestedAttributeSet);
 
             if (requestedAttributeSet == null || requestedAttributeSet.isEmpty()) {
                 //wenn kein requestedAttributeSet vorliegend --> Trigger nicht anwendbar
@@ -49,10 +52,10 @@ public class CheckRequestedAttributeSetAuthenticator implements Authenticator {
             }
 
             BayernIdConfigProvider configProvider = context.getSession().getProvider(BayernIdConfigProvider.class);
-            final String accountSource = user.getAttributeStream(attributeName).findFirst().get();
-            logger.info("Using accountSource: " + accountSource);
+            final String accountSource = user.getAttributeStream(attributeName).findFirst().isPresent() ? user.getAttributeStream(attributeName).findFirst().get() : null;
+            logger.debug("Using accountSource: " + accountSource);
             final IDP idp = configProvider.findIDPByName(accountSource);
-            logger.info("requestedAttributeSets of provider is " + Arrays.toString(idp.getRequestedAttributeSets()));
+            logger.debug("requestedAttributeSets of provider is " + Arrays.toString(idp.getRequestedAttributeSets()));
 
             if (Arrays.asList(idp.getRequestedAttributeSets()).contains(requestedAttributeSet)) {
                 //Erfolg
