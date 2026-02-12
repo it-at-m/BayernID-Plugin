@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
+import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.authentication.Authenticator;
 import org.keycloak.models.*;
 
@@ -30,13 +31,20 @@ public class CheckRequestedAttributeSetAuthenticator implements Authenticator {
     public void authenticate(final AuthenticationFlowContext context) {
         final RealmModel realm = context.getRealm();
         final UserModel user = context.getUser();
+
         final AuthenticatorConfigModel authenticatorConfig = context.getAuthenticatorConfig();
         String errorString;
 
+        if (authenticatorConfig == null || authenticatorConfig.getConfig() == null) {
+            logger.error("Missing configuration for check-requested-attribute-set authenticator.");
+            context.failure(AuthenticationFlowError.INTERNAL_ERROR);
+            return;
+        }
+
         final String attributeName = resolveConfiguration(authenticatorConfig.getConfig(),
-                RequireEffectiveScopesAuthenticatorFactory.ATTRIBUTE);
+                CheckRequestedAttributeSetAuthenticatorFactory.ATTRIBUTE);
         final String customError = resolveConfiguration(authenticatorConfig.getConfig(),
-                RequireEffectiveScopesAuthenticatorFactory.CUSTOM_ERROR);
+                CheckRequestedAttributeSetAuthenticatorFactory.CUSTOM_ERROR);
 
         if (attributeName == null || attributeName.trim().equalsIgnoreCase("")) {
             logger.error("Wrong / missing konfiguration in check-requested-attribute-set! AttributeName " + attributeName);
@@ -53,17 +61,23 @@ public class CheckRequestedAttributeSetAuthenticator implements Authenticator {
             }
 
             BayernIdConfigProvider configProvider = context.getSession().getProvider(BayernIdConfigProvider.class);
-            final String accountSource = user.getAttributeStream(attributeName).findFirst().isPresent()
-                    ? user.getAttributeStream(attributeName).findFirst().get()
-                    : null;
+            final String accountSource = user.getAttributeStream(attributeName) != null &&
+                    user.getAttributeStream(attributeName).findFirst().isPresent()
+                            ? user.getAttributeStream(attributeName).findFirst().get()
+                            : null;
             logger.debug("Using accountSource: " + accountSource);
             final IDP idp = configProvider.findIDPByName(accountSource);
-            logger.debug("requestedAttributeSets of provider is " + Arrays.toString(idp.getRequestedAttributeSets()));
 
-            if (Arrays.asList(idp.getRequestedAttributeSets()).contains(requestedAttributeSet)) {
-                //Erfolg
-                context.success();
-                return;
+            if (idp != null) {
+                logger.debug("requestedAttributeSets of provider is " + Arrays.toString(idp.getRequestedAttributeSets()));
+
+                if (Arrays.asList(idp.getRequestedAttributeSets()).contains(requestedAttributeSet)) {
+                    //Erfolg
+                    context.success();
+                    return;
+                }
+            } else {
+                logger.warn("IDP " + accountSource + " not found. Client-switch cannot proceed.");
             }
 
             if (customError != null && !customError.trim().equalsIgnoreCase("")) {

@@ -98,6 +98,9 @@ public class RequireEffectiveScopesAuthenticator implements Authenticator {
     }
 
     private Set<String> restrictScopes(Set<String> scopes, String restrictedScopes) {
+        if (restrictedScopes == null) {
+            return scopes;
+        }
         final List<String> restrictedScopesList = Arrays.asList(restrictedScopes.trim().split("##"));
         return scopes.stream().filter(restrictedScopesList::contains).collect(Collectors.toSet());
     }
