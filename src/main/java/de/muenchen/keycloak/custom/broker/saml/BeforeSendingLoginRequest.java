@@ -3,9 +3,8 @@ package de.muenchen.keycloak.custom.broker.saml;
 import de.muenchen.keycloak.custom.IdentityProviderHelper;
 import de.muenchen.keycloak.custom.broker.saml.domain.RequestedAttribute;
 import de.muenchen.keycloak.custom.broker.saml.mappers.CustomUserAttributeMapper;
-import java.util.*;
-
 import de.muenchen.keycloak.custom.config.domain.DisplayInformation;
+import java.util.*;
 import org.jboss.logging.Logger;
 import org.keycloak.dom.saml.v2.protocol.AuthnContextComparisonType;
 import org.keycloak.dom.saml.v2.protocol.AuthnRequestType;

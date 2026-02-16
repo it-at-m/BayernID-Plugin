@@ -1,13 +1,12 @@
 package de.muenchen.keycloak.custom.broker.saml;
 
 import de.muenchen.keycloak.custom.broker.saml.domain.RequestedAttribute;
+import de.muenchen.keycloak.custom.config.domain.DisplayInformation;
 import java.io.ByteArrayOutputStream;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.stream.XMLStreamWriter;
-
-import de.muenchen.keycloak.custom.config.domain.DisplayInformation;
 import org.keycloak.saml.SamlProtocolExtensionsAwareBuilder;
 import org.keycloak.saml.common.constants.GeneralConstants;
 import org.keycloak.saml.common.exceptions.ProcessingException;
