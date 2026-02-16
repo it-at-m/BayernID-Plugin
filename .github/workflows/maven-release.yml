@@ -15,6 +15,9 @@ on:
 jobs:
   release-maven:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     outputs:
       MVN_ARTIFACT_ID: ${{ steps.maven-release-step.outputs.MVN_ARTIFACT_ID }}
       ARTIFACT_NAME: ${{ steps.maven-release-step.outputs.artifact-name }}
@@ -36,6 +39,8 @@ jobs:
   create-github-release:
     needs: release-maven
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Download a single artifact
         uses: it-at-m/lhm_actions/action-templates/actions/action-create-github-release@9767179088fd2e344d1a24c17404ab809a60f1b6 # v1.0.20
