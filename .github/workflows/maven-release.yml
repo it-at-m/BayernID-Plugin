@@ -1,0 +1,45 @@
+name: Release Maven
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: "Version to use when preparing a release (e.g., 1.2.3)"
+        required: true
+        default: 0.0.1
+      developmentVersion:
+        description: "Version to use for new local working copy (e.g., 1.2.4-SNAPSHOT)"
+        required: true
+        default: 0.0.2-SNAPSHOT
+
+jobs:
+  release-maven:
+    runs-on: ubuntu-latest
+    outputs:
+      MVN_ARTIFACT_ID: ${{ steps.maven-release-step.outputs.MVN_ARTIFACT_ID }}
+      ARTIFACT_NAME: ${{ steps.maven-release-step.outputs.artifact-name }}
+    env:
+      TZ: Europe/Berlin # timezone
+    steps:
+      - id: maven-release-step
+        uses: it-at-m/lhm_actions/action-templates/actions/action-maven-release@9767179088fd2e344d1a24c17404ab809a60f1b6 # v1.0.20
+        with:
+          app-path: ""
+          releaseVersion: ${{ github.event.inputs.releaseVersion }}
+          developmentVersion: ${{ github.event.inputs.developmentVersion }}
+          use-pr: true
+          SIGN_KEY_PASS: ${{ secrets.gpg_passphrase }}
+          CENTRAL_USERNAME: ${{ secrets.sonatype_username }}
+          CENTRAL_PASSWORD: ${{ secrets.sonatype_password }}
+          GPG_PRIVATE_KEY: ${{ secrets.gpg_private_key }}
+
+  create-github-release:
+    needs: release-maven
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download a single artifact
+        uses: it-at-m/lhm_actions/action-templates/actions/action-create-github-release@9767179088fd2e344d1a24c17404ab809a60f1b6 # v1.0.20
+        with:
+          artifact-name: ${{ needs.release-maven.outputs.ARTIFACT_NAME }}
+          tag-name: ${{ github.event.inputs.releaseVersion }}
+          artifact-path: target/*.jar

@@ -1,0 +1,14 @@
+"Type: Feature":
+  - head-branch: [ '^feat', '-feature-' ]
+"Type: Bug":
+  - head-branch: [ '^bug', '-bug-' ]
+"Type: Maintenance":
+  - head-branch: [ '^maint', '-maintenance-' ]
+"Type: Documentation":
+  - head-branch: [ '^docs', '-documentation-' ]
+  - changed-files:
+    - any-glob-to-any-file: ['docs/**']
+"Type: Dependency":
+  - head-branch: [ '^dep', '-dependency-' ]
+"Type: Security":
+  - head-branch: [ '^sec', '-security-' ]
