@@ -52,11 +52,11 @@ public class RequireAttributeAuthenticator implements Authenticator {
 
             //attribute values sind mit ## getrennt
             final List<String> attributeValuesArray = Arrays.asList(attributeValues.trim().split("##"));
-            logger.info("One of these attribute values is required as per config: " + String.join(", ", attributeValuesArray));
+            logger.debug("One of these attribute values is required as per config: " + String.join(", ", attributeValuesArray));
 
             List<String> filteredAttributeValues = attributeValuesArray;
             if (dependOnScopes.equalsIgnoreCase("true") && regExp.equalsIgnoreCase("false")) {
-                logger.info("Depend-on-scopes is active and no regexp - filtering required attribute values by scopes assigned in client.");
+                logger.debug("Depend-on-scopes is active and no regexp - filtering required attribute values by scopes assigned in client.");
                 //dependOnScopes ist gesetzt und keine regulären Expressions aktiv
                 filteredAttributeValues = filterValidAttributesByScopes(context, attributeValuesArray);
 
@@ -98,7 +98,7 @@ public class RequireAttributeAuthenticator implements Authenticator {
 
         final UserSessionProvider usp = context.getSession().sessions();
         final RealmModel realm = context.getRealm();
-        final List<UserSessionModel> userSessions = usp.getUserSessionsStream(realm, user).collect(Collectors.toList());
+        final List<UserSessionModel> userSessions = usp.getUserSessionsStream(realm, user).toList();
         logger.info("Found " + userSessions.size() + " Sessions of user " + user.getUsername() + " in realm " + realm.getName() + " to kill.");
         for (UserSessionModel userSession : userSessions) {
             usp.removeUserSession(realm, userSession);
@@ -116,7 +116,7 @@ public class RequireAttributeAuthenticator implements Authenticator {
     private List<String> filterValidAttributesByScopes(final AuthenticationFlowContext context, final List<String> attributeValues) {
 
         //hole alle client scopes (default und optional)
-        final List<String> clientScopes = ScopesHelper.getClientScopes(context);
+        final List<String> clientScopes = ScopesHelper.getClientScopes(context.getSession());
 
         if (clientScopes == null) {
             //shortcut: wenn keine scopes definiert sind, brauchen wir auch nicht filtern
@@ -130,7 +130,7 @@ public class RequireAttributeAuthenticator implements Authenticator {
                 .filter(attributeValue -> (strippedClientScopes != null && strippedClientScopes.contains(attributeValue)))
                 .collect(Collectors.toList());
 
-        logger.info("Filtered attribute values from config: " + String.join(", ", filteredAttributeValues));
+        logger.debug("Filtered attribute values from config: " + String.join(", ", filteredAttributeValues));
 
         return filteredAttributeValues;
     }
@@ -147,7 +147,7 @@ public class RequireAttributeAuthenticator implements Authenticator {
     private boolean isUserWithAttribute(final AuthenticationFlowContext context, final UserModel user, final String attributeName,
             final List<String> attributeValues, final String regExp) {
         if (user == null || user.getAttributeStream(attributeName) == null) {
-            logger.info("Could not find attribute " + attributeName + " on user  " + (user != null ? user.getUsername() : "UNKNOWN"));
+            logger.warn("Could not find attribute " + attributeName + " on user  " + (user != null ? user.getUsername() : "UNKNOWN"));
             return false;
         }
 
@@ -160,14 +160,15 @@ public class RequireAttributeAuthenticator implements Authenticator {
                     "or all values filtered due to inadequate scopes in client " + client + ".");
             return false;
         }
-        final List<String> userAttributeValues = user.getAttributeStream(attributeName).collect(Collectors.toList());
+        final List<String> userAttributeValues = user.getAttributeStream(attributeName).toList();
         if (!userAttributeValues.isEmpty()) {
             if (userAttributeValues.size() > 1) {
                 logger.error("Found more than one attribute value on user --> error, but taking first one");
             }
-            final String userAttributeValue = userAttributeValues.get(0);
+            final String userAttributeValue = userAttributeValues.getFirst();
             logger.debug("Found attribute " + attributeName + " on user with value " + userAttributeValue);
-            logger.debug("Comparing " + attributeValues.get(0) + " with " + userAttributeValue + " is " + attributeValues.get(0).matches(userAttributeValue));
+            logger.debug("Comparing " + attributeValues.getFirst() + " with " + userAttributeValue + " is "
+                    + attributeValues.getFirst().matches(userAttributeValue));
 
             boolean match = false;
             if (regExp.equalsIgnoreCase("true") &&
@@ -179,11 +180,13 @@ public class RequireAttributeAuthenticator implements Authenticator {
             }
 
             if (match) {
-                logger.info("Found matching value " + userAttributeValue + " on attribute " + attributeName);
+                logger.debug("Found matching value " + userAttributeValue + " on attribute " + attributeName);
                 return true;
+            } else {
+                logger.info("Value " + userAttributeValue + " on attribute " + attributeName + " did not match.");
             }
         }
-        logger.info("Did not find matching value on attribute " + attributeName);
+        logger.debug("Did not find matching value on attribute " + attributeName);
         return false;
     }
 

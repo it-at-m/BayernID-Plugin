@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import org.jboss.logging.Logger;
-import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.models.ClientModel;
 import org.keycloak.models.ClientScopeModel;
+import org.keycloak.models.KeycloakSession;
 
 public class ScopesHelper {
 
@@ -20,14 +20,10 @@ public class ScopesHelper {
      * Holt alle Client Scopes vom aktuellen Client - sowohl die default scopes als auch die optional
      * scopes.
      *
-     * @param context AuthenticationFlowContext
      * @return client scopes als Liste
      */
-    public static List<String> getClientScopes(final AuthenticationFlowContext context) {
-        if (context == null || context.getAuthenticationSession() == null || context.getAuthenticationSession().getClient() == null) {
-            return null;
-        }
-        final ClientModel currentClient = context.getAuthenticationSession().getClient();
+    public static List<String> getClientScopes(final KeycloakSession session) {
+        final ClientModel currentClient = session.getContext().getClient();
 
         if (currentClient == null) {
             return null;
