@@ -29,7 +29,7 @@ public class IdentityProviderHelper {
     /**
      * Checks whether the given Identity Provider should remain on the list of login option (depending
      * on the
-     * provided authLevel and the effeictive scopes).
+     * provided authLevel and the effective scopes).
      *
      * @param alias The alias of the IdentityProvider to check
      * @param authLevel the AuthLevel to check
