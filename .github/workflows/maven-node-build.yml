@@ -1,0 +1,28 @@
+name: Build all
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    env:
+      TZ: Europe/Berlin # timezone
+    steps:
+      - uses: it-at-m/lhm_actions/action-templates/actions/action-checkout@9767179088fd2e344d1a24c17404ab809a60f1b6 # v1.0.20
+      - if: ${{ hashFiles('./package.json')!=null }}
+        id: node
+        uses: it-at-m/lhm_actions/action-templates/actions/action-npm-build@9767179088fd2e344d1a24c17404ab809a60f1b6 # v1.0.20
+        with:
+          app-path: ""
+      - if: ${{ hashFiles('./pom.xml')!=null }}
+        id: maven
+        uses: it-at-m/lhm_actions/action-templates/actions/action-maven-build@9767179088fd2e344d1a24c17404ab809a60f1b6 # v1.0.20
+        with:
+          app-path: ""

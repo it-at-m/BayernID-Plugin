@@ -1,8 +1,6 @@
 package de.muenchen.keycloak.custom.config.domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class IDP {
 
