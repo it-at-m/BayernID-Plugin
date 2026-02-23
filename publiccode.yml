@@ -75,7 +75,7 @@ localisation:
   localisationReady: true
 maintenance:
   contacts:
-      - name: Roland Werner
+    - name: Roland Werner
   type: internal
 name: bayernID-Plugin für Keycloak/RH-SSO
 platforms:
