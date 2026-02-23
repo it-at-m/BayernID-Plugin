@@ -2,7 +2,7 @@
 
 Die BayernID (ein Service der AKDB im Auftrag des Freistaats Bayern) bzw. BundID 
 (bereitgestellt vom Bundesministerium für Digitales und Staatsmodernisierung) ist
-eine  digitale Identität, die Bürgerinnen und Bürger im Zusammenhang mit der Abwicklung digitaler
+eine digitale Identität, die Bürgerinnen und Bürger im Zusammenhang mit der Abwicklung digitaler
 Verwaltungsdienste einsetzen können. Sie dient dazu, sich online eindeutig
 zu identifizieren und bietet verschiedene Authentifizierungsstufen
 (schwache Authentifizierung per Benutzername und Passwort, substantielle
@@ -20,7 +20,7 @@ Vertrauensstellung aufbauen müssen und dafür sowohl OpenID-Connect (OIDC)
 als auch SAML2 als Protokoll zur Verfügung stehen.
 
 Die Anbindung eines Keycloak/RH-SSO an die BayernID/BundID unterstützt aber nicht
-alle benötigten Funktionalitäten der BayernID. Bspw.  muss für die Anforderung
+alle benötigten Funktionalitäten der BayernID. Bspw. muss für die Anforderung
 eines Mindest-Vertrauensniveaus oder auch für die Anforderung expliziter Attribute
 in den SAML2-Request eingegriffen werden, was nativ
 vom Keycloak/RH-SSO nicht unterstützt wird.
@@ -35,7 +35,7 @@ Datensatz im Keycloak/RH-SSO zu mappen, so dass dort bspw. auch eine
 Autorisierung angewendet werden kann.
 
 **Hinweis:** Ein Klon dieses Repos findet sich auch bei [OpenCode](https://gitlab.opencode.de/landeshauptstadt-muenchen/bayernid-plugin).
-Auch wenn beide Repos regelmäßig synchronisiert werden, ist das Github-Repo führend und sollte für Issues / MRs 
+Auch wenn beide Repos regelmäßig synchronisiert werden, ist das Github-Repo führend und sollte für Issues / MRs
 verwendet werden.
 
 ## Bauen
