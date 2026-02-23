@@ -2,6 +2,7 @@ package de.muenchen.keycloak.custom.authentication.authenticators;
 
 import de.muenchen.keycloak.custom.broker.saml.PreprocessorHelper;
 import jakarta.ws.rs.core.Response;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +12,12 @@ import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.Authenticator;
 import org.keycloak.models.*;
 
+/**
+ * Authenticator that checks whether all relevant scopes of the current account-type (BayernID,
+ * BundID, ELSTER_NEZO)
+ * that are required on the target client are present on the current user when doing a client-switch
+ * through SSO.
+ */
 public class RequireEffectiveScopesAuthenticator implements Authenticator {
 
     protected static final Logger logger = Logger.getLogger(RequireEffectiveScopesAuthenticator.class);
@@ -26,36 +33,56 @@ public class RequireEffectiveScopesAuthenticator implements Authenticator {
         final UserModel user = context.getUser();
         final AuthenticatorConfigModel authenticatorConfig = context.getAuthenticatorConfig();
         String errorString;
+        String errorStringInternal;
 
         final String attributeName = resolveConfiguration(authenticatorConfig.getConfig(),
                 de.muenchen.keycloak.custom.authentication.authenticators.RequireEffectiveScopesAuthenticatorFactory.ATTRIBUTE);
         final String customError = resolveConfiguration(authenticatorConfig.getConfig(),
                 de.muenchen.keycloak.custom.authentication.authenticators.RequireEffectiveScopesAuthenticatorFactory.CUSTOM_ERROR);
+        final String accountSource = resolveConfiguration(authenticatorConfig.getConfig(),
+                RequireEffectiveScopesAuthenticatorFactory.ACCOUNT_SOURCE);
+        final String restrictedScopes = resolveConfiguration(authenticatorConfig.getConfig(),
+                RequireEffectiveScopesAuthenticatorFactory.RESTRICTED_SCOPES);
 
         if (attributeName == null || attributeName.trim().equalsIgnoreCase("")) {
             logger.error("Wrong / missing konfiguration in require-effective-scopes-plugin! AttributeName " + attributeName);
             errorString = "Login nicht möglich wegen fehlerhafter Konfiguration.";
+            errorStringInternal = errorString;
             //Fehlerhafte Konfiguration - keine weitere Prüfung
-        } else {
+        } else if (accountSource != null
+                && !isUserWithAttribute(user, RequireEffectiveScopesAuthenticatorFactory.ACCOUNT_SOURCE, Set.of(accountSource))) {
+                    logger.info("Trigger only applicable for accountSource " + accountSource + " - skipping.");
+                    context.success();
+                    return;
+                } else {
 
-            Set<String> effectiveScopes = PreprocessorHelper.collectEffectiveScopes(context.getAuthenticationSession());
-            Set<String> deductedScopes = PreprocessorHelper.enhanceEffectiveScopes(effectiveScopes, context.getAuthenticationSession());
+                    Set<String> effectiveScopes = PreprocessorHelper.collectEffectiveScopes(context.getAuthenticationSession());
+                    Set<String> deductedScopes = PreprocessorHelper.enhanceEffectiveScopes(effectiveScopes, context.getAuthenticationSession());
 
-            if (isUserWithAttribute(context, user, attributeName, deductedScopes)) {
-                //Erfolg
-                context.success();
-                return;
-            }
+                    Set<String> scopesToCheck;
+                    if (accountSource == null || accountSource.isEmpty()) {
+                        scopesToCheck = deductedScopes;
+                    } else {
+                        scopesToCheck = restrictScopes(deductedScopes, restrictedScopes);
+                        logger.debug("Restricted scopes FROM: " + String.join(", ", deductedScopes) + " TO: " + String.join(", ", scopesToCheck));
+                    }
 
-            if (customError != null && !customError.trim().equalsIgnoreCase("")) {
-                errorString = customError;
-            } else {
-                errorString = createErrorString(user, attributeName, deductedScopes);
-            }
-        }
+                    if (isUserWithAttribute(user, attributeName, scopesToCheck)) {
+                        //Erfolg
+                        context.success();
+                        return;
+                    }
 
-        logger.infof("Access denied because of missing attribute. realm=%s username=%s attribute=%s",
-                realm.getName(), user.getUsername(), attributeName);
+                    errorStringInternal = createErrorString(user, attributeName, deductedScopes);
+                    if (customError != null && !customError.trim().equalsIgnoreCase("")) {
+                        errorString = customError;
+                    } else {
+                        errorString = errorStringInternal;
+                    }
+                }
+
+        logger.infof("Access denied because of missing scope(s). realm=%s error-message=%s",
+                realm.getName(), errorStringInternal);
 
         //Variante Login-Seite (mit vorherigem Logout des Users)
         //User aus jeder seiner Sessions innerhalb dieses Realms ausloggen
@@ -70,6 +97,14 @@ public class RequireEffectiveScopesAuthenticator implements Authenticator {
         context.forceChallenge(challenge);
     }
 
+    private Set<String> restrictScopes(Set<String> scopes, String restrictedScopes) {
+        if (restrictedScopes == null) {
+            return scopes;
+        }
+        final List<String> restrictedScopesList = Arrays.asList(restrictedScopes.trim().split("##"));
+        return scopes.stream().filter(restrictedScopesList::contains).collect(Collectors.toSet());
+    }
+
     private void logoutUser(final AuthenticationFlowContext context, final UserModel user) {
         if (context == null || context.getRealm() == null || context.getSession() == null || context.getSession().sessions() == null) {
             return;
@@ -77,7 +112,7 @@ public class RequireEffectiveScopesAuthenticator implements Authenticator {
 
         final UserSessionProvider usp = context.getSession().sessions();
         final RealmModel realm = context.getRealm();
-        final List<UserSessionModel> userSessions = usp.getUserSessionsStream(realm, user).collect(Collectors.toList());
+        final List<UserSessionModel> userSessions = usp.getUserSessionsStream(realm, user).toList();
         logger.info("Found " + userSessions.size() + " Sessions of user " + user.getUsername() + " in realm " + realm.getName() + " to kill.");
         for (UserSessionModel userSession : userSessions) {
             usp.removeUserSession(realm, userSession);
@@ -91,21 +126,22 @@ public class RequireEffectiveScopesAuthenticator implements Authenticator {
      * @param attributeName attributName zur Prüfung
      * @return true wenn Wert vorhanden, false sonst
      */
-    private boolean isUserWithAttribute(final AuthenticationFlowContext context, final UserModel user, final String attributeName,
-            final Set<String> effectiveScopes) {
+    private boolean isUserWithAttribute(final UserModel user, final String attributeName,
+            final Set<String> values) {
         if (user == null || user.getAttributeStream(attributeName) == null) {
-            logger.info("Could not find attribute " + attributeName + " on user  " + (user != null ? user.getUsername() : "UNKNOWN"));
+            logger.warn("Could not find attribute " + attributeName + " on user  " + (user != null ? user.getUsername() : "UNKNOWN"));
             return false;
         }
 
         final List<String> userAttributeValues = user.getAttributeStream(attributeName).collect(Collectors.toList());
-        logger.debug("Checking scopes " + String.join(",", effectiveScopes) + " against values " + String.join(",", userAttributeValues));
+        logger.debug("Checking values " + String.join(",", values) + " against values " + String.join(",", userAttributeValues));
         if (!userAttributeValues.isEmpty()) {
-            if (userAttributeValues.containsAll(effectiveScopes)) {
-                logger.info("Found all attribute values " + String.join("", userAttributeValues));
+            if (userAttributeValues.containsAll(values)) {
+                logger.debug("Found all attribute values " + String.join(", ", userAttributeValues));
                 return true;
             } else {
-                logger.info("Did not find all attribute values " + String.join("", userAttributeValues));
+                logger.debug("Did not find all attribute values: " + String.join(", ", userAttributeValues) +
+                        " in list of possible values: " + String.join(", ", values));
             }
         }
         return false;

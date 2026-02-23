@@ -1,0 +1,31 @@
+<html>
+<body>
+<h1>Aufruf per SAML Client</h1>
+Kann an dieser Stelle konvertiert werden: <a href="https://www.samltool.com/base64.php">https://www.samltool.com/base64.php</a>
+
+<h2>Anforderung persönlicher Account</h2>
+<ul>
+<il>Kein Orgakonto angefordert</il>
+<li>RequestedAttributeSet "person" angefordert</li>
+<li>Ergebnis: Ein User mit NEZO wird ausgeloggt beim Wechsel zu einem Client, der BayernID-Only fordert</li>
+</ul>
+<xmp>
+<?xml version="1.0" encoding="UTF-8"?>
+<saml2p:AuthnRequest xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" AssertionConsumerServiceURL="http://www.example.org" Destination="http://localhost:8080/auth/realms/public/protocol/saml" ForceAuthn="false" ID="a1963b52bfcca6bi4ah1ai93cifg81e" IsPassive="false" IssueInstant="2022-03-21T08:24:44.052Z" ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Version="2.0">
+	<saml2:Issuer xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">testclient</saml2:Issuer>
+	<saml2p:Extensions>
+		<akdb:RequestedAttributeSet xmlns:akdb="https://www.akdb.de/request/2018/09">person</akdb:RequestedAttributeSet>
+	</saml2p:Extensions>
+	<saml2p:RequestedAuthnContext Comparison="minimum">
+		<saml:AuthnContextClassRef xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">STORK-QAA-Level-1</saml:AuthnContextClassRef>
+	</saml2p:RequestedAuthnContext>
+</saml2p:AuthnRequest>
+</xmp>
+
+<form action="http://localhost:8080/auth/realms/public/protocol/saml" method="post">
+<input type="test" id="SAMLRequest" name="SAMLRequest" value="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzYW1sMnA6QXV0aG5SZXF1ZXN0IHhtbG5zOnNhbWwycD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOnByb3RvY29sIiBBc3NlcnRpb25Db25zdW1lclNlcnZpY2VVUkw9Imh0dHA6Ly93d3cuZXhhbXBsZS5vcmciIERlc3RpbmF0aW9uPSJodHRwOi8vbG9jYWxob3N0OjgwODAvYXV0aC9yZWFsbXMvcHVibGljL3Byb3RvY29sL3NhbWwiIEZvcmNlQXV0aG49ImZhbHNlIiBJRD0iYTE5NjNiNTJiZmNjYTZiaTRhaDFhaTkzY2lmZzgxZSIgSXNQYXNzaXZlPSJmYWxzZSIgSXNzdWVJbnN0YW50PSIyMDIyLTAzLTIxVDA4OjI0OjQ0LjA1MloiIFByb3RvY29sQmluZGluZz0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmJpbmRpbmdzOkhUVFAtUE9TVCIgVmVyc2lvbj0iMi4wIj4NCgk8c2FtbDI6SXNzdWVyIHhtbG5zOnNhbWwyPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXNzZXJ0aW9uIj50ZXN0Y2xpZW50PC9zYW1sMjpJc3N1ZXI+DQoJPHNhbWwycDpFeHRlbnNpb25zPg0KCQk8YWtkYjpSZXF1ZXN0ZWRBdHRyaWJ1dGVTZXQgeG1sbnM6YWtkYj0iaHR0cHM6Ly93d3cuYWtkYi5kZS9yZXF1ZXN0LzIwMTgvMDkiPnBlcnNvbjwvYWtkYjpSZXF1ZXN0ZWRBdHRyaWJ1dGVTZXQ+DQoJPC9zYW1sMnA6RXh0ZW5zaW9ucz4NCgk8c2FtbDJwOlJlcXVlc3RlZEF1dGhuQ29udGV4dCBDb21wYXJpc29uPSJtaW5pbXVtIj4NCgkJPHNhbWw6QXV0aG5Db250ZXh0Q2xhc3NSZWYgeG1sbnM6c2FtbD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmFzc2VydGlvbiI+U1RPUkstUUFBLUxldmVsLTE8L3NhbWw6QXV0aG5Db250ZXh0Q2xhc3NSZWY+DQoJPC9zYW1sMnA6UmVxdWVzdGVkQXV0aG5Db250ZXh0Pg0KPC9zYW1sMnA6QXV0aG5SZXF1ZXN0Pg==" />
+<input type="submit"/>
+</form>
+
+</body>
+</html>

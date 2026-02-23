@@ -96,6 +96,11 @@ public class DefaultBayernIdConfigProvider implements BayernIdConfigProvider {
         return result;
     }
 
+    public IDP findIDPByName(String name) {
+        IDP result = config.getIdp().stream().filter(idp -> idp.getName().equals(name)).findFirst().orElse(null);
+        return result;
+    }
+
     @Override
     public boolean isPublicRealm(RealmModel realm) {
         return config.getPublicRealms().stream().filter(realmName -> realmName.equalsIgnoreCase(realm.getName().trim())).findFirst().isPresent();

@@ -1,0 +1,168 @@
+<!-- This is a temporary file to develop the initial design according to
+
+https://www.figma.com/design/X8XCxBmS9VnYsAdnrbputf/Design-Spezifikation-_Meine-Anmeldung_?node-id=201-54888&m=dev
+
+and will be ported to a *.ftl-Themefile in the end -->
+
+<head>
+    <title>Login-Testpage</title>
+    <link rel="stylesheet" href="./resources/css/styles.css">
+    <link rel="stylesheet" href="./resources/css/mucbutton.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+<div class="site">
+    <header>
+        <a>
+            <img class="header-image" src="./resources/img/muenchende.png">
+        </a>
+        <div class="spacer"></div>
+        <button
+                class="m-button m-button--primary"
+        >
+            <img class="icon" src="./resources/img/icons/close.svg">
+        </button>
+    </header>
+
+    <div>
+        <h1 class="heading">Bürgerservice-Anmeldung</h1>
+
+        <div class="graphics-container">
+            <img
+                    class="munich-background"
+                    src="./resources/img/bg/bg-munich-left.svg"
+                    alt="munich skyline background"
+                    aria-hidden="true"
+            />
+            <div class="spacer"></div>
+            <img
+                    class="munich-background"
+                    src="./resources/img/bg/bg-munich-right.svg"
+                    alt="munich skyline background"
+                    aria-hidden="true"
+            />
+        </div>
+
+        <div class="card-container">
+            <div class="card buerger">
+                <h2>Bürger*innen</h2>
+                <p>Melden Sie sich über Ihre BundID oder BayernID an - zum Beispiel mit Benutzername und Passwort oder mit Online-Ausweis.</p>
+                <button
+                        class="m-button m-button--primary"
+                        style="padding: 12px;"
+                >
+                    <img
+                            class="icon"
+                            style="margin-right: 12px;"
+                            src="./resources/img/providers/bundid.png"
+                            alt="BundID Logo"
+                    />
+                    Mit BundID anmelden
+                    <img
+                            class="icon"
+                            style="margin-left: 12px;"
+                            src="./resources/img/icons/ext-link.svg"
+                    />
+                </button>
+
+                <button
+                        class="m-button m-button--link"
+                >
+                    Bei BundID registrieren
+                    <img
+                            class="icon"
+                            style="margin-left: 12px;"
+                            src="./resources/img/icons/ext-link-blue.svg"
+                    />
+                </button>
+
+                <div class="seperator">
+                    <div class="hr"></div>
+                    <div class="text">oder</div>
+                    <div class="hr"></div>
+                </div>
+
+                <button
+                        class="m-button m-button--secondary"
+                        style="padding: 12px;"
+                >
+                    <img
+                            class="icon"
+                            style="margin-right: 12px;"
+                            src="./resources/img/providers/bayernid-dark.png"
+                            alt="BayernID Logo"
+                    />
+                    Mit BayernID anmelden
+                    <img
+                            class="icon"
+                            style="margin-left: 12px;"
+                            src="./resources/img/icons/ext-link-blue.svg"
+                    />
+                </button>
+            </div>
+
+
+            <div class="card unternehmen">
+                <h2>Unternehmen</h2>
+                <p>Melden Sie sich über „Mein Unternehmenskonto“ mit Ihrem ELSTER-Organisationszertifikat beim
+                    Bürgerservice an.</p>
+                <button
+                        class="m-button m-button--primary"
+                        style="padding: 12px;"
+                >
+                    <img
+                            class="icon"
+                            style="margin-right: 12px;"
+                            src="./resources/img/providers/elster-dark.png"
+                            alt="Elster Logo"
+                    />
+                    Mit ELSTER anmelden
+                    <img
+                            class="icon"
+                            style="margin-left: 12px;"
+                            src="./resources/img/icons/ext-link.svg"
+                    />
+                </button>
+                <button
+                        class="m-button m-button--link"
+                >
+                    Bei ELSTER registrieren
+                    <img
+                            class="icon"
+                            style="margin-left: 12px;"
+                            src="./resources/img/icons/ext-link-blue.svg"
+                    />
+                </button>
+            </div>
+
+
+            <div class="card mitarbeitende">
+                <h2>Mitarbeiter*innen</h2>
+                <p>Melden Sie sich mit Ihrem städtischen Nutzernamen und Passwort sowie Ihrem Yubikey Token beim Bürgerservice an.</p>
+                <button
+                        class="m-button m-button--primary"
+                        style="padding: 12px;"
+                >
+                    <img
+                            class="icon"
+                            style="margin-right: 12px;"
+                            src="./resources/img/providers/yubikey.png"
+                            alt="Yubikey Logo"
+                    />
+                    Mit Token anmelden
+                    <img
+                            class="icon"
+                            style="margin-left: 12px;"
+                            src="./resources/img/icons/ext-link.svg"
+                    />
+                </button>
+            </div>
+        </div>
+        <footer>
+
+        </footer>
+    </div>
+</div>
+</body>
