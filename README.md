@@ -1,5 +1,43 @@
 # KeyCloak (RedHat SSO) BayernID Plugin
 
+Die BayernID (ein Service der AKDB im Auftrag des Freistaats Bayern) bzw. BundID 
+(bereitgestellt vom Bundesministerium für Digitales und Staatsmodernisierung) ist
+eine digitale Identität, die Bürgerinnen und Bürger im Zusammenhang mit der Abwicklung digitaler
+Verwaltungsdienste einsetzen können. Sie dient dazu, sich online eindeutig
+zu identifizieren und bietet verschiedene Authentifizierungsstufen
+(schwache Authentifizierung per Benutzername und Passwort, substantielle
+Authentifizierung per ELSTER oder hohe Authentifizierung per eID/nPA).
+
+Die direkte Integration der BayernID / BundID mit Fachverfahren erfolgt per SAML2-Protokoll.
+
+Da eine direkte Integration jedes Fachverfahrens-Servers aufgrund
+auszutauschender Zertifikate und Metadaten aufwändig ist, setzt die
+Landeshauptstadt München einen zwischengeschalteten Identity Provider
+(IDP) auf Basis der Software Keycloak (bzw. deren größtenteils baugleiches
+kommerzielles Pendant RedHat Single Sign On (RH-SSO)) ein. Dies hat den
+Vorteil, dass die angeschlossenen Fachverfahren nur mit diesem IDP eine
+Vertrauensstellung aufbauen müssen und dafür sowohl OpenID-Connect (OIDC)
+als auch SAML2 als Protokoll zur Verfügung stehen.
+
+Die Anbindung eines Keycloak/RH-SSO an die BayernID/BundID unterstützt aber nicht
+alle benötigten Funktionalitäten der BayernID. Bspw. muss für die Anforderung
+eines Mindest-Vertrauensniveaus oder auch für die Anforderung expliziter Attribute
+in den SAML2-Request eingegriffen werden, was nativ
+vom Keycloak/RH-SSO nicht unterstützt wird.
+
+Aus diesem Grund wurde von der Landeshauptstadt München ein Plugin
+entwickelt, das eine entsprechende Erweiterung des Keycloak/RH-SSO
+bewirkt. Damit ist es für die angebundenen Fachverfahren möglich, ein
+gewünschtes Mindest-Vertrauensniveau oder spezifische Attribute (per Scopes oder einzeln)
+explizit anzufordern - sowohl per OIDC als auch per SAML2. Außerdem
+ermöglicht das Plugin, dass Userdatensätze eindeutig auf den gleichen
+Datensatz im Keycloak/RH-SSO zu mappen, so dass dort bspw. auch eine
+Autorisierung angewendet werden kann.
+
+**Hinweis:** Ein Klon dieses Repos findet sich auch bei [OpenCode](https://gitlab.opencode.de/landeshauptstadt-muenchen/bayernid-plugin).
+Auch wenn beide Repos regelmäßig synchronisiert werden, ist das Github-Repo führend und sollte für Issues / MRs
+verwendet werden.
+
 ## Bauen
 
 ```
@@ -146,7 +184,7 @@ Dabei gibt es folgende Möglichkeiten:
 Diese Möglichkeiten kann man bspw. bei Shibboleth erreichen, indem man in der Datei `shibboleth2.xml` einen `SessionInitiator` mit entsprechendem Inhalt definiert.
 
 ## Built with
-    Java 17
+    Java 21
 
 ## Contributing
 
