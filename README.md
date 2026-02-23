@@ -17,10 +17,10 @@ Landeshauptstadt München einen zwischengeschalteten Identity Provider
 kommerzielles Pendant RedHat Single Sign On (RH-SSO)) ein. Dies hat den
 Vorteil, dass die angeschlossenen Fachverfahren nur mit diesem IDP eine
 Vertrauensstellung aufbauen müssen und dafür sowohl OpenID-Connect (OIDC)
-als auch SAML2 als Protkoll zur Verfügung stehen.
+als auch SAML2 als Protokoll zur Verfügung stehen.
 
 Die Anbindung eines Keycloak/RH-SSO an die BayernID/BundID unterstützt aber nicht
-alle benötigen Funktionalitäten der BayernID. Bspw.  muss für die Anforderung
+alle benötigten Funktionalitäten der BayernID. Bspw.  muss für die Anforderung
 eines Mindest-Vertrauensniveaus oder auch für die Anforderung expliziter Attribute
 in den SAML2-Request eingegriffen werden, was nativ
 vom Keycloak/RH-SSO nicht unterstützt wird.
