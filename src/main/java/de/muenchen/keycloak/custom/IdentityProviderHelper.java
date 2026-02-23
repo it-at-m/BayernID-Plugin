@@ -9,7 +9,6 @@ import org.jboss.logging.Logger;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.sessions.AuthenticationSessionModel;
-import org.slf4j.LoggerFactory;
 
 public class IdentityProviderHelper {
 
@@ -24,7 +23,6 @@ public class IdentityProviderHelper {
     public static final String STORK_QAA_LEVEL_3 = "STORK-QAA-Level-3";
     public static final String STORK_QAA_LEVEL_4 = "STORK-QAA-Level-4";
     public static final String AUTH_CONTEXT = "AUTH_CONTEXT";
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(IdentityProviderHelper.class);
 
     /**
      * Checks whether the given Identity Provider should remain on the list of login option (depending
@@ -33,7 +31,7 @@ public class IdentityProviderHelper {
      *
      * @param alias The alias of the IdentityProvider to check
      * @param authLevel the AuthLevel to check
-     * @return true if to be removed
+     * @return true if IDP should remain
      */
     public static boolean keepIdp(KeycloakSession session, String alias, final String authLevel,
             final String requestedAttributeSet) {

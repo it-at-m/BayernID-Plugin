@@ -14,6 +14,7 @@ public class CustomIdentityProviderBean extends IdentityProviderBean {
         super(ipb.getSession(), ipb.getRealm(), ipb.getBaseURI(), ipb.getFlowContext());
     }
 
+    @Override
     public List<IdentityProvider> getProviders() {
         AuthenticationSessionModel authenticationSession = session.getContext().getAuthenticationSession();
         final String authLevel = IdentityProviderHelper.findAuthLevel(authenticationSession);
