@@ -27,6 +27,13 @@
       "alias": ["intern"],
       "authlevels": ["level1", "level2", "level3"],
       "requestedAttributeSets": ["person", "legalEntity", "any"]
+    },
+    {
+      "name": "eudiwallet",
+      "scope": "eudiwallet",
+      "alias": ["eudiwallet"],
+      "authlevels": ["level1", "level2", "level3", "level4"],
+      "requestedAttributeSets": ["person", "any"]
     }
   ],
   "publicRealms" : ["public", "demo", "A61"],
