@@ -120,7 +120,7 @@ public class BeforeSendingLoginRequest {
         boolean otherOptions = findOtherOptions(clientSession);
         if (authnMethods == null && !otherOptions) {
             //keine explizite Anforderung und auch otherOptions nicht angefordert
-            authnMethods = new HashSet<>(Arrays.asList("eID", "Benutzername", "Authega", "Elster"));
+            authnMethods = new HashSet<>(Arrays.asList("eID", "Benutzername", "Authega", "Elster", "EUDI"));
         }
 
         Set<RequestedAttribute> requestedAttributes = retrieveRequestedAttributes(clientSession);
