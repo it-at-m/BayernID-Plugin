@@ -7,7 +7,9 @@ and will be ported to a *.ftl-Themefile in the end -->
 <head>
     <title>Login-Testpage</title>
     <link rel="stylesheet" href="${url.resourcesPath}/css/styles.css">
-    <link rel="stylesheet" href="${url.resourcesPath}/css/mucbutton.css">
+    <link rel="stylesheet" href="https://assets.muenchen.de/mde/1.1.15/css/fonts.css">
+    <link rel="stylesheet" href="https://assets.muenchen.de/mde/1.1.15/css/style.css">
+    <link rel="icon" type="image/x-icon" href="${url.resourcesPath}/img/favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -16,19 +18,24 @@ and will be ported to a *.ftl-Themefile in the end -->
 <div class="site">
     <header>
         <a>
-            <img class="header-image" src="${url.resourcesPath}/img/muenchende.png">
+            <img class="header-image" src="${url.resourcesPath}/img/muenchende.svg">
         </a>
         <div class="spacer"></div>
 
         <#if logoutConfirm.skipLink>
         <#else>
             <#if (client.baseUrl)?has_content>
-            <a href="${client.baseUrl}">${kcSanitize(msg("backToApplication"))?no_esc}
-                <button
-                        class="m-button m-button--primary"
+            <a
+                ref="${client.baseUrl}"
+                class="m-button m-button--primary"
+            >
+                ${kcSanitize(msg("backToApplication"))?no_esc}
+                <img
+                    class="icon"
+                    src="${url.resourcesPath}/img/icons/close.svg"
+                    style="margin-left: 12px;"
+                    alt="${kcSanitize(msg("backToApplication"))?no_esc}"
                 >
-                    <img class="icon" src="${url.resourcesPath}/img/icons/close.svg">
-                </button>
             </a>
             </#if>
         </#if>
@@ -74,7 +81,7 @@ and will be ported to a *.ftl-Themefile in the end -->
                                     class="m-button m-button--primary"
                                     style="padding: 12px;"
                             >
-                                ${msg("doLogout")}
+                                <span>${msg("doLogout")}</span>
                                 <img
                                         class="icon"
                                         style="margin-left: 12px;"
@@ -91,13 +98,3 @@ and will be ported to a *.ftl-Themefile in the end -->
     </div>
 </div>
 </body>
-
-
-
-
-
-<!--
-Messages:
-
-
--->

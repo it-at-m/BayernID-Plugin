@@ -1,25 +1,16 @@
-@font-face {
-	font-family: 'Open Sans';
-	src: url(../fonts/OpenSans-Regular.ttf) format('truetype');
-}
-
-@font-face {
-	font-family: 'Roboto Condensed';
-	src: url(../fonts/RobotoCondensed-VariableFont_wght.ttf) format('truetype');
-}
-
 body {
 	margin: 0;
 }
 
 :root {
 	--header-height: 52px;
+	--header-padding: 24px;
 
 	--munich-background-height: 78px;
 
 	--page-max-width: 1840px;
 	--content-padding: 24px;
-	--content-max-width: 1216px;
+	--content-max-width: 1264px;
 
 	--color-brand: #1B98D5;
 	--color-brand-main: #005A9F;
@@ -28,11 +19,19 @@ body {
 	--color-blue-x-light: #F2F6FA;
 }
 
-.site {
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Roboto Condensed", Arial, sans-serif;
+}
+
+.login-site {
 	margin: auto;
 	max-width: var(--page-max-width);
 	background-color: #F2F6FA;
 	box-shadow: 0 0 30px 0 rgba(0,0,0,.5);
+}
+
+.icon.left {
+	margin-right: 12px;
 }
 
 header {
@@ -40,7 +39,6 @@ header {
 	flex-direction: row;
 	align-items: center;
 	width: 100%;
-	height: var(--header-height);
 	background-color: var(--color-brand);
 }
 
@@ -49,9 +47,17 @@ header .m-button {
 	align-items: center;
 }
 
-.header-image {
-	height: 36px;
-	padding-left: 8px;
+header .m-button span {
+	text-wrap: nowrap
+}
+
+.m-page-header__branding-image {
+	max-width: unset !important;
+}
+
+.m-page-header__top {
+	padding-left: 4rem;
+	padding-right: 4rem;
 }
 
 footer {
@@ -60,39 +66,10 @@ footer {
 	background-color: var(--color-brand-main);
 	overflow: hidden;
 	z-index: -1;
-	font-family: Roboto Condensed;
+	font-family: Roboto Condensed, Arial, sans-serif;
     font-size: 12px;
     color: #fff;
     text-align: right;
-}
-
-h1 {
-	color: var(--color-neutral-grey);
-	font-size: 30px;
-	font-family: Roboto Condensed;
-	font-weight: 700;
-	line-height: 37.50px;
-	word-wrap: break-word;
-	margin: 0;
-}
-
-h2 {
-	color: var(--color-neutral-grey);
-	font-size: 24px;
-	font-family: Roboto Condensed;
-	font-weight: 700;
-	line-height: 30px;
-	word-wrap: break-word;
-	margin: 0;
-}
-
-p {
-	color: var(--color-neutral-grey);
-	font-size: 16px;
-	font-family: Open Sans;
-	font-weight: 400;
-	line-height: 24px;
-	word-wrap: break-word
 }
 
 .spacer {
@@ -102,7 +79,7 @@ p {
 .heading {
 	width: 100%;
 	text-align: center;
-	padding-top: calc(var(--header-height) + var(--content-padding));
+	padding-top: var(--header-padding);
 }
 
 .graphics-container {
@@ -148,6 +125,23 @@ p {
 	text-align: center;
 }
 
+.error {
+    text-align: left;
+    color: red;
+    font-weight: bold;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.message {
+    text-align: left;
+    color: red;
+    font-weight: bold;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+
 .m-button--link svg{
 	fill: var(--color-brand-main)
 }
@@ -165,31 +159,48 @@ p {
 	width: 100%;
 	height: 0;
 	max-width: 180px;
-	border: 1px var(--color-neutral-blue) solid;
+	border-top: 1px var(--color-neutral-blue) solid;
 }
 
 .seperator .text {
 	padding: 0 8px;
 	color: var(--color-neutral-grey);
 	font-size: 14px;
-	font-family: Open Sans;
+	font-family: Open Sans, Arial, sans-serif;
 	font-weight: 400;
 	line-height: 20px;
-	word-wrap: break-word;
+	word-break: normal;
 }
 
+@media only screen and (max-width: 350px) {
+	.munich-background.rathaus {
+		visibility: hidden;
+	}
+}
 
 /* Screen Size SM */
-@media only screen and (min-width: 576px) {
+@media only screen and (max-width: 767px) {
+	header .m-button span {
+		display: none;
+	}
+
+	header .m-button .m-button__icon {
+		margin-left: 0;
+	}
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
 	:root {
+		--munich-background-height: 123px;
 		--content-padding: 45px;
+		--header-padding: 40px;
 	}
 }
 
 /* Screen Size MD */
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 768px) and (max-width: 991px) {
 	:root {
 		--munich-background-height: 123px;
+		--header-padding: 40px;
 	}
 
 	.graphics-container {
@@ -203,24 +214,29 @@ p {
 }
 
 /* Screen Size LG */
-@media only screen and (min-width: 992px) {
+@media only screen and (max-width: 1199px) {
 	.card-container {
 		padding-bottom: 64px;
 	}
+	.m-page-header__top {
+		padding-left: 0.75rem;
+		padding-right: 0;
+	}
 }
 
-/* Screen Size XL */
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 992px) {
 	:root {
-		--munich-background-height: 177px;
 		--content-padding: 52px;
+		--munich-background-height: 177px;
+		--header-padding: 76px;
 	}
-
 	.graphics-container {
 		padding-top: 0;
-		margin-top: -2em;
+		margin-top: -3rem;
 	}
+}
 
+@media screen and (min-width: 1200px)  {
 	.card-container {
 		flex-direction: row;
 		justify-content: space-between;
@@ -237,12 +253,5 @@ p {
 
 	.card.mitarbeitende {
 		margin-left: 32px;
-	}
-}
-
-/* Screen Size XXL */
-@media only screen and (min-width: 1400px) {
-	:root {
-		--content-padding: 92px;
 	}
 }

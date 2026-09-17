@@ -1,0 +1,3 @@
+podman build . -t keycloak-bayernid-mock
+
+podman run --name keycloak-bayernid-mock --rm -p 8080:8080 -p 5005:5005 -e DEBUG_PORT=5005 -e JAVA_OPTS_APPEND="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005" keycloak-bayernid-mock start-dev 

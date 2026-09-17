@@ -7,22 +7,29 @@ and will be ported to a *.ftl-Themefile in the end -->
 <head>
     <title>Login-Testpage</title>
     <link rel="stylesheet" href="./resources/css/styles.css">
-    <link rel="stylesheet" href="./resources/css/mucbutton.css">
+    <link rel="stylesheet" href="https://assets.muenchen.de/mde/1.1.15/css/fonts.css">
+    <link rel="stylesheet" href="https://assets.muenchen.de/mde/1.1.15/css/style.css">
+    <link rel="icon" type="image/x-icon" href="./resources/img/favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-<div class="site">
-    <header>
-        <a>
-            <img class="header-image" src="./resources/img/muenchende.png">
+<div class="login-site">
+    <header class="m-page-header__top">
+        <a href="https://www.muenchen.de/" rel="home">
+            <img
+                alt="Logo muenchen.de - das offizielle Stadtportal (Zur Startseite)"
+                class="m-page-header__branding-image"
+                src="./resources/img/muenchende.svg"
+            >
         </a>
         <div class="spacer"></div>
         <button
                 class="m-button m-button--primary"
         >
-            <img class="icon" src="./resources/img/icons/close.svg">
+            <span>Abbrechen</span>
+            <img class="m-button__icon m-button__icon--after" src="./resources/img/icons/close.svg" alt="">
         </button>
     </header>
 
@@ -38,7 +45,7 @@ and will be ported to a *.ftl-Themefile in the end -->
             />
             <div class="spacer"></div>
             <img
-                    class="munich-background"
+                    class="munich-background rathaus"
                     src="./resources/img/bg/bg-munich-right.svg"
                     alt="munich skyline background"
                     aria-hidden="true"
@@ -49,34 +56,22 @@ and will be ported to a *.ftl-Themefile in the end -->
             <div class="card buerger">
                 <h2>Bürger*innen</h2>
                 <p>Melden Sie sich über Ihre BundID oder BayernID an - zum Beispiel mit Benutzername und Passwort oder mit Online-Ausweis.</p>
-                <button
+                <a
                         class="m-button m-button--primary"
-                        style="padding: 12px;"
                 >
                     <img
-                            class="icon"
-                            style="margin-right: 12px;"
-                            src="./resources/img/providers/bundid.png"
+                            class="icon left"
+                            src="./resources/img/providers/bundid.svg"
                             alt="BundID Logo"
                     />
-                    Mit BundID anmelden
-                    <img
-                            class="icon"
-                            style="margin-left: 12px;"
-                            src="./resources/img/icons/ext-link.svg"
-                    />
-                </button>
+                    <span>Mit BundID anmelden</span>
+                </a>
 
-                <button
+                <a
                         class="m-button m-button--link"
                 >
                     Bei BundID registrieren
-                    <img
-                            class="icon"
-                            style="margin-left: 12px;"
-                            src="./resources/img/icons/ext-link-blue.svg"
-                    />
-                </button>
+                </a>
 
                 <div class="seperator">
                     <div class="hr"></div>
@@ -84,23 +79,16 @@ and will be ported to a *.ftl-Themefile in the end -->
                     <div class="hr"></div>
                 </div>
 
-                <button
+                <a
                         class="m-button m-button--secondary"
-                        style="padding: 12px;"
                 >
                     <img
-                            class="icon"
-                            style="margin-right: 12px;"
-                            src="./resources/img/providers/bayernid-dark.png"
+                            class="icon left"
+                            src="./resources/img/providers/bayernid.svg"
                             alt="BayernID Logo"
                     />
-                    Mit BayernID anmelden
-                    <img
-                            class="icon"
-                            style="margin-left: 12px;"
-                            src="./resources/img/icons/ext-link-blue.svg"
-                    />
-                </button>
+                    <span>Mit BayernID anmelden</span>
+                </a>
             </div>
 
 
@@ -108,60 +96,46 @@ and will be ported to a *.ftl-Themefile in the end -->
                 <h2>Unternehmen</h2>
                 <p>Melden Sie sich über „Mein Unternehmenskonto“ mit Ihrem ELSTER-Organisationszertifikat beim
                     Bürgerservice an.</p>
-                <button
+                <a
                         class="m-button m-button--primary"
-                        style="padding: 12px;"
                 >
                     <img
-                            class="icon"
-                            style="margin-right: 12px;"
-                            src="./resources/img/providers/elster-dark.png"
+                            class="icon left"
+                            src="./resources/img/providers/elster.svg"
                             alt="Elster Logo"
                     />
-                    Mit ELSTER anmelden
-                    <img
-                            class="icon"
-                            style="margin-left: 12px;"
-                            src="./resources/img/icons/ext-link.svg"
-                    />
-                </button>
-                <button
+                    <span>Mit ELSTER anmelden</span>
+                </a>
+                <a
                         class="m-button m-button--link"
                 >
-                    Bei ELSTER registrieren
-                    <img
-                            class="icon"
-                            style="margin-left: 12px;"
-                            src="./resources/img/icons/ext-link-blue.svg"
-                    />
-                </button>
+                    <span>Bei ELSTER registrieren</span>
+                </a>
             </div>
 
 
             <div class="card mitarbeitende">
                 <h2>Mitarbeiter*innen</h2>
                 <p>Melden Sie sich mit Ihrem städtischen Nutzernamen und Passwort sowie Ihrem Yubikey Token beim Bürgerservice an.</p>
-                <button
+                <a
                         class="m-button m-button--primary"
                         style="padding: 12px;"
                 >
                     <img
-                            class="icon"
-                            style="margin-right: 12px;"
+                            class="icon left"
                             src="./resources/img/providers/yubikey.png"
                             alt="Yubikey Logo"
                     />
-                    Mit Token anmelden
-                    <img
-                            class="icon"
-                            style="margin-left: 12px;"
-                            src="./resources/img/icons/ext-link.svg"
-                    />
-                </button>
+                    <span>Mit Token anmelden</span>
+                </a>
             </div>
         </div>
         <footer>
-
+            <span
+                    style="display: none;"
+            >
+                theme-version
+            </span>
         </footer>
     </div>
 </div>
