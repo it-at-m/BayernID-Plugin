@@ -172,6 +172,11 @@ public class BeforeSendingLoginRequest {
 
         Stream<IdentityProviderMapperModel> identityProviderMapperModels;
         if (alias != null) {
+            //Hinweis: getIdentityProviderMappersByAliasStream ist deprecated, aber das folgende funktioniert nicht
+            //( java.lang.IllegalStateException: Session not bound to a realm)
+            //IdentityProviderStorageProvider idpProvider = session.getProvider(IdentityProviderStorageProvider.class);
+            //identityProviderMapperModels = idpProvider.getMappersByAliasStream(alias);
+
             identityProviderMapperModels = clientSession.getRealm().getIdentityProviderMappersByAliasStream(alias);
         } else {
             logger.error("Cannot find IDP with alias " + alias + " - using all mappers.");
