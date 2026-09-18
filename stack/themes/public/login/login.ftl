@@ -1,5 +1,5 @@
 <#assign themeVersion>
-    1.0.1
+    1.1.1
 </#assign>
 
 <#macro getProviderLogin alias providerList>
@@ -24,6 +24,11 @@
     <@getProviderLogin alias="bundid" providerList=social.providers/>
 </#assign>
 
+<!-- BundID (EUDI-Wallet) -->
+<#assign eudiwalletURL>
+    <@getProviderLogin alias="eudiwallet" providerList=social.providers/>
+</#assign>
+
 <!-- Elster Unternehmenskonto -->
 <#assign elsterNezoURL>
     <@getProviderLogin alias="nezo" providerList=social.providers/>
@@ -37,43 +42,79 @@
 <head>
     <title>Bürgerservice-Anmeldung</title>
     <link rel="stylesheet" href="${url.resourcesPath}/css/styles.css">
-    <link rel="stylesheet" href="${url.resourcesPath}/css/mucbutton.css">
+    <link rel="stylesheet" href="https://assets.muenchen.de/mde/1.1.15/css/fonts.css">
+    <link rel="stylesheet" href="https://assets.muenchen.de/mde/1.1.15/css/style.css">
+    <link rel="icon" type="image/x-icon" href="${url.resourcesPath}/img/favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<div class="site">
-    <header>
-        <a>
-            <img class="header-image" src="${url.resourcesPath}/img/muenchende.png">
+<div class="login-site">
+    <header class="m-page-header__top">
+        <a href="https://www.muenchen.de/" rel="home">
+            <img
+                alt="Logo muenchen.de - das offizielle Stadtportal (Zur Startseite)"
+                class="m-page-header__branding-image"
+                src="${url.resourcesPath}/img/muenchende.svg"
+            >
         </a>
         <div class="spacer"></div>
         <button
+                alt="${kcSanitize(msg("backToApplication"))?no_esc}"
                 class="m-button m-button--primary"
+                onClick="(function(){
+                    history.back();
+                    return false;
+                })();return false;"
         >
-            <img class="icon" src="${url.resourcesPath}/img/icons/close.svg">
+            <span>${kcSanitize(msg("cancel"))?no_esc}</span>
+            <img
+                    class="m-button__icon m-button__icon--after"
+                    src="${url.resourcesPath}/img/icons/close.svg"
+                    alt=""
+            >
         </button>
     </header>
 
     <div>
         <h1 class="heading">${msg("heading")}</h1>
 
+        <#if message?has_content && (message.type != 'warning' || !isAppInitiatedAction??)>
+            <div class="card-container">
+                <div class="card">
+                      <#if message.type = 'error'>
+                        <p class="error">
+                            Der folgende Fehler ist aufgetreten: <br/>
+                            ${kcSanitize(message.summary)?no_esc}
+                        </p>
+                      </#if>
+                      <#if message.type != 'error'>
+                        <p class="message">
+                            Das System meldet folgende Nachricht: <br/>
+                            ${kcSanitize(message.summary)?no_esc}
+                        </p>
+                      </#if>
+                </div>
+            </div>
+        </#if>
+
         <div class="graphics-container">
             <img
                     class="munich-background"
                     src="${url.resourcesPath}/img/bg/bg-munich-left.svg"
-                    alt="munich skyline background"
+                    alt=""
                     aria-hidden="true"
             />
             <div class="spacer"></div>
             <img
-                    class="munich-background"
+                    class="munich-background rathaus"
                     src="${url.resourcesPath}/img/bg/bg-munich-right.svg"
-                    alt="munich skyline background"
+                    alt=""
                     aria-hidden="true"
             />
         </div>
 
         <div class="card-container">
+
 
             <!-- BayernID/BundID Karte für BürgerInnen-Login -->
             <#if (samlURL?has_content || buergerKontoURL?has_content) || bundidURL?has_content>
@@ -85,39 +126,44 @@
                         <p>${msg("buerger_bayernid_description_" + authlevel)}</p>
 
                         <#if samlURL?has_content>
-                        <a href="${samlURL}">
+                        <a
+                            class="m-button m-button--primary"
+                            href="${samlURL}"
+                        >
                         <#else>
-                        <a href="${buergerKontoURL}">
+                        <a
+                            class="m-button m-button--primary"
+                            href="${buergerKontoURL}"
+                        >
                         </#if>
-                            <button class="m-button m-button--primary" style="padding: 12px;">
-                                <img class="icon" style="margin-right: 12px;" src="${url.resourcesPath}/img/providers/bayernid-dark.png" alt="BayernID Logo"/>
-                                ${msg("buerger_bayernid_login_button")}
-                                <img class="icon" style="margin-left: 12px;" src="${url.resourcesPath}/img/icons/ext-link.svg"/>
-                            </button>
+                            <img class="icon left" src="${url.resourcesPath}/img/providers/bayernid.svg" alt=""/>
+                            <span>${msg("buerger_bayernid_login_button")}</span>
                         </a>
-                        <a href="https://id.bayernportal.de/de/registration/eID" target="_blank">
-                            <button class="m-button m-button--link">
-                                ${msg("buerger_bayernid_register_button")}
-                                <img class="icon" style="margin-left: 12px;" src="${url.resourcesPath}/img/icons/ext-link-blue.svg"/>
-                            </button>
+                        <a
+                            class="m-button m-button--link"
+                            href="https://id.bayernportal.de/de/registration/eID"
+                            target="_blank"
+                        >
+                            <span>${msg("buerger_bayernid_register_button")}</span>
                         </a>
 
                     <!-- BayernID UND BundID -->
                     <#elseif (samlURL?has_content || buergerKontoURL?has_content) && (bundidURL?has_content)>
                         <p>${msg("buerger_bayernidbundid_description_" + authlevel)}</p>
 
-                        <a href="${bundidURL}">
-                            <button class="m-button m-button--primary" style="padding: 12px;">
-                                <img class="icon" style="margin-right: 12px;" src="${url.resourcesPath}/img/providers/bundid.png" alt="BundID Logo"/>
-                                ${msg("buerger_bundid_login_button")}
-                                <img class="icon" style="margin-left: 12px;" src="${url.resourcesPath}/img/icons/ext-link.svg"/>
-                            </button>
+                        <a
+                            href="${bundidURL}"
+                            class="m-button m-button--primary"
+                        >
+                            <img class="icon left" src="${url.resourcesPath}/img/providers/bundid.svg" alt=""/>
+                            <span>${msg("buerger_bundid_login_button")}</span>
                         </a>
-                        <a href="https://id.bund.de/de/registration/eID" target="_blank">
-                            <button class="m-button m-button--link">
-                                ${msg("buerger_bundid_register_button")}
-                                <img class="icon" style="margin-left: 12px;" src="${url.resourcesPath}/img/icons/ext-link-blue.svg"/>
-                            </button>
+                        <a
+                            href="https://id.bund.de/de/registration/eID"
+                            class="m-button m-button--link"
+                            target="_blank"
+                        >
+                            <span>${msg("buerger_bundid_register_button")}</span>
                         </a>
 
                         <div class="seperator">
@@ -127,36 +173,50 @@
                         </div>
 
                         <#if samlURL?has_content>
-                        <a href="${samlURL}">
+                        <a
+                            href="${samlURL}"
+                            class="m-button m-button--primary"
+                        >
                         <#else>
-                        <a href="${buergerKontoURL}">
+                        <a
+                            href="${buergerKontoURL}"
+                            class="m-button m-button--primary"
+                        >
                             </#if>
-                            <button class="m-button m-button--primary" style="padding: 12px;">
-                                <img class="icon" style="margin-right: 12px;" src="${url.resourcesPath}/img/providers/bayernid-dark.png" alt="BayernID Logo"/>
-                                ${msg("buerger_bayernid_login_button")}
-                                <img class="icon" style="margin-left: 12px;" src="${url.resourcesPath}/img/icons/ext-link.svg"/>
-                            </button>
+                            <img class="icon left" src="${url.resourcesPath}/img/providers/bayernid.svg" alt=""/>
+                            <span>${msg("buerger_bayernid_login_button")}</span>
                         </a>
 
                     <!-- Nur BundID -->
                     <#else>
                         <p>${msg("buerger_bundid_description_" + authlevel)}</p>
 
-                        <a href="${bundidURL}">
-                            <button class="m-button m-button--primary" style="padding: 12px;">
-                                <img class="icon" style="margin-right: 12px;" src="${url.resourcesPath}/img/providers/bundid.png" alt="BundID Logo"/>
-                                ${msg("buerger_bundid_login_button")}
-                                <img class="icon" style="margin-left: 12px;" src="${url.resourcesPath}/img/icons/ext-link.svg"/>
-                            </button>
+                        <a
+                            href="${bundidURL}"
+                            class="m-button m-button--primary"
+                        >
+                            <img class="icon left" src="${url.resourcesPath}/img/providers/bundid.svg" alt=""/>
+                            ${msg("buerger_bundid_login_button")}
                         </a>
-                        <a href="https://id.bund.de/de/registration/eID" target="_blank">
-                            <button class="m-button m-button--link">
-                                ${msg("buerger_bundid_register_button")}
-                                <img class="icon" style="margin-left: 12px;" src="${url.resourcesPath}/img/icons/ext-link-blue.svg"/>
-                            </button>
+                        <a
+                            href="https://id.bund.de/de/registration/eID"
+                            class="m-button m-button--link"
+                            target="_blank"
+                        >
+                            <span>${msg("buerger_bundid_register_button")}</span>
                         </a>
-
                     </#if>
+					
+					<#if (eudiwalletURL?has_content)>
+						<p>
+						<a
+                            href="${eudiwalletURL}"
+                            class="m-button m-button--primary"
+                        >
+                            <img class="icon left" src="${url.resourcesPath}/img/providers/bundid.svg" alt=""/>
+                            ${msg("buerger_bundid_login_button")} (EUDI-Wallet)
+                        </a>
+					</#if>
                 </div>
             </#if>
 
@@ -166,37 +226,24 @@
                     <h2>${msg('unternehmen_heading')}</h2>
                     <p>${msg('unternehmen_description')}</p>
 
-                    <a href="${elsterNezoURL}">
-                        <button
-                                class="m-button m-button--primary"
-                                style="padding: 12px;"
-                        >
-                            <img
-                                    class="icon"
-                                    style="margin-right: 12px;"
-                                    src="${url.resourcesPath}/img/providers/elster-dark.png"
-                                    alt="Ekster Logo"
-                            />
-                            ${msg("unternehmen_login_button")}
-                            <img
-                                    class="icon"
-                                    style="margin-left: 12px;"
-                                    src="${url.resourcesPath}/img/icons/ext-link.svg"
-                            />
-                        </button>
+                    <a
+                        href="${elsterNezoURL}"
+                        class="m-button m-button--primary"
+                    >
+                        <img
+                                class="icon left"
+                                src="${url.resourcesPath}/img/providers/elster.svg"
+                                alt=""
+                        />
+                        <span>${msg("unternehmen_login_button")}</span>
                     </a>
 
-                    <a href="https://www.elster.de/elsterweb/infoseite/nezo" target="_blank">
-                        <button
-                                class="m-button m-button--link"
-                        >
-                            ${msg("unternehmen_register_button")}
-                            <img
-                                    class="icon"
-                                    style="margin-left: 12px;"
-                                    src="${url.resourcesPath}/img/icons/ext-link-blue.svg"
-                            />
-                        </button>
+                    <a
+                        href="https://www.elster.de/elsterweb/infoseite/nezo"
+                        class="m-button m-button--link"
+                        target="_blank"
+                    >
+                        <span>${msg("unternehmen_register_button")}</span>
                     </a>
                 </div>
             </#if>
@@ -207,30 +254,26 @@
                     <h2>${msg("mitarbeiter_heading")}</h2>
                     <p>${msg("mitarbeiter_description")}</p>
 
-                    <a href="${internURL}">
-                        <button
-                                class="m-button m-button--primary"
-                                style="padding: 12px;"
-                        >
-                            <img
-                                    class="icon"
-                                    style="margin-right: 12px;"
-                                    src="${url.resourcesPath}/img/providers/yubikey.png"
-                                    alt="Yubikey Logo"
-                            />
-                            ${msg("mitarbeiter_login_button")}
-                            <img
-                                    class="icon"
-                                    style="margin-left: 12px;"
-                                    src="${url.resourcesPath}/img/icons/ext-link.svg"
-                            />
-                        </button>
+                    <a
+                        href="${internURL}"
+                        class="m-button m-button--primary"
+                    >
+                        <img
+                            class="icon left"
+                            src="${url.resourcesPath}/img/providers/yubikey.png"
+                            alt=""
+                        />
+                        ${msg("mitarbeiter_login_button")}
                     </a>
                 </div>
             </#if>
         </div>
         <footer>
-            ${themeVersion}
+            <span
+                style="display: none;"
+            >
+                ${themeVersion}
+            </span>
         </footer>
     </div>
 </div>

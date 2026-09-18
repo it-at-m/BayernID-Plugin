@@ -65,6 +65,22 @@ Die Datei `bayernid-plugin-[VERSION].jar` aus dem Verzeichnis `target` (existier
 
 Siehe Dokument `KeyCloak-Konfiguration.pdf`
 
+## In Podman betreiben und remote Debuggen
+
+- Podman starten
+- `podman build . -t keycloak-bayernid-mock`
+- `podman run --name keycloak-bayernid-mock -p 8080:8080 keycloak-bayernid-mock start-dev`
+- Im Browser aufrufen unter localhost:8080
+
+## Remote debuggen
+
+- Wie bei "In Podman betreiben", aber
+- `podman run --name keycloak-bayernid-mock -p 8080:8080 -p 5005:5005 -e DEBUG_PORT=5005 -e JAVA_OPTS_APPEND="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005" keycloak-bayernid-mock start-dev`
+- Im IntelliJ
+    - Run --> Edit Configuration...
+    - Remote JVM Debug
+    - localhost, Port 5005
+
 ## Testen
 
 Je nachdem, ob das Plugin per SAML2-Client oder OIDC-Client aufgerufen wird, verhält es sich unterschiedlich 

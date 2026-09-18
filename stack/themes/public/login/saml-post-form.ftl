@@ -2,6 +2,7 @@
     <title>Authentication redirect...</title>
     <link rel="stylesheet" href="${url.resourcesPath}/css/styles.css">
     <link rel="stylesheet" href="${url.resourcesPath}/css/saml-post-form.css">
+    <link rel="icon" type="image/x-icon" href="${url.resourcesPath}/img/favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>

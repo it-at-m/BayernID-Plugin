@@ -5,11 +5,13 @@ import de.muenchen.keycloak.custom.broker.saml.domain.RequestedAttribute;
 import de.muenchen.keycloak.custom.broker.saml.mappers.CustomUserAttributeMapper;
 import de.muenchen.keycloak.custom.config.domain.DisplayInformation;
 import java.util.*;
+import java.util.stream.Stream;
 import org.jboss.logging.Logger;
 import org.keycloak.dom.saml.v2.protocol.AuthnContextComparisonType;
 import org.keycloak.dom.saml.v2.protocol.AuthnRequestType;
 import org.keycloak.dom.saml.v2.protocol.ExtensionsType;
 import org.keycloak.dom.saml.v2.protocol.RequestedAuthnContextType;
+import org.keycloak.models.IdentityProviderMapperModel;
 import org.keycloak.saml.SamlProtocolExtensionsAwareBuilder;
 import org.keycloak.sessions.AuthenticationSessionModel;
 
@@ -123,7 +125,7 @@ public class BeforeSendingLoginRequest {
             authnMethods = new HashSet<>(Arrays.asList("eID", "Benutzername", "Authega", "Elster", "EUDI"));
         }
 
-        Set<RequestedAttribute> requestedAttributes = retrieveRequestedAttributes(clientSession);
+        Set<RequestedAttribute> requestedAttributes = retrieveRequestedAttributes(authnRequest, clientSession);
         addExtension(authnRequest, makeAuthenticationRequestExtension(authnMethods, requestedAttributes));
     }
 
@@ -136,8 +138,8 @@ public class BeforeSendingLoginRequest {
      * @param clientSession AuthenticationSessionModel
      * @return Die Requested Attributes für den SAML-Request an die BayernID.
      */
-    public Set<RequestedAttribute> retrieveRequestedAttributes(AuthenticationSessionModel clientSession) {
-        Map<String, RequestedAttribute> requestedAttributesFromScopes = deductAttributesFromEffectiveScopes(clientSession);
+    public Set<RequestedAttribute> retrieveRequestedAttributes(AuthnRequestType authnRequest, AuthenticationSessionModel clientSession) {
+        Map<String, RequestedAttribute> requestedAttributesFromScopes = deductAttributesFromEffectiveScopes(authnRequest, clientSession);
         Map<String, RequestedAttribute> requestedAttributesFromSamlRequest = PreprocessorHelper.deriveRequestedAttributesFromSamlRequest(clientSession);
 
         Set<RequestedAttribute> requestedAttributes = new HashSet<>();
@@ -159,14 +161,31 @@ public class BeforeSendingLoginRequest {
         return requestedAttributes;
     }
 
-    public Map<String, RequestedAttribute> deductAttributesFromEffectiveScopes(AuthenticationSessionModel clientSession) {
+    public Map<String, RequestedAttribute> deductAttributesFromEffectiveScopes(AuthnRequestType authnRequest, AuthenticationSessionModel clientSession) {
         Map<String, RequestedAttribute> requestedAttributes = new HashMap<>();
         Set<String> effectiveScopes = AuthNoteHelper.getEffectiveScopesAsSet(clientSession);
         if (effectiveScopes == null) {
             return requestedAttributes;
         }
 
-        clientSession.getRealm().getIdentityProviderMappersStream().forEach(identityProviderMapperModel -> {
+        String alias = findChosenAlias(authnRequest);
+
+        Stream<IdentityProviderMapperModel> identityProviderMapperModels;
+        if (alias != null) {
+            //Hinweis: getIdentityProviderMappersByAliasStream ist deprecated, aber das folgende funktioniert nicht
+            //( java.lang.IllegalStateException: Session not bound to a realm)
+            //IdentityProviderStorageProvider idpProvider = session.getProvider(IdentityProviderStorageProvider.class);
+            //identityProviderMapperModels = idpProvider.getMappersByAliasStream(alias);
+
+            identityProviderMapperModels = clientSession.getRealm().getIdentityProviderMappersByAliasStream(alias);
+        } else {
+            logger.error("Cannot find IDP with alias " + alias + " - using all mappers.");
+            identityProviderMapperModels = clientSession.getRealm().getIdentityProviderMappersStream();
+        }
+
+        identityProviderMapperModels.forEach(identityProviderMapperModel -> {
+            logger.info("Working on identity provider mapper model: " + identityProviderMapperModel.getName() + " "
+                    + identityProviderMapperModel.getIdentityProviderAlias());
             String scope = identityProviderMapperModel.getConfig().get(CustomUserAttributeMapper.FIELD_SCOPE);
             if (scope != null) {
                 //scope attribute gefunden
@@ -180,6 +199,15 @@ public class BeforeSendingLoginRequest {
             }
         });
         return requestedAttributes;
+    }
+
+    private String findChosenAlias(AuthnRequestType authnRequest) {
+        String destinationPath = authnRequest.getAssertionConsumerServiceURL().getPath();
+        if (destinationPath.contains("/broker/") && destinationPath.endsWith("/endpoint")) {
+            return destinationPath.split("/broker/")[1].split("/endpoint")[0];
+        }
+
+        return null;
     }
 
     private void addExtension(AuthnRequestType authnRequest, SamlProtocolExtensionsAwareBuilder.NodeGenerator extension) {
