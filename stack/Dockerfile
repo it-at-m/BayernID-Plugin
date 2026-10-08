@@ -9,7 +9,7 @@ WORKDIR /opt/keycloak
 RUN keytool -genkeypair -storepass password -storetype PKCS12 -keyalg RSA -keysize 2048 -dname "CN=server" -alias server -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -keystore conf/server.keystore
 
 # Add the provider JARs file to the providers directory
-ADD --chown=keycloak:keycloak bayernid-plugin-2.0.5-SNAPSHOT.jar /opt/keycloak/providers/bayernid-plugin-2.0.5-SNAPSHOT.jar
+ADD --chown=keycloak:keycloak bayernid-plugin-2.0.6-SNAPSHOT.jar /opt/keycloak/providers/bayernid-plugin-2.0.6-SNAPSHOT.jar
 
 # Add the custom themes
 ADD --chown=keycloak:keycloak themes/ /opt/keycloak/themes
